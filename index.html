@@ -1,0 +1,3221 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>CC课后流程SOP · 台湾团队</title>
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --accent: #f59e0b;
+  --accent-light: #fbbf24;
+  --success: #10b981;
+  --danger: #ef4444;
+  --bg: #f0f7ff;
+  --card: #ffffff;
+  --text: #1e293b;
+  --text-secondary: #64748b;
+  --border: #bfdbfe;
+  --sidebar-bg: #1e293b;
+  --sidebar-text: #cbd5e1;
+  --sidebar-active: #3b82f6;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.7;
+  display: flex; min-height: 100vh;
+}
+.sidebar {
+  width: 280px; min-width: 280px; background: var(--sidebar-bg);
+  color: var(--sidebar-text); display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+  transition: transform 0.3s;
+}
+.sidebar-close-btn { display: none; position: absolute; top: 8px; right: 12px;
+  background: none; border: none; color: #94a3b8; font-size: 20px;
+  cursor: pointer; z-index: 10; padding: 8px; line-height: 1; }
+.sidebar-header { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sidebar-header h3 { font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.sidebar-header .course-title { font-size: 16px; font-weight: 700; color: #fff; line-height: 1.4; }
+.sidebar-progress { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.progress-label { display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-bottom: 8px; }
+.progress-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--sidebar-active); border-radius: 3px; transition: width 0.5s ease; width: 0%; }
+.study-timer { padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.timer-icon { font-size: 16px; }
+.timer-display { color: #fff; font-weight: 700; font-variant-numeric: tabular-nums; }
+.timer-label { color: #94a3b8; font-size: 11px; }
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+.nav-section { padding: 8px 20px; cursor: pointer; display: flex; align-items: flex-start; gap: 12px; transition: all 0.2s; border-left: 3px solid transparent; }
+.nav-section:hover { background: rgba(255,255,255,0.05); }
+.nav-section.active { background: rgba(59,130,246,0.15); border-left-color: var(--sidebar-active); color: #fff; }
+.nav-section.completed { color: #94a3b8; }
+.nav-section.completed .nav-icon { background: var(--success); color: #fff; }
+.nav-section.locked { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+.nav-section.locked .nav-icon { background: rgba(255,255,255,0.08); color: #64748b; }
+.nav-icon { width: 32px; height: 32px; min-width: 32px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--sidebar-text); transition: all 0.3s; }
+.nav-section.active .nav-icon { background: var(--sidebar-active); color: #fff; }
+.nav-info .nav-label { font-size: 13px; font-weight: 600; }
+.nav-info .nav-sub { font-size: 11px; color: #64748b; margin-top: 2px; }
+.nav-section.active .nav-info .nav-sub { color: #94a3b8; }
+.sidebar-footer { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #64748b; }
+.main { margin-left: 280px; flex: 1; padding: 40px; max-width: 900px; }
+.section { display: none; animation: fadeSlide 0.4s ease; }
+.section.active { display: block; }
+@keyframes fadeSlide { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.section-header { margin-bottom: 32px; }
+.section-badge { display: inline-block; padding: 4px 14px; background: #dbeafe; color: var(--primary-dark); border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+.section-header h1 { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.section-header .duration { font-size: 14px; color: var(--text-secondary); }
+.card { background: var(--card); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.card-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+.highlight-box { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-left: 4px solid var(--primary); padding: 20px 24px; border-radius: var(--radius-sm); margin: 20px 0; }
+.highlight-box.warning { background: linear-gradient(135deg, #fef3c7, #fde68a); border-left-color: var(--accent); }
+.highlight-box.danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-left-color: var(--danger); }
+.highlight-box.success { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-left-color: var(--success); }
+.script-block { background: #f1f5f9; padding: 20px 24px; border-radius: var(--radius-sm); font-style: italic; color: #475569; position: relative; margin: 16px 0; line-height: 1.8; }
+.flow-steps { display: flex; gap: 16px; margin: 20px 0; flex-wrap: wrap; }
+.flow-step { flex: 1; min-width: 140px; background: var(--card); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 20px; text-align: center; box-shadow: var(--shadow); }
+.flow-step .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; margin-bottom: 12px; }
+.flow-step h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.flow-step p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+.flow-arrow { display: flex; align-items: center; font-size: 24px; color: var(--primary); font-weight: 700; }
+.strategy-grid { display: flex; gap: 16px; margin: 20px 0; flex-wrap: wrap; }
+.strategy-card { flex: 1; min-width: 200px; background: var(--card); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 24px; text-align: center; box-shadow: var(--shadow); }
+.strategy-card .icon { font-size: 36px; margin-bottom: 12px; }
+.strategy-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.strategy-card p { font-size: 13px; color: var(--text-secondary); }
+.callout-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+.callout-item { flex: 1; min-width: 180px; background: var(--card); border-radius: var(--radius-sm); padding: 20px; text-align: center; box-shadow: var(--shadow); border-top: 4px solid var(--primary); }
+.quiz-card { background: var(--card); border-radius: var(--radius); padding: 28px; margin: 24px 0; box-shadow: var(--shadow-lg); border: 2px solid var(--border); }
+.quiz-card.answered-correct { border-color: var(--success); }
+.quiz-card.answered-wrong { border-color: var(--danger); }
+.quiz-question { font-size: 16px; font-weight: 600; margin-bottom: 20px; line-height: 1.7; }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; }
+.quiz-option { display: flex; align-items: center; gap: 12px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s; min-height: 48px; }
+.quiz-option:hover { border-color: var(--primary-light); background: #f0f7ff; }
+.quiz-option.selected { border-color: var(--primary); background: #dbeafe; }
+.quiz-option.correct { border-color: var(--success) !important; background: #ecfdf5 !important; }
+.quiz-option.wrong { border-color: var(--danger) !important; background: #fef2f2 !important; }
+.quiz-option-label { width: 30px; height: 30px; min-width: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.quiz-feedback { display: none; margin-top: 16px; padding: 16px; border-radius: var(--radius-sm); font-size: 14px; line-height: 1.7; }
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { background: #ecfdf5; color: #065f46; }
+.quiz-feedback.wrong { background: #fef2f2; color: #991b1b; }
+.dialogue-container { background: var(--card); border-radius: var(--radius); padding: 28px; margin: 24px 0; box-shadow: var(--shadow-lg); border: 2px solid var(--border); }
+.dialogue-scenario { background: #f8fafc; padding: 14px 16px; border-radius: var(--radius-sm); font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+.customer-bubble { background: #f1f5f9; padding: 16px 20px; border-radius: 16px 16px 16px 4px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; border: 1px solid #e2e8f0; }
+.reply-input { width: 100%; min-height: 120px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; line-height: 1.7; resize: vertical; }
+.reply-input:focus { border-color: var(--primary-light); outline: none; }
+.dialogue-actions { display: flex; gap: 12px; margin-top: 16px; }
+.ai-feedback-panel { display: none; margin-top: 20px; padding: 20px; background: #f8fafc; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.ai-feedback-panel.show { display: block; }
+
+/* Multi-turn chat styles */
+.scenario-card { transition: all .2s; }
+.scenario-card:hover { border-color: #a5b4fc !important; transform: translateY(-1px); }
+.chat-history { background: #fafbfc; border-radius: 12px; padding: 16px; border: 1px solid #e8ecf0; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.final-task-container { margin: 24px 0; }
+.final-task-input { width: 100%; min-height: 160px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; line-height: 1.8; resize: vertical; }
+.final-task-input:focus { border-color: var(--primary-light); outline: none; }
+.char-counter { text-align: right; font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+.score-display { text-align: center; margin-bottom: 16px; }
+.score-circle { width: 64px; height: 64px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; }
+.score-circle.high { background: #ecfdf5; color: #065f46; border: 3px solid var(--success); }
+.score-circle.medium { background: #fffbeb; color: #92400e; border: 3px solid var(--accent); }
+.score-circle.low { background: #fef2f2; color: #991b1b; border: 3px solid var(--danger); }
+.keywords-result { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.keyword-tag { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.keyword-tag.found { background: #ecfdf5; color: #065f46; }
+.keyword-tag.missing { background: #fef2f2; color: #991b1b; }
+.eval-dimensions { display: flex; gap: 16px; flex-wrap: wrap; }
+.eval-dim { flex: 1; min-width: 160px; background: var(--card); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 20px; text-align: center; }
+.eval-dim h4 { font-size: 14px; margin-bottom: 8px; }
+.eval-dim .stars { font-size: 16px; margin: 8px 0; }
+.btn { display: inline-block; padding: 12px 28px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
+.btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+.btn-success { background: var(--success); }
+.btn-success:hover { background: #059669; }
+.section-nav-buttons { display: flex; justify-content: space-between; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); }
+.cert-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; justify-content: center; align-items: center; }
+.cert-overlay.show { display: flex; }
+.certificate-paper { background: #fff; border-radius: 16px; padding: 40px 32px; max-width: 560px; width: 90%; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+.cert-title { font-size: 28px; font-weight: 800; color: #1d4ed8; margin-bottom: 8px; }
+.cert-sub { font-size: 12px; color: #64748b; letter-spacing: 0.1em; margin-bottom: 24px; }
+.cert-body { font-size: 15px; color: #1e293b; line-height: 2.2; }
+.cert-name { display: inline-block; border-bottom: 2px solid #2563eb; min-width: 100px; padding: 2px 8px; margin: 0 4px; outline: none; }
+.cert-course { font-weight: 700; color: #1d4ed8; margin: 8px 0; }
+.cert-score { margin: 20px 0; font-size: 16px; font-weight: 600; color: #10b981; }
+.cert-footer { display: flex; justify-content: space-between; font-size: 12px; color: #64748b; margin-top: 32px; border-top: 1px solid #e2e8f0; padding-top: 16px; }
+.cert-actions { display: flex; gap: 12px; justify-content: center; margin-top: 20px; }
+.notes-toggle { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: var(--primary); color: #fff; border: none; cursor: pointer; font-size: 20px; box-shadow: var(--shadow-lg); z-index: 50; display: flex; align-items: center; justify-content: center; }
+.notes-panel { position: fixed; right: 0; top: 0; bottom: 0; width: 300px; background: var(--card); box-shadow: -4px 0 20px rgba(0,0,0,0.1); z-index: 90; transform: translateX(100%); transition: transform 0.3s; padding: 24px; display: flex; flex-direction: column; }
+.notes-panel.open { transform: translateX(0); }
+.notes-panel h3 { margin-bottom: 12px; }
+.notes-panel textarea { flex: 1; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; font-family: inherit; font-size: 13px; resize: none; }
+.toast { position: fixed; bottom: 24px; right: 24px; padding: 12px 24px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; z-index: 300; animation: toastIn 0.3s ease; box-shadow: var(--shadow-lg); }
+.toast.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+.toast.warning { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
+.toast.info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.mobile-header { display: none; background: var(--sidebar-bg); color: #fff; padding: 10px 16px; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 50; min-height: 48px; }
+.mobile-header .mh-title { flex: 1; font-weight: 700; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mobile-header .mh-btn { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 4px 8px; line-height: 1; min-width: 36px; min-height: 36px; display: flex; align-items: center; justify-content: center; }
+.mobile-progress-bar { display: none; height: 3px; background: rgba(255,255,255,0.15); position: sticky; top: 48px; z-index: 49; }
+.mobile-progress-bar .mpb-fill { height: 100%; background: var(--primary-light); transition: width 0.5s ease; width: 0%; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+@media (max-width: 1024px) {
+  body { flex-direction: column; }
+  .sidebar { transform: translateX(-100%); width: 280px; min-width: 280px; }
+  .sidebar.open { transform: translateX(0); z-index: 110; }
+  .sidebar-overlay.show { display: block; }
+  .sidebar-close-btn { display: block; }
+  .mobile-header { display: flex; }
+  .mobile-progress-bar { display: block; }
+  .main { margin-left: 0 !important; padding: 16px 14px 80px; max-width: 100%; }
+  .section-header h1 { font-size: 20px; }
+  .section-badge { font-size: 11px; padding: 3px 10px; }
+  .card { padding: 16px; }
+  .card-title { font-size: 16px; }
+  .flow-steps, .strategy-grid, .eval-dimensions { flex-direction: column; }
+  .flow-arrow { transform: rotate(90deg); }
+  .quiz-option { padding: 14px 12px; min-height: 44px; }
+  .dialogue-actions { flex-direction: column; }
+  .dialogue-actions .btn { width: 100%; }
+  .final-task-input { min-height: 120px; font-size: 13px; padding: 12px; }
+  .section-nav-buttons { flex-direction: column; gap: 10px; position: sticky; bottom: 0; background: var(--bg); padding: 12px 0; border-top: 1px solid var(--border); margin-top: 24px; }
+  .section-nav-buttons .btn { width: 100%; text-align: center; }
+  .section-nav-buttons > div { width: 100%; }
+  .notes-toggle { display: none; }
+  .notes-panel { width: 100%; max-width: 340px; }
+  .toast { left: 50%; right: auto; transform: translateX(-50%); bottom: 80px; white-space: nowrap; }
+  .certificate-paper { width: 95%; max-width: 95%; padding: 28px 20px; max-height: 90vh; overflow-y: auto; }
+  .cert-title { font-size: 22px; }
+  .cert-actions { flex-direction: column; }
+  .cert-actions .btn { width: 100%; }
+  .score-circle { width: 56px; height: 56px; font-size: 22px; }
+}
+.objection-card { background: var(--card); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.objection-card .obj-type { font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; font-size: 15px; }
+.closing-card { background: var(--card); border: 2px solid var(--accent); border-radius: var(--radius-sm); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.closing-card .closing-type { font-weight: 700; color: #92400e; margin-bottom: 8px; font-size: 15px; }
+</style>
+<script src="https://beacon.cdn.qq.com/sdk/4.5.9/beacon_web.min.js"></script>
+<script>
+(function(){
+  try{
+    var beacon=new BeaconAction({
+      appkey:'0WEB06U85YBSLJNL',
+      versionCode:'1.0.0',
+      channelID:'share',
+      delay:1000,
+      sessionDuration:30*60*1000,
+      isOversea:false,
+      needReportRqdEvent:false
+    });
+    beacon.onDirectUserAction('preview_page_view',{
+      'url':location.href,
+      'referrer':document.referrer,
+      'title':document.title,
+      'sandbox_id':'dca3c897ee1a4f7aa2d3650db6235c2a'
+    });
+  }catch(e){}
+})();
+</script></head>
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <button class="sidebar-close-btn" onclick="toggleSidebar()" aria-label="关闭菜单">✕</button>
+  <div class="sidebar-header">
+    <h3>微课</h3>
+    <div class="course-title">CC课后流程SOP</div>
+  </div>
+  <div class="sidebar-progress">
+    <div class="progress-label"><span>学习进度</span><span id="progressPercent">0%</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="study-timer">
+    <span class="timer-icon">⏱</span>
+    <span class="timer-display" id="timerDisplay">00:00</span>
+    <span class="timer-label">学习时长</span>
+  </div>
+  <div class="sidebar-nav" id="sidebarNav"></div>
+  <div class="sidebar-footer">
+    <button onclick="toggleNotes()" style="background:none;border:1px solid rgba(255,255,255,0.15);color:var(--sidebar-text);padding:6px 16px;border-radius:20px;font-size:12px;cursor:pointer;width:100%;">📝 学习笔记</button>
+  </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<div class="mobile-header">
+  <button class="mh-btn" onclick="toggleSidebar()" aria-label="菜单">☰</button>
+  <span class="mh-title" id="mhTitle">CC课后流程SOP</span>
+  <span style="font-size:12px;opacity:0.7;white-space:nowrap;" id="mhTimer">00:00</span>
+</div>
+<div class="mobile-progress-bar"><div class="mpb-fill" id="mpbFill"></div></div>
+
+<main class="main" id="mainContent"></main>
+
+<div class="cert-overlay" id="certOverlay">
+  <div class="certificate-paper" id="certPaper">
+    <div class="cert-title">🏆 结业证书</div>
+    <div class="cert-sub">CERTIFICATE OF COMPLETION</div>
+    <div class="cert-body">
+      <p>兹证明</p>
+      <p><span class="cert-name" id="certStudentName" contenteditable="true">请填写姓名</span></p>
+      <p>已完成</p>
+      <p class="cert-course">CC课后流程SOP · 台湾团队</p>
+      <p>全部课程内容并通过考核</p>
+      <div class="cert-score" id="certScore">综合评定：通过</div>
+    </div>
+    <div class="cert-footer">
+      <span id="certDate"></span>
+      <span>VIP THINK</span>
+    </div>
+    <div class="cert-actions">
+      <button class="btn" onclick="printCertificate()">🖨️ 列印证书</button>
+      <button class="btn btn-outline" onclick="closeCertificate()">关闭</button>
+    </div>
+  </div>
+</div>
+
+<button class="notes-toggle" onclick="toggleNotes()">📝</button>
+<div class="notes-panel" id="notesPanel">
+  <h3>📝 学习笔记 — <span id="notesChapterLabel" style="font-weight:400;font-size:13px;color:var(--text-secondary);"></span></h3>
+  <textarea id="notesTextarea" placeholder="在这里记录你的学习心得..."></textarea>
+  <button class="btn btn-outline" onclick="toggleNotes()" style="margin-top:12px;width:100%;">关闭</button>
+</div>
+
+<script>
+const courseData = {
+  title: 'CC课后流程SOP · 台湾团队',
+  sections: [
+  {
+    "id": "s1",
+    "title": "课后电话流程与报告解读",
+    "duration": "8-10分钟",
+    "icon": "1",
+    "type": "content_quiz",
+    "quizId": "quiz1",
+    "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第一章</span>\n        <h1>课后电话流程与报告解读</h1>\n        <span class=\"duration\">⏱ 预估时长：8-10分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📋 课后电话完整流程</div>\n        <p style=\"margin-bottom:16px;\">课后电话是 CC 和家长建立信任、展示专业、引导报名的重要环节。完整流程分为以下步骤：</p>\n        <div class=\"flow-steps\">\n          <div class=\"flow-step\"><div class=\"step-num\">1</div><h4>开场询问感受</h4><p>寒暄破冰，了解小朋友上课感受</p></div>\n          <div class=\"flow-arrow\">→</div>\n          <div class=\"flow-step\"><div class=\"step-num\">2</div><h4>解读课后报告</h4><p>展示专业度，讲解小朋友表现</p></div>\n          <div class=\"flow-arrow\">→</div>\n          <div class=\"flow-step\"><div class=\"step-num\">3</div><h4>观念强化</h4><p>塑造课程重要性和紧迫感</p></div>\n          <div class=\"flow-arrow\">→</div>\n          <div class=\"flow-step\"><div class=\"step-num\">4</div><h4>课程介绍</h4><p>针对需求介绍课程优势</p></div>\n          <div class=\"flow-arrow\">→</div>\n          <div class=\"flow-step\"><div class=\"step-num\">5</div><h4>学习规划</h4><p>制定个性化学习路径</p></div>\n          <div class=\"flow-arrow\">→</div>\n          <div class=\"flow-step\"><div class=\"step-num\">6</div><h4>报价</h4><p>确认意向，提出方案</p></div>\n          <div class=\"flow-arrow\">→</div>\n          <div class=\"flow-step\"><div class=\"step-num\">7</div><h4>异议处理</h4><p>化解家长疑虑</p></div>\n          <div class=\"flow-arrow\">→</div>\n          <div class=\"flow-step\"><div class=\"step-num\">8</div><h4>关单</h4><p>时机成熟，促进报名</p></div>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🎯 第1步：开场询问感受</div>\n        <p>课后电话开始时，首先要询问家长小朋友上课的感受。不要一上来就推销，要先建立情感连接。</p>\n        <div class=\"highlight-box\" style=\"margin-top:16px;\">\n          <strong>核心要点：</strong>家长和小朋友的感受是第一手反馈，认真聆听并记录，为后续解读报告做铺垫。\n        </div>\n\n        <div style=\"margin-top:24px;padding:20px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:12px;border:2px solid #86efac;\">\n          <div style=\"font-size:16px;font-weight:800;color:#166534;margin-bottom:16px;display:flex;align-items:center;gap:8px;\">\n            <span style=\"display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#22c55e;color:#fff;font-size:14px;\">📞</span>\n            开场询问感受 — 参考话术流程\n          </div>\n\n          <div style=\"position:relative;padding-left:20px;border-left:3px solid #86efac;\">\n\n            <!-- 分支1: 询问是否陪伴 -->\n            <div style=\"position:relative;padding:16px 0 16px 20px;\">\n              <div style=\"position:absolute;left:-9px;top:22px;width:14px;height:14px;border-radius:50%;background:#22c55e;border:3px solid #fff;\"></div>\n              <div style=\"background:#fff;padding:14px 18px;border-radius:10px;border-left:4px solid #22c55e;box-shadow:0 1px 4px rgba(0,0,0,0.06);\">\n                <div style=\"font-weight:700;color:#166534;margin-bottom:6px;\">🔵 询问是否陪伴</div>\n                <p style=\"font-size:13px;line-height:1.8;\">「XX妈妈，我是 VIP THINK 的XX老师，我看到小朋友下课了。刚才上课的时候我都有一直关注，发现XX其实很喜欢我们的课程喔～妈妈有陪着小朋友上课吗？」</p>\n                <p style=\"font-size:13px;line-height:1.8;margin-top:8px;color:#475569;\"><strong>（若已陪伴）</strong>「我在画面里看到妈妈陪着小朋友上课，小朋友上课表现和配合度都很好，也很愿意和老师互动。」</p>\n              </div>\n            </div>\n\n            <!-- 分支2: 询问上课感受 -->\n            <div style=\"position:relative;padding:16px 0 16px 20px;\">\n              <div style=\"position:absolute;left:-9px;top:22px;width:14px;height:14px;border-radius:50%;background:#22c55e;border:3px solid #fff;\"></div>\n              <div style=\"background:#fff;padding:14px 18px;border-radius:10px;border-left:4px solid #22c55e;box-shadow:0 1px 4px rgba(0,0,0,0.06);\">\n                <div style=\"font-weight:700;color:#166534;margin-bottom:6px;\">🟢 询问上课感受</div>\n                <p style=\"font-size:13px;line-height:1.8;\">「妈妈今天觉得小朋友上课怎么样？课程难不难呢？」</p>\n\n                <div style=\"margin-top:10px;padding:10px 14px;background:#f0fdf4;border-radius:8px;font-size:13px;\">\n                  <strong style=\"color:#166534;\">▶ 觉得难：</strong>结合课前问到的基础，分情况回应\n                  <div style=\"margin-top:8px;padding:8px 12px;background:#fff;border-radius:6px;border:1px solid #bbf7d0;\">\n                    <strong>· 零基础：</strong>「因为小朋友之前没有接触过系统的课程，第一次上数学思维课，觉得难是很正常的。不过小朋友今年读XX，面临私中面试／国小评量，现在做一些思维训练，学习相应的数学知识还是很有必要的。」\n                  </div>\n                  <div style=\"margin-top:8px;padding:8px 12px;background:#fff;border-radius:6px;border:1px solid #bbf7d0;\">\n                    <strong>· 有基础：</strong>「其实按照小朋友的年龄，也应该达到这个难度水平了。不过小朋友有基础，可能是第一次上课，对新环境需要时间适应。后续小朋友会有自己的班级、同学和老师，经过一段时间的学习，适应环境就会好很多。继续跟着学习的话，我们还会帮小朋友进行专业的思维能力测评，主要看我们的授课形式小朋友喜不喜欢。」\n                  </div>\n                </div>\n                <div style=\"margin-top:10px;padding:10px 14px;background:#f0fdf4;border-radius:8px;font-size:13px;\">\n                  <strong style=\"color:#166534;\">▶ 觉得不难：</strong>「那说明小朋友的适应能力和学习能力很强。这堂体验课主要是为了让小朋友感受上课形式和课堂氛围，接下来正式跟着学习，会有专业的思维能力测评。」\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📊 第2步：解读课后报告（核心话术）</div>\n        <p>解读课后报告是展示你专业度的最佳时机。以下是标准话术框架：</p>\n        <div class=\"script-block\">\n<strong>【参考话术】</strong><br><br>\n「XX妈妈，刚刚授课老师已经把完整的课后测评报告给了我。等我跟您详细讲解一下XX今天的表现，我们一起看看他的强项和可以进步的地方。在我讲解的过程当中，您有任何疑问或者不理解的地方，您及时跟我说喔，我会针对性地跟您讲解。」<br><br>\n「今天我们上的是S2的课程，这堂课主要是学习分类概念、简单推理，小朋友很愿意配合老师，可以自己动手完成每一个小任务，而且也可以在规定时间内完成；老师讲解了题目之后，小朋友可以自主探索，找出题目的规律，举一反三完成例题2。不过老师说，小朋友的逆向逻辑推理需要加强，有时候会受到颜色的干扰。老师建议小朋友要继续提升逻辑推理能力、表达分析能力以及数感。所以我们建议他可以继续在S2级别学习，打好基础。」\n        </div>\n        <div class=\"highlight-box warning\" style=\"margin-top:16px;\">\n          <strong>⚠️ 注意：</strong>课后 demo 老师会把课堂评价和建议级别，通过 <strong>Line</strong> 私信给对应的 CC。CC 要提前了解小朋友表现，才能专业地和家长沟通。\n        </div>\n        <div class=\"highlight-box success\" style=\"margin-top:16px;\">\n          <strong>💡 解读报告的关键技巧</strong><br>\n          ✅ 先优点后缺点：让家长先听到小朋友的进步，建立信心，再委婉提出可改进方向。<br>\n          ✅ 缺点要具体：「逆向逻辑推理需要加强」比「小朋友还有进步空间」更具体，家长更信服。<br>\n          ✅ 给出学习建议：针对缺点提出明确建议（如「继续在 S2 学习，打好基础」），为后续关单做铺垫。\n        </div>\n      </div>\n      <!-- ====== 报告解读编写练习 ====== -->\n      <div class=\"card\" style=\"border:2px solid #8b5cf6;\">\n        <div class=\"card-title\" style=\"display:flex;align-items:center;gap:8px;\">\n          <span>✍️</span>\n          <span>实战练习：根据案例编写报告解读话术</span>\n        </div>\n        <p style=\"margin-bottom:16px;font-size:14px;\">以下是一位学员的体验课老师反馈。请你<strong>扮演 CC 角色，根据以下信息，撰写一段完整的报告解读话术</strong>（讲给家长听）。要求包含：<strong>提问授权 + 学了什么 + 2-3个优点 + 1个缺点 + 学习建议</strong>。</p>\n\n        <div style=\"background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;margin-bottom:20px;\">\n          <div style=\"font-weight:700;color:#4338ca;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:6px;\">\n            📋 案例资料\n          </div>\n          <div style=\"font-size:13px;line-height:2;color:#374151;\">\n            <div><strong style=\"color:#1e40af;\">学生姓名：</strong>暖暖</div>\n            <div><strong style=\"color:#1e40af;\">基本信息：</strong>性别：女孩　年龄：6岁10个月　年级：国小一年级</div>\n            <div style=\"margin-top:8px;padding-top:8px;border-top:1px dashed #cbd5e1;\">\n              <strong style=\"color:#dc2626;\">📝 体验课老师反馈：</strong><br>\n              <span style=\"color:#4b5563;\"><strong>孩子整体表现：</strong>喜欢课堂，会主动回答问题，专注力OK，理解能力OK，学习态度端正</span><br>\n              <span style=\"color:#4b5563;\"><strong>知识点掌握情况：</strong></span>\n              <ul style=\"padding-left:20px;margin-top:4px;\">\n                <li>环节一排序能完成，能够有序枚举</li>\n                <li>环节二数字枚举也没问题，对于三位数理解的也很好，讲完就知道为什么0不能在最前面了，三位数的读法熟练</li>\n                <li>环节三凑数计算20以内进退位加减法是会的，但还不熟，对于如何枚举凑数不熟练，思路会比较混乱，带领着是能知道下一步如何枚举的，有序思考、分步思考意识需加强，需要多练习巩固</li>\n              </ul>\n            </div>\n          </div>\n        </div>\n\n        <label style=\"font-weight:600;font-size:14px;color:#4338ca;margin-bottom:8px;display:block;\">📝 请在下方输入你的报告解读话术：</label>\n        <textarea id=\"reportWritingInput\" class=\"final-task-input\" placeholder=\"请按照「提问授权 → 学了什么 → 优点 → 缺点 → 学习建议」的结构，撰写给暖暖妈妈的报告解读话术...\" style=\"min-height:200px;\"></textarea>\n        <div class=\"char-counter\"><span id=\"reportWritingCount\">0</span> / 字</div>\n\n        <div class=\"dialogue-actions\">\n          <button class=\"btn\" onclick=\"submitReportWriting()\" id=\"reportWritingBtn\">提交答案 ✨</button>\n        </div>\n\n        <div class=\"ai-feedback-panel\" id=\"reportWritingFeedback\"></div>\n        <div id=\"reportWritingScoreWarning\" style=\"display:none;\"></div>\n      </div>"
+  },
+  {
+    "id": "s2",
+    "title": "观念强化与产品介绍",
+    "duration": "12-15分钟",
+    "icon": "2",
+    "type": "content_quiz",
+    "quizId": "quiz2",
+    "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第二章</span>\n        <h1>观念强化与产品介绍</h1>\n        <span class=\"duration\">⏱ 预估时长：12-15分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🎯 第3步：观念强化 — 塑造重要性和紧迫性</div>\n        <div class=\"script-block\">\n<strong>【参考话术】</strong><br><br>\n「妈妈，刚刚完整跟您说明完这份学习报告，孩子目前的优势、薄弱点都一目了然。其实说到这边，我也想跟妈妈分享一个观念：逻辑思维不是短期冲刺就能补起来的，关键要靠系统化长期培养，妈妈您说是不是？」<br><br>\n「好的，妈妈您提到想帮助小朋友XXXX（衔接国小／稳固校内成绩／锻炼逻辑思维／适应评量考题／参加竞赛），这样我结合我们的课程，跟您详细介绍一下。」\n        </div>\n        <div class=\"highlight-box warning\" style=\"margin-top:16px;\">\n          <strong>⚠️ 关键目的：</strong>让家长意识到「不能再等了」，建立报名的紧迫感。同时，通过了解家长目标，为后续产品介绍定方向。<br>\n          <strong>💡 提示：</strong>如果课前电话没有问到家长想培养孩子什么能力，这边记得补问一下，再结合家长目标介绍课程。\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🏢 第4步：课程介绍 — 公司背景</div>\n        <div class=\"script-block\">\n<strong>【参考话术】</strong><br><br>\n「妈妈，我简单跟您介绍一下我们 VIP THINK。帮孩子选线上课程，机构的规模跟长期办学稳定性一定是首要考量，才能安心让孩子持续学习。」<br><br>\n「我们 VIP THINK 2016 年创立，到现在已经运营满 10 年，学员遍及全球 72 个国家与地区，累计超过 200 万名孩子在这里学习数理思维，完整课程体系经过全球长时间市场验证。」<br><br>\n「课程依照台湾 108 课纲在地化设计，结合国际数理教育理念，采用情境探究、游戏互动的建构式教学，不只提升校内数学成绩，更培养逻辑推理、独立解题的能力，完整衔接国小日常学习。」\n        </div>\n        <div class=\"highlight-box\" style=\"margin-top:16px;\">\n          <strong>💡 介绍要点：</strong>产品介绍并非每一点都要介绍，要根据家长关心的点（需求点／痛点）来介绍，且中途要有互动，不能自己单方面输出。例如：如果课前电话中了解到小朋友计算题是弱项（要数手指、计算慢、准确率低），那在产品介绍环节，就要重点介绍课程内容，以及我们是怎么帮助小朋友提升计算能力的。\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">👩‍🏫 师资介绍</div>\n        <p style=\"margin-bottom:16px;\">「妈妈，我们是全球性品牌，亚太区配有台湾专属师资，所有授课老师、班级课程都是专为台湾孩子量身打造。老师都很熟悉本地口音，很了解台湾小朋友的学习习惯与思考模式，能精准抓住孩子学习痛点，家长可以放心。」</p>\n        <div style=\"display:flex;gap:16px;flex-wrap:wrap;\">\n          <div style=\"flex:1;min-width:250px;background:linear-gradient(135deg,#eff6ff,#dbeafe);padding:20px;border-radius:8px;border-left:4px solid #2563eb;\">\n            <div style=\"font-size:24px;margin-bottom:8px;\">🎓</div>\n            <div style=\"font-weight:700;margin-bottom:8px;\">数理深耕型师资</div>\n            <p style=\"font-size:13px;color:#475569;line-height:1.7;\">深耕数理教学，熟悉国小定期评量、各类数学竞赛的考点与孩子常出错的难点，实战教学经验充足。</p>\n          </div>\n          <div style=\"flex:1;min-width:250px;background:linear-gradient(135deg,#ecfdf5,#d1fae5);padding:20px;border-radius:8px;border-left:4px solid #10b981;\">\n            <div style=\"font-size:24px;margin-bottom:8px;\">🧠</div>\n            <div style=\"font-weight:700;margin-bottom:8px;\">教育、儿童心理背景师资</div>\n            <p style=\"font-size:13px;color:#475569;line-height:1.7;\">具备教育、儿童心理专业背景，擅长引导慢热、内向的低龄孩子，带动课堂氛围。</p>\n          </div>\n        </div>\n        <div class=\"highlight-box\" style=\"margin-top:16px;\">\n          我们会依照孩子性格、学习状况匹配合适老师，授课语言也能自选中文（国语）或英文，在训练逻辑思维的同时，同步锻炼口语能力。\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📚 课程体系与学习效果</div>\n        <div style=\"display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;\">\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;padding:16px;border-radius:8px;text-align:center;\">\n            <div style=\"font-size:28px;font-weight:800;color:#2563eb;\">9</div>\n            <div style=\"font-size:13px;color:#475569;margin-top:4px;\">循序渐进学习阶段</div>\n          </div>\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;padding:16px;border-radius:8px;text-align:center;\">\n            <div style=\"font-size:28px;font-weight:800;color:#10b981;\">100%</div>\n            <div style=\"font-size:13px;color:#475569;margin-top:4px;\">覆盖校内考点</div>\n          </div>\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;padding:16px;border-radius:8px;text-align:center;\">\n            <div style=\"font-size:28px;font-weight:800;color:#f59e0b;\">70/30</div>\n            <div style=\"font-size:13px;color:#475569;margin-top:4px;\">校内 70% + 拓展 30%</div>\n          </div>\n        </div>\n        <p style=\"font-size:14px;line-height:1.8;\">我们课程分为 9 个循序渐进的学习阶段，贴合台湾 108 课纲素养导向，采用建构式教学。不用家长费心规划进度，不会难度过高打击信心，也不会内容太简单浪费学习时间。小朋友学习像闯关一样路径清晰，不靠填鸭背诵，而是透过建构式引导自主思考、层层搭建数理观念，扎实培养数学核心素养。</p>\n        <div class=\"highlight-box success\" style=\"margin-top:16px;\">\n          <strong>📊 内容比例（以 S4 阶段举例）：</strong><br>\n          • 70% 同步校内知识点，完整覆盖所有评量考点，稳固在校成绩<br>\n          • 30% 拓展题型，锻炼逻辑思辨，也为数理竞赛打好底子\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🎮 趣味化课堂与学习体验</div>\n        <div style=\"display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;\">\n          <div style=\"flex:1;min-width:240px;background:#fefce8;padding:18px;border-radius:8px;border-left:4px solid #f59e0b;\">\n            <div style=\"font-size:24px;margin-bottom:8px;\">🎬</div>\n            <div style=\"font-weight:700;margin-bottom:8px;\">动画剧情 + 互动游戏</div>\n            <p style=\"font-size:13px;color:#475569;line-height:1.7;\">知识点融入动画剧情和互动游戏，小朋友从被动填鸭学习变为主动探索，完成任务获得星星奖励，即时正向反馈提升学习动力。</p>\n          </div>\n          <div style=\"flex:1;min-width:240px;background:#eef2ff;padding:18px;border-radius:8px;border-left:4px solid #4338ca;\">\n            <div style=\"font-size:24px;margin-bottom:8px;\">👥</div>\n            <div style=\"font-weight:700;margin-bottom:8px;\">4-6 人小班教学</div>\n            <p style=\"font-size:13px;color:#475569;line-height:1.7;\">每周两堂，每堂 40 分钟。小班的好处是老师可以照顾到每个小朋友，同时又有同伴互动，保持课堂活跃度。</p>\n          </div>\n          <div style=\"flex:1;min-width:240px;background:#f0fdf4;padding:18px;border-radius:8px;border-left:4px solid #10b981;\">\n            <div style=\"font-size:24px;margin-bottom:8px;\">📋</div>\n            <div style=\"font-weight:700;margin-bottom:8px;\">完整学习闭环</div>\n            <p style=\"font-size:13px;color:#475569;line-height:1.7;\">「学 → 练 → 测 → 评」。预习和上课完成知识学习，配套课后练习巩固知识，定期综合检测评估学习情况。</p>\n          </div>\n        </div>\n        <div class=\"highlight-box\" style=\"margin-top:16px;\">\n          <strong>👨‍👩‍👧 课后服务：</strong>正式报名之后，由 3 位老师共同服务 1 位学员——排课老师负责确认小朋友的上课时间；班导老师负责请假、调课以及定期反馈学习情况；授课老师除了授课之外，还可以一对一解答小朋友上课遇到的问题。家长有任何疑问，也可以随时在 <strong>line@</strong> 上跟我们沟通交流。\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">⚡ 产品介绍后 — 排雷</div>\n        <div class=\"highlight-box\" style=\"border-left-color:#7c3aed;\">\n          <strong>排雷的作用：</strong><br>\n          1. 确认家长是否有听进去<br>\n          2. 试探家长意向：有意向的家长会在这个环节主动提问\n        </div>\n        <p style=\"margin-top:12px;font-size:14px;\">排雷是一个「倾听」环节，不是继续推销。透过家长的反馈，判断后续需要重点攻坚的方向。</p>\n      </div>"
+  },
+  {
+    "id": "s3",
+    "title": "学习规划与报价",
+    "duration": "8-10分钟",
+    "icon": "3",
+    "type": "content_quiz",
+    "quizId": "quiz3",
+    "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第三章</span>\n        <h1>学习规划与报价</h1>\n        <span class=\"duration\">⏱ 预估时长：8-10分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🗺️ 第5步：学习规划</div>\n        <p style=\"margin-bottom:16px;\">根据小朋友的年纪、目前程度、家长目标，为小朋友制定个性化学习路径。</p>\n        <div style=\"background:linear-gradient(135deg,#eff6ff,#dbeafe);padding:20px;border-radius:8px;margin:16px 0;\">\n          <div style=\"font-weight:700;margin-bottom:12px;\">📋 学习规划要包含：</div>\n          <ul style=\"padding-left:20px;line-height:2;\">\n            <li>目前程度评估（依据课后报告）</li>\n            <li>推荐起始级别（如 S2）</li>\n            <li>学习路径（如 S2 → S3 → S4...）</li>\n            <li>每周上课频率建议</li>\n            <li>预期学习效果与时间表</li>\n          </ul>\n        </div>\n        <div class=\"highlight-box success\">\n          <strong>💡 技巧：</strong>用「如果现在开始 → 3 个月后 → 6 个月后 → 1 年后」的时间线，让家长看到清晰的学习路径和效果预期。\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">💰 第6步：报价方式</div>\n        <p style=\"margin-bottom:16px;\">报价有两种方式，根据家长反馈灵活选择：</p>\n        <div style=\"display:flex;gap:16px;flex-wrap:wrap;\">\n          <div style=\"flex:1;min-width:250px;background:#f0fdf4;padding:18px;border-radius:8px;border-left:4px solid #10b981;\">\n            <div style=\"font-weight:700;margin-bottom:8px;\">方式一：正报</div>\n            <p style=\"font-size:13px;color:#475569;line-height:1.7;\">直接根据家长需求，给出完整的课程方案和价格。<br><strong>适用情况：</strong>家长意向明确，已经认可课程价值。<br><br><strong>话术示例：</strong>「妈妈，根据XX目前的程度，我建议报 48 堂课的方案，可以学习约 6 个月，价格是 XXXX 元（台币），现在还有优惠活动...」</p>\n          </div>\n          <div style=\"flex:1;min-width:250px;background:#eff6ff;padding:18px;border-radius:8px;border-left:4px solid #2563eb;\">\n            <div style=\"font-weight:700;margin-bottom:8px;\">方式二：反推</div>\n            <p style=\"font-size:13px;color:#475569;line-height:1.7;\">先了解家长预算，再根据预算推荐合适的课包。<br><strong>适用情况：</strong>家长对价格敏感，或之前提到预算有限。<br><br><strong>话术示例：</strong>「妈妈，您目前的预算大概是多少呢？我帮您看看哪个课包最合适...」</p>\n          </div>\n        </div>\n        <div class=\"highlight-box warning\" style=\"margin-top:16px;\">\n          <strong>⚠️ 报价注意事项：</strong><br>\n          1. 报价前要确认家长已经认可课程价值（通过排雷环节判断）<br>\n          2. 报价时要同时提及优惠活动，增加成交动力<br>\n          3. 如果家长当场没决定，不要施加过大压力，进入异议处理环节\n        </div>\n      </div>"
+  },
+  {
+    "id": "s4",
+    "title": "异议处理实战",
+    "duration": "15-20分钟",
+    "icon": "4",
+    "type": "content_chart_dialogue",
+    "quizId": "quiz4_dialogue",
+    "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第四章</span>\n        <h1>异议处理实战</h1>\n        <span class=\"duration\">⏱ 预估时长：15-20分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🤔 异议处理核心思路</div>\n        <div class=\"highlight-box\" style=\"border-left-color:#7c3aed;\">\n          <strong>核心认知：</strong>当家长说「我再考虑下」「要和家人商量」「迟些再回复你」时，切勿简单回应「好啊，等你消息」。「我再考虑一下」不是一个结果，而是一个信号——它通常意味着家长的顾虑未被完全解决、价值感知不足，或缺乏紧迫感。我们的目标不是「逼单」，而是帮助家长完成决策所需的心理过程。\n        </div>\n        <div style=\"background:#f5f3ff;padding:20px;border-radius:8px;margin:16px 0;\">\n          <div style=\"font-weight:700;font-size:16px;color:#7c3aed;margin-bottom:12px;\">🗣️ 沟通方式：YES…BUT…</div>\n          <p style=\"font-size:14px;line-height:1.9;\">一定要先表示你的理解，不要直接驳斥家长的想法，不同的观点会消磨你们之间的好感。<br>\n          <strong>YES：</strong>「我完全理解您的想法…」　→　先共情<br>\n          <strong>BUT：</strong>「不过，从专业角度…」　→　再引导</p>\n        </div>\n        <div style=\"display:flex;gap:12px;flex-wrap:wrap;\">\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;border-radius:8px;padding:14px;border:1px solid #e2e8f0;\">\n            <div style=\"font-weight:700;color:#4338ca;margin-bottom:6px;\">第一步：搞清楚考虑什么</div>\n            <p style=\"font-size:12px;color:#475569;line-height:1.7;\">将模糊的「考虑」具体化为可讨论的议题（价格、效果、时间等）。<br><br>「完全理解，帮孩子选课程真是要慎重。为了帮您考虑得更周全，可以跟我分享下，您目前最想『考虑』或『比较』的主要是哪一方面呢？是课程时间安排、效果，还是其它因素？这样我可以提供更准确的信息给您。」</p>\n          </div>\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;border-radius:8px;padding:14px;border:1px solid #e2e8f0;\">\n            <div style=\"font-weight:700;color:#4338ca;margin-bottom:6px;\">第二步：搞清楚谁说了算</div>\n            <p style=\"font-size:12px;color:#475569;line-height:1.7;\">了解决策结构和核心决策标准，为后续提供针对性信息铺垫。<br><br>「明白，和家人商量是应该的。一般来说，您和先生最看重哪几个方面？比如小朋友的兴趣还是 CP 值方面？我整理份重点资料给您，等您商量的时候可以更清晰。」</p>\n          </div>\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;border-radius:8px;padding:14px;border:1px solid #e2e8f0;\">\n            <div style=\"font-weight:700;color:#4338ca;margin-bottom:6px;\">第三步：假设问题解决</div>\n            <p style=\"font-size:12px;color:#475569;line-height:1.7;\">假设问题解决了，家长是否会买单，从而判断是真实原因还是借口。<br><br>「妈妈，如果我们可以解决您最担心的那个问题，是不是您就会比较容易作出决定呢？例如：这样如果先生同意，是不是就会继续学习呀？」</p>\n          </div>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">💬 七大常见异议及应对话术</div>\n        <p style=\"margin-bottom:16px;font-size:14px;\">以下按台湾实际服务场景整理，CC 需先归类异议类型，再套用对应思路与话术：</p>\n\n        <div style=\"background:#fef2f2;border-left:4px solid #ef4444;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#991b1b;margin-bottom:8px;\">异议1️⃣ 看到简体字 / 公司是广州（信任类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            「妈妈，因为我们是环球企业，有新加坡、美国、澳洲等地区，所以界面会有简体字、英文、繁体，这是很正常的。」<br>\n            「我们这边是专门负责台湾学员的，台湾是我们重要的服务地区，班级专为台湾学生量身打造，教学内容妈妈不用担心，VIP THINK 的课程内容不仅 100% 覆盖台湾校内考点，还有思维拓展的内容。」<br>\n            「如果您看到公司地址是广州，是因为我们也有大量的大陆学员，其实我们的学员遍布全球，公司总部是在香港喔，台湾也有我们的公司，您也可以看我们公司的 Google Maps 资讯。」<br>\n            「支付方式我们支持卡支付（Visa／MasterCard 等）和 AFTEE 分期。虽然是美金付款页面，但您付款的时候是按照台币计算的，请放心。」\n          </p>\n        </div>\n\n        <div style=\"background:#fffbeb;border-left:4px solid #f59e0b;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#92400e;margin-bottom:8px;\">异议2️⃣ 我需要和先生商量（决策人问题）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>尊重先生想法，但引导妈妈拿主意——日常辅导多是妈妈负责，先生不了解孩子学习状况；可提议致电给先生完整介绍。<br>\n            「了解，肯定要尊重先生的想法。不过其实更建议您拿主意，平常大多是妈妈在负责盯孩子功课，先生很少参与辅导。报这个课程不只是帮孩子减轻学习压力，更是帮您分担重担。很多爸爸只看重最后成绩，却不清楚分数不会凭空提升，还是需要您来做决定。」<br>\n            「之前聊天您也说过，孩子数学一直是您在带。先生没有陪同孩子上过课，并不清楚孩子真实的学习状况，全程都是我跟您对接沟通，您去问先生，他其实没有概念，说到底这件事还是得您来判断。依照您对先生的了解，您觉得他会愿意支持孩子加强数理思维吗？」<br>\n            「妈妈，不妨给小朋友一个体验的机会。如果今天是先生单独带孩子上课，回头突然跟您说要报名课程、要支出一笔费用，您一时也很难马上认同。不如先让孩子正式上课体验，先生亲眼看到上课效果会更直观。现在报名也不会立刻开课，教务老师还要安排班级，我可以先帮您登记入学资料，您有看到我在 Line 上传给您的连结吗？点开就能核对相关资讯。」<br>\n            <strong>（对方坚持要和先生沟通）</strong>「当然我也明白，您确实需要和先生好好讨论。不过学习规划这种专业的事交给专业团队最稳妥。您方便说一下先生晚上几点回家吗？到时候我致电过去，当面跟你们两位完整介绍课程内容，先生有任何疑问也能直接问我。不管最后要不要报名，先完整了解整套课程体系，也方便您和先生多方比较、挑选适合孩子的学习方案。」\n          </p>\n        </div>\n\n        <div style=\"background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#1e40af;margin-bottom:8px;\">异议3️⃣ 孩子说不喜欢 / 不想学（教育理念类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>用课堂表现佐证 + 家长引导责任 + 108 课纲升学压力 + 黄金启蒙期。<br>\n            「妈妈，其实刚刚体验课整堂课下来，小朋友很投入，全程都愿意跟着老师动脑，专注力也很在线，上课态度很积极耶。想请问妈妈为什么会觉得小朋友不喜欢上数学呢？」<br>\n            （听完后）「嗯嗯，我完全懂您的想法。XX妈妈，您愿意尊重小朋友的感受，看得出来您真的很用心在为孩子着想。不过小朋友年纪还小，很多长远的规划还是需要家长帮忙把关、做决定。就像小朋友本来都爱零食、不爱正餐，但我们身为家长，都清楚要多让孩子吃青菜、少吃油炸，才对身体好。」<br>\n            「学习也是一样的道理，没有小朋友天生就爱念书、爱考试。但现在 108 课纲重视长期思维能力，小朋友国小把数学逻辑打底，国中、高中在校排名才稳，未来才有机会靠繁星推荐挤进国立名校。而且小朋友越往上念，校内课业压力只会越来越重，之后安亲班、补习时间全部挤在一起，很难再腾出完整时段打底数学思维，现在刚好是黄金启蒙期。」<br>\n            「趁现在刚好合适，我们先帮孩子把学习规划定下来，我现在立刻帮您预留体验优惠名额，您看可以吗？」\n          </p>\n        </div>\n\n        <div style=\"background:#f0fdf4;border-left:4px solid #10b981;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#065f46;margin-bottom:8px;\">异议4️⃣ 不着急学习 / 小朋友年纪小（教育理念类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>3-6 岁大脑黄金期科学依据 + 私中面试准备 + 24 小时优惠紧迫感。<br>\n            「理解您的想法，XX妈妈，您担心小朋友年纪小，但是小朋友这个年龄反而是他学习数学的一个优势。您知道吗，在数学的课堂上，年龄越小的小朋友思维能力提升的速度就越快。」<br>\n            「妈妈，3 到 6 岁是小朋友大脑快速发育的黄金阶段，又是培养思维能力的关键时期。这个阶段，小朋友的大脑神经元快速增生并且形成联结，达到顶峰。当小朋友受到足够的思维训练刺激，神经元处理资讯的速度会越来越快，6 岁时大脑的发育程度已经达到成人的 70%。但是，一旦超过 6 岁，神经元的增长就会减慢。所以，3 到 6 岁是开发小朋友数学思维的关键期，错过这个黄金时段，效果可能就会差很多了。」<br>\n            「除此之外，如果孩子想进比较优质的国中，私中的面试环节也会出数学相关题目，像是基础运算、分类逻辑这类题型。不少家长都会提前带孩子练习、做面试备考，经过训练和完全没练习过的孩子，面试时的表现差距会非常大。」<br>\n            「现在我们试听后 24 小时内报名还可以享受XXXX（赠送课时）优惠，我现在帮您办理入学手续，您是用信用卡支付吗？」\n          </p>\n        </div>\n\n        <div style=\"background:#fefce8;border-left:4px solid #eab308;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#854d0e;margin-bottom:8px;\">异议5️⃣ 价格太贵 / 我还要考虑（价格类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>回归价值 + 重要性——教育选大品牌、CP 值高、早学早进步。<br>\n            「妈妈，我真的懂赚钱辛苦，但我们这个课程 CP 值真的很高。平常小朋友要用的东西，太便宜的您一定不敢买，就像奶粉、尿布我们都会选大品牌，图个安心。教育本来就有价格区间，给小朋友上的课千万别贪便宜，要是内容浅、学不到东西，白白浪费孩子宝贵的童年时间。我们全台累计超过五十万付费学员，就是靠好口碑，孩子爱上、也真的学到东西。」<br>\n            「XX妈妈，您相信我，越早打底进步越快，等到落后再补只会让孩子压力更大。我们大人工作，无非就是希望小孩读书可以轻松一点，您一定也不想每天陪写作业鸡飞狗跳吧？专业的事交给专业团队处理最合适。我们课程完整覆盖国小校内考点，额外再加逻辑思维拓展内容，成绩稳定往上走，孩子自信心也会大幅提升。」<br>\n            「我们先报 48 堂课的方案，连结我刚传给您，您点开确认金额无误，直接透过连结付款就可以囉。」\n          </p>\n        </div>\n\n        <div style=\"background:#f5f3ff;border-left:4px solid #8b5cf6;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#6d28d9;margin-bottom:8px;\">异议6️⃣ 视力不好，不想上在线课（视力类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>护眼设计（护眼模式／40 分钟课时／护眼操）+ 3C 价值观引导 + AFTEE 分期。<br>\n            「特别理解您的顾虑，我很多家长报名前都会有这个顾虑，所以我们学生端本身设计了护眼模式，可以调整上课屏幕的亮度跟色彩，调到孩子看着最舒服的状态。」<br>\n            「每节课时间设计在 40 分钟，一方面符合小朋友的注意力习惯，也是从保护孩子的视力出发的。另外我们还设计了一套护眼操，孩子上完课就可以做一下眼保健操，让眼睛休息休息。」<br>\n            「不过您想啊，现在是科技教育时代，3C 设备作为学习工具这件事是避免不了的。所以要减少小朋友接触电子设备的时间，一定要减少在对小朋友有害的事情上面，比如减少看动画片、玩游戏的时间。我们的课程一节就是 40 分钟，但这 40 分钟带给小朋友的知识、技能、甚至成就感，都远远大于动画片、游戏的价值。如果可以把 3C 变成他最好的学习伴侣，而不是玩游戏的工具，这其实就是我们额外的收获。」<br>\n            「小朋友的价值观是我们大人引导出来的！我跟您一起，帮小朋友建立一个好的学习习惯，可以令他终身受益。我帮小朋友办理入学手续，之后帮他做详细的学习规划，可以分期付款喔，还支持 AFTEE。」\n          </p>\n        </div>\n\n        <div style=\"background:#ecfeff;border-left:4px solid #06b6d4;border-radius:8px;padding:16px;\">\n          <div style=\"font-weight:700;color:#155e75;margin-bottom:8px;\">异议7️⃣ 一次买太多 / 想分期（付款方式类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>先探询真实顾虑（担心坚持不了／看不到效果／太忙），再分情况回应；坚持分期 → 推荐试学班或 AFTEE。<br>\n            「明白的，妈妈，您是不是有些担心小朋友坚持不了啊？」<br>\n            <strong>· 情况1 对数学不感兴趣：</strong>「您完全不用担心，VIP THINK 的课程是游戏化教学，跟传统填鸭式的教学方法不同，不是一味做题目、套公式，课程里面有很多趣味化的设计，可以提升小朋友的学习兴趣。而且我们引进了小朋友喜欢的动画人物，会陪着小朋友一起思考、探索、解决问题。很多小朋友课程结束都不肯下线，所以完全不用担心他会对我们的课程不感兴趣。」<br>\n            <strong>· 情况2 看不到效果：</strong>「在课程内容设计上，我们课程 100% 覆盖校内考点，会比校内进度快 2 个月，小朋友还会学到很多学校里面学不了的解题技巧。很多小朋友家长跟我反映，学一段时间之后，计算速度和准确率都有提升，遇到应用题也可以轻松应对，成绩都进步很多。」<br>\n            <strong>· 情况3 太忙、兴趣班多：</strong>「现在小朋友都很忙，我很多学生都有 3-4 个兴趣班。我们课程按照小朋友的时间安排就可以了，可以选择的上课时间非常灵活，每天都有课，您将小朋友的空闲时间发给我，我来帮他安排，后面上课就和其他兴趣班一样，固定时间学习就可以了。」<br>\n            <strong>（不是担心坚持，只是不想一次买太多）</strong>「明白，这样妈妈可以选择试学班，可以学 4 个月，一来可以看到小朋友的学习效果，二来又不用一次买这么多课。或者妈妈也可以选择 AFTEE，可以分三期，没有手续费。」\n          </p>\n        </div>\n      </div>"
+  },
+  {
+    "id": "s5",
+    "title": "关单技巧与成交",
+    "duration": "10-12分钟",
+    "icon": "5",
+    "type": "content_quiz",
+    "quizId": "quiz5",
+    "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第五章</span>\n        <h1>关单技巧与成交</h1>\n        <span class=\"duration\">⏱ 预估时长：10-12分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🎯 关单的核心认知</div>\n        <div class=\"highlight-box\" style=\"border-left-color:#7c3aed;\">\n          <strong>⚠️ 关单是在时机成熟的时候，而不是固定在哪个流程中。</strong><br>\n          前几轮「软关」，多轮后「硬关」。<br>\n          关单应该是随时随地多次的心理暗示传递。<br>\n          黄金关单 48 小时：课前做好挖需，课后顺水推舟，用和家长同频的方式去沟通。\n        </div>\n        <div style=\"background:#f5f3ff;padding:20px;border-radius:8px;margin-top:16px;\">\n          <div style=\"font-weight:700;font-size:15px;color:#7c3aed;margin-bottom:8px;\">🏆 最后的胜利是给坚持的人！</div>\n          <p style=\"font-size:14px;line-height:1.8;\">关单不是一次就成功的，需要多次尝试、多种方法组合使用。不要因为家长一次拒绝就放弃。</p>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">💡 五种关单方法</div>\n        <div style=\"display:flex;flex-direction:column;gap:14px;\">\n\n          <div style=\"background:#f0fdf4;border-left:4px solid #10b981;border-radius:8px;padding:16px;\">\n            <div style=\"font-weight:700;color:#065f46;margin-bottom:6px;\">方法1️⃣ 假设关单法</div>\n            <p style=\"font-size:13px;color:#475569;margin-bottom:8px;\"><strong>目的：</strong>直接将客户带入成交阶段，减少客户的心理压力，形成良好的销售气氛。</p>\n            <div class=\"script-block\"><strong>话术：</strong>「我们有很多上课时间可以选择，下午跟晚上也可以上课，小朋友倾向下午还是晚上上课呀？」</div>\n            <p style=\"font-size:12px;color:#94a3b8;margin-top:6px;\">直接问上课时间，假设家长已经决定报名，跳过「是否报名」，直接进入「如何报名」的细节。</p>\n          </div>\n\n          <div style=\"background:#fefce8;border-left:4px solid #f59e0b;border-radius:8px;padding:16px;\">\n            <div style=\"font-weight:700;color:#92400e;margin-bottom:6px;\">方法2️⃣ 优惠关单法</div>\n            <p style=\"font-size:13px;color:#475569;margin-bottom:8px;\"><strong>目的：</strong>通过优惠让家长有紧迫性。</p>\n            <div class=\"script-block\"><strong>话术：</strong>「现在 108 课纲特别看重数学逻辑思维，不再只靠死记计算，国小低年级就大量融入生活化素养题型，私中面试更是把逻辑题当成核心门槛，现在家长都看得很远，很多小朋友 4、5 岁就提前打底思维能力。现在我们体验课专属优惠名额剩最后 3 个，近期有规划的家长几乎都在抢名额，我这边可以先帮您锁定优惠名额吗？」</div>\n            <p style=\"font-size:12px;color:#94a3b8;margin-top:6px;\">利用「名额有限」制造紧迫感，促使家长尽快做决定。</p>\n          </div>\n\n          <div style=\"background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;padding:16px;\">\n            <div style=\"font-weight:700;color:#1e40af;margin-bottom:6px;\">方法3️⃣ 直接关单法</div>\n            <p style=\"font-size:13px;color:#475569;margin-bottom:8px;\"><strong>目的：</strong>帮助客户尽快做决定。</p>\n            <div class=\"script-block\"><strong>话术：</strong>「刚刚跟您聊这么久，我看得出来您对我们的课程、老师都很认同，那我们今天就直接帮小朋友把学习名额先保留下来，先报 48 堂课时的方案最适合现阶段打底。我等下把缴费连结传到您 Line，您可以点开确认金额没问题，直接用卡支付完成报名囉。」</div>\n            <p style=\"font-size:12px;color:#94a3b8;margin-top:6px;\">适用于家长已经表现出明确的购买意向，不需要再绕弯子。</p>\n          </div>\n\n          <div style=\"background:#f5f3ff;border-left:4px solid #8b5cf6;border-radius:8px;padding:16px;\">\n            <div style=\"font-weight:700;color:#6d28d9;margin-bottom:6px;\">方法4️⃣ 衡量关单法</div>\n            <p style=\"font-size:13px;color:#475569;margin-bottom:8px;\"><strong>目的：</strong>给家长算账，让家长看到小朋友学完之后的收获。</p>\n            <div class=\"script-block\"><strong>话术：</strong>「您看这份 Sx 完整课程规划，内容对应 108 课纲校内知识点。我们课程除了校内必学内容，额外再加大量素养思维拓展题型，刚好补足现在学校课堂练不够的逻辑题。再给您看我之前带的学生案例，一开始算数字还要掰手指头，扎扎实实上满一年，不只校内数学成绩稳定前段，还去参加思维竞赛拿到奖项。孩子越早启动规划，越早把数学底子打稳、分数拉上来。现在越早开课效益越好，妈妈您看要不要直接帮小朋友办理入学登记？」</div>\n            <p style=\"font-size:12px;color:#94a3b8;margin-top:6px;\">用「看得见的效果」说服家长，而不是只讲「课程好」。</p>\n          </div>\n\n          <div style=\"background:#fef2f2;border-left:4px solid #ef4444;border-radius:8px;padding:16px;\">\n            <div style=\"font-weight:700;color:#991b1b;margin-bottom:6px;\">方法5️⃣ 保障关单法</div>\n            <p style=\"font-size:13px;color:#475569;margin-bottom:8px;\"><strong>目的：</strong>通过「随时可以退费 + 按平均价格扣课时费」给家长吃个定心丸。</p>\n            <div class=\"script-block\"><strong>话术：</strong>「其实跟您聊了这么多，小朋友的情况我都很清楚，目前最好的方案都给到您了，我们目前的名额确实不多了。况且我们的课程有 4 堂无忧试学保障，如果前 4 堂课上完不满意，可以全额退给您。建议妈妈可以用现在的优惠帮小朋友报名，先学起来，最主要是小朋友可以多学些知识，解决小朋友数学学习的问题。」</div>\n            <p style=\"font-size:12px;color:#94a3b8;margin-top:6px;\"><strong>⚠️ 不到万不得已，不要用退费促单！</strong>使用保障关单法是为了解除家长的后顾之忧，而不是威胁。</p>\n          </div>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📋 关单方法速查表</div>\n        <table style=\"width:100%;border-collapse:collapse;font-size:13px;\">\n          <thead>\n            <tr style=\"background:#f1f5f9;\">\n              <th style=\"padding:10px;border:1px solid #e2e8f0;text-align:left;\">方法</th>\n              <th style=\"padding:10px;border:1px solid #e2e8f0;text-align:left;\">适用场景</th>\n              <th style=\"padding:10px;border:1px solid #e2e8f0;text-align:left;\">关键话术</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr><td style=\"padding:10px;border:1px solid #e2e8f0;\">假设关单</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">家长意向明确，但犹豫</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">「小朋友倾向下午还是晚上上课呀？」</td></tr>\n            <tr style=\"background:#f8fafc;\"><td style=\"padding:10px;border:1px solid #e2e8f0;\">优惠关单</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">家长在犹豫，需要推一把</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">「优惠名额只剩 3 个，我帮您锁定一个」</td></tr>\n            <tr><td style=\"padding:10px;border:1px solid #e2e8f0;\">直接关单</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">家长已经满意，只差最后一推</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">「我们今天就帮小朋友把名额保留下来」</td></tr>\n            <tr style=\"background:#f8fafc;\"><td style=\"padding:10px;border:1px solid #e2e8f0;\">衡量关单</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">家长对效果有疑虑</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">「给您看小朋友学完 Sx 的收获」</td></tr>\n            <tr><td style=\"padding:10px;border:1px solid #e2e8f0;\">保障关单</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">家长担心效果／风险</td><td style=\"padding:10px;border:1px solid #e2e8f0;\">「前 4 堂不满意，可以全额退」</td></tr>\n          </tbody>\n        </table>\n      </div>"
+  },
+  {
+    "id": "s6",
+    "title": "成交后跟进",
+    "duration": "8-10分钟",
+    "icon": "6",
+    "type": "content",
+    "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第六章</span>\n        <h1>成交后跟进</h1>\n        <span class=\"duration\">⏱ 预估时长：8-10分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🎉 成交后的定心丸</div>\n        <div class=\"script-block\">\n<strong>【参考话术】</strong><br><br>\n「恭喜妈妈！XX正式成为我们 VIP THINK 的学员了！我传您对应的老师的 line@，妈妈可以先添加，很快会有老师跟您确认正式上课时间，也安排入学前的定级测评。」<br><br>\n「还有呀妈妈，现在报名还有个打卡赠课活动：您稍后可以 po 一张XX的专属海报到 FB／IG 等等社交软体，24 小时后截图上传到家长端，我们就会送 8000 豌豆币，可以兑换正式课！之后每个星期打卡一次，都有奖励，8000 豌豆币就可以换一堂。记得做呀！」<br><br>\n「再次谢谢妈妈您的信任！我们很有信心XX会在这里玩得开心、学得进步。如果有任何问题，随时在 Line 上跟我们说，我们都会协助您处理！祝您和XX有个愉快的晚上，下次课上见！」\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📋 成交后的完整流程</div>\n        <div class=\"flow-steps\">\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">1</div>\n            <h4>给予鼓励和信心</h4>\n            <p>恭喜家长，表达对小朋友学习的信心</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">2</div>\n            <h4>确认并完善客户资料</h4>\n            <p>在后台写好跟进记录、注意事项</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">3</div>\n            <h4>引入班导概念</h4>\n            <p>突显服务质素，让家长感受到专业</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">4</div>\n            <h4>介绍转介绍活动</h4>\n            <p>打卡赠课，鼓励分享 FB／IG 动态</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">5</div>\n            <h4>发送入学指南</h4>\n            <p>24小时内必须发，否则会触犯质检</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">6</div>\n            <h4>发送课时确认函</h4>\n            <p>对应购买的课包版本，24小时内必须发</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">7</div>\n            <h4>发送打卡教程</h4>\n            <p>解释打卡的意义，提供一键生成工具</p>\n          </div>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📖 发送入学指南</div>\n        <div class=\"highlight-box warning\">\n          <strong>⚠️ 重要规则：</strong><br>\n          • 不同课包的入学指南不同，注意发送家长购买的对应版本<br>\n          • <strong>24小时内必须发</strong>，否则会触犯质检<br>\n          • 发送后要在后台记录，方便后续跟进\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🧾 发送课时确认函</div>\n        <div class=\"highlight-box warning\">\n          <strong>⚠️ 重要规则：</strong><br>\n          • 根据不同课包，发送家长购买的对应版本<br>\n          • <strong>24小时内必须发</strong>，否则会触犯质检\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📱 发送打卡教程</div>\n        <p style=\"margin-bottom:12px;\">部分家长可能对打卡有抵触，需要耐心解释：</p>\n        <div class=\"script-block\">\n<strong>【应对话术】</strong><br><br>\n「我理解，打卡真的很简单的，VIP THINK 80% 的学员其实都是转介绍来的，当然口碑也是可以的，所以这个分享赠课也是额外给到您的福利喔。分享打卡也是记录小朋友的成长呢，希望您能谅解，后续我也会每个礼拜提醒您的，图片和文案都是一键生成的，非常简单，1 分钟就搞定了。」\n        </div>\n        <div class=\"highlight-box success\" style=\"margin-top:16px;\">\n          <strong>✅ 关键要点：</strong>解释打卡的价值（记录成长 + 获得奖励），并强调操作简单（一键生成），减少家长的抗拒感。\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🏆 终极考核</div>\n        <p style=\"margin-bottom:16px;\">恭喜你来到最后一章！<b>终极考核为自由对话模式</b>，你将以 CC 身份与 AI 家长通话，系统会根据你的综合表现（流程、准确、亲和、覆盖）由 AI 评分官评分。覆盖 8 个话题流程即可提交结束。</p>\n        <div class=\"final-task-container\" id=\"finalTaskContainer\">\n          <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:12px;\">\n            <span style=\"font-size:24px;\">🏆</span>\n            <h3 style=\"font-size:16px;font-weight:700;\">终极考核：CC 课后电话自由对话</h3>\n          </div>\n\n          <!-- Scenario banner -->\n          <div id=\"finalScenarioBanner\" class=\"dialogue-scenario\" style=\"margin-bottom:16px;\">\n            <strong>📋 场景：</strong>你是 CC，今天小朋友（暖暖）完成了 S2 体验课。课后报告显示：小朋友互动积极，可以完成基础题目，但逆向推理需要加强。家长（暖暖妈妈）可能会混合提出多个异议。<br><br>\n            <strong>📞 点击「开始通话」后，AI 家长将接通，你自由应对即可。</strong>\n          </div>\n\n          <!-- 话题标签（动态高亮） -->\n          <div id=\"finalTopicsBar\" style=\"display:none;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px;\"></div>\n\n          <!-- 对话轮数 + 当前话题 -->\n          <div id=\"finalMetaBar\" style=\"display:none;background:#eff6ff;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;\">\n            <span style=\"color:#2563eb;font-weight:600;\">📞 对话轮数：<b id=\"finalExchangeCount\">0</b></span>\n            <span style=\"color:#64748b;font-size:12px;\">📍 当前话题：<b id=\"finalCurrentTopic\">-</b></span>\n          </div>\n\n          <!-- Chat history -->\n          <div id=\"finalChatHistory\" class=\"chat-history\" style=\"display:none;flex-direction:column;gap:12px;margin-bottom:16px;max-height:420px;overflow-y:auto;padding:12px;background:#fafbfc;border-radius:12px;border:1px solid #e8ecf0;\">\n            <div style=\"text-align:center;color:var(--text-secondary);padding:20px;font-size:13px;\">👇 点击「开始通话」开始 CC 课后电话模拟</div>\n          </div>\n\n          <!-- Input area -->\n          <div id=\"finalInputArea\" style=\"display:none;\">\n            <textarea class=\"reply-input\" id=\"finalDialogueInput\" placeholder=\"输入你的回应话术...（Ctrl+Enter 发送）\" style=\"min-height:100px;\" rows=\"3\"></textarea>\n            <div class=\"dialogue-actions\" style=\"margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;\">\n              <button class=\"btn\" id=\"finalSubmitDialogueBtn\" onclick=\"submitFinalMessage()\">📤 发送回应</button>\n              <button class=\"btn\" id=\"finalEndBtn\" onclick=\"endFinalConversation()\" style=\"display:none;background:var(--accent);\">🏁 结束对话 & AI 评分</button>\n              <button class=\"btn btn-outline\" onclick=\"resetFinalDialogue()\">🔄 重新开始</button>\n            </div>\n            <div id=\"finalTypingIndicator\" style=\"display:none;margin-top:8px;padding:6px 12px;background:#f1f5f9;border-radius:6px;font-size:12px;color:#64748b;font-style:italic;\">\n              <span style=\"display:inline-block;animation:blink 1.2s infinite;\">●●●</span> AI 家长正在思考回应...\n            </div>\n          </div>\n\n          <!-- Start button -->\n          <div id=\"finalStartArea\" style=\"text-align:center;padding:20px;\">\n            <button class=\"btn\" onclick=\"startFinalExam()\" style=\"font-size:16px;padding:14px 32px;\">📞 开始通话</button>\n          </div>\n\n          <!-- Final feedback (AI 评分结果) -->\n          <div id=\"finalSummaryArea\" class=\"ai-feedback-panel\" style=\"display:none;\"></div>\n        </div>\n      </div>"
+  }
+]
+};
+
+const quizzes = {
+  "quiz1": {
+    "quizId": "quiz1",
+    "question": "课后报告解读的标准话术结构是什么？",
+    "options": [
+      {
+        "label": "A",
+        "text": "提问授权 + 学了什么 + 2-3个优点 + 1个缺点 + 学习建议"
+      },
+      {
+        "label": "B",
+        "text": "寒暄 → 报价 → 关单"
+      },
+      {
+        "label": "C",
+        "text": "询问感受 → 产品介绍 → 异议处理"
+      },
+      {
+        "label": "D",
+        "text": "开场 → 互动 → 总结"
+      }
+    ],
+    "correct": 0,
+    "feedback_correct": "✅ <strong>正确！</strong>课后报告解读的标准结构是：提问授权 → 学了什么 → 2-3个优点 → 1个缺点 → 学习建议。先讲优点建立信心，再委婉提出改进方向，最后给出学习建议，为关单做铺垫。",
+    "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是A。课后报告解读的标准结构是：提问授权 → 学了什么 → 2-3个优点 → 1个缺点 → 学习建议。请返回第一章重温话术框架。"
+  },
+  "quiz2": {
+    "quizId": "quiz2",
+    "question": "产品介绍环节最重要的原则是什么？",
+    "options": [
+      {
+        "label": "A",
+        "text": "把所有产品卖点全部讲完"
+      },
+      {
+        "label": "B",
+        "text": "根据家长关心的点（需求点/痛点）来介绍，且中途要有互动"
+      },
+      {
+        "label": "C",
+        "text": "只介绍公司背景即可"
+      },
+      {
+        "label": "D",
+        "text": "按照PPT顺序逐页朗读"
+      }
+    ],
+    "correct": 1,
+    "feedback_correct": "✅ <strong>正确！</strong>产品介绍并非每一点都要介绍，要根据家长关心的点（需求点/痛点）来介绍，且中途要有互动，不能自己单方面输出。这样才能让家长感受到针对性服务。",
+    "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是B。产品介绍要针对家长关心的点来介绍，不是把所有内容都讲一遍。单方面输出会让家长失去兴趣。"
+  },
+  "quiz3": {
+    "quizId": "quiz3",
+    "question": "报价的两种方式是什么？",
+    "options": [
+      {
+        "label": "A",
+        "text": "正报和反推"
+      },
+      {
+        "label": "B",
+        "text": "高报和低报"
+      },
+      {
+        "label": "C",
+        "text": "直接报和间接报"
+      },
+      {
+        "label": "D",
+        "text": "单价报和总价报"
+      }
+    ],
+    "correct": 0,
+    "feedback_correct": "✅ <strong>正确！</strong>报价有两种方式：<strong>正报</strong>（直接根据需求给方案和价格）和<strong>反推</strong>（先了解预算，再根据预算推荐合适课包）。要根据家长情况灵活选择。",
+    "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是A。报价的两种方式是「正报」和「反推」，请重温第三章报价方式的内容。"
+  },
+  "quiz4": {
+    "quizId": "quiz4",
+    "question": "异议处理时应该使用什么沟通方式？",
+    "options": [
+      {
+        "label": "A",
+        "text": "直接驳斥家长的想法"
+      },
+      {
+        "label": "B",
+        "text": "用 YES…BUT… 的沟通方式，先表示理解"
+      },
+      {
+        "label": "C",
+        "text": "忽略家长的异议直接关单"
+      },
+      {
+        "label": "D",
+        "text": "同意家长所有观点"
+      }
+    ],
+    "correct": 1,
+    "feedback_correct": "✅ <strong>正确！</strong>异议处理要用 YES…BUT… 的沟通方式，一定要先表示理解，不要直接驳斥家长的想法。不同的观点会消磨你们之间的好感。先共情，再引导，是处理异议的核心技巧。",
+    "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是B。直接驳斥或忽略异议都会让家长反感。要先表示理解（YES），再引出你的观点（BUT）。"
+  },
+  "quiz5": {
+    "quizId": "quiz5",
+    "question": "关单的正确时机是什么？",
+    "options": [
+      {
+        "label": "A",
+        "text": "固定在流程的某个环节"
+      },
+      {
+        "label": "B",
+        "text": "时机成熟的时候，而不是固定在哪个流程中"
+      },
+      {
+        "label": "C",
+        "text": "只能在最后一轮沟通时"
+      },
+      {
+        "label": "D",
+        "text": "必须等家长主动提出"
+      }
+    ],
+    "correct": 1,
+    "feedback_correct": "✅ <strong>正确！</strong>关单是在时机成熟的时候，而不是固定在哪个流程中。前几轮「软关」，多轮后「硬关」。关单应该是随时随地多次的心理暗示传递。黄金关单 48 小时：课前做好挖需，课后顺水推舟。",
+    "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是B。关单不是固定在某个环节，而是要判断时机是否成熟。过早关单会让家长反感，过晚则可能错失机会。"
+  },
+  "quiz4_dialogue": {
+    "isDialogue": true,
+    "scenarios": [
+      {
+        "id": "consult_price",
+        "title": "场景一：「要商量」+「觉得贵」组合异议",
+        "desc": "家长对课程有兴趣，但提出需要和家人商量，同时暗示价格偏贵。这是最常见的组合异议场景。",
+        "scenario": "你是 CC，今天小朋友完成了 S2 体验课。课后报告显示：小朋友互动积极，可以完成基础题目，但逆向推理需要加强。电话中XX妈妈说：",
+        "rounds": [
+          {
+            "parentMsg": "嗯⋯我觉得课程都挺好的，但是我要和先生商量一下，晚点再回复你吧。",
+            "hint": "运用 YES...BUT... 沟通方式：先表示理解（YES），再引导决策权归属（BUT）。参照资料异议2话术。",
+            "dimensions": [
+              {
+                "concept": "理解认同",
+                "terms": [
+                  "理解",
+                  "明白",
+                  "尊重",
+                  "应该",
+                  "正常",
+                  "合理",
+                  "慎重",
+                  "体谅",
+                  "收到",
+                  "OK",
+                  "商量是正常的",
+                  "尊重意见",
+                  "重视",
+                  "考虑",
+                  "沟通",
+                  "聊一下",
+                  "聊聊"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "决策权引导",
+                "terms": [
+                  "先生",
+                  "太太",
+                  "爸爸",
+                  "妈妈",
+                  "家人",
+                  "商量",
+                  "决定",
+                  "意见",
+                  "谁做主",
+                  "拿主意",
+                  "您来",
+                  "做主",
+                  "负责",
+                  "辅导",
+                  "了解",
+                  "介绍",
+                  "一起",
+                  "帮您"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "探询与行动引导",
+                "terms": [
+                  "担心",
+                  "顾虑",
+                  "犹豫",
+                  "方面",
+                  "因素",
+                  "最看重",
+                  "关注",
+                  "在意",
+                  "想",
+                  "主要",
+                  "哪方面",
+                  "建议",
+                  "尝试",
+                  "机会",
+                  "观察",
+                  "专业",
+                  "打电话",
+                  "几点",
+                  "方便",
+                  "多聊",
+                  "想问",
+                  "了解一下",
+                  "介绍"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "YES..BUT结构",
+                "terms": [
+                  "不过",
+                  "但是",
+                  "但其实",
+                  "不过呢",
+                  "不过我",
+                  "只是",
+                  "其实",
+                  "当然",
+                  "这样"
+                ],
+                "weight": 25
+              }
+            ],
+            "reference": "理解的，XX妈妈，要和先生商量是非常正常的，毕竟是为小朋友做决定，肯定要慎重一些。不过呢，我建议还是您来拿主意比较好，毕竟先生辅导小朋友学习是比较少的——之前和您沟通的时候，您提到小朋友的数学辅导都是您负责的。而且这堂课先生没有陪在小朋友身边上课，对上课情况也不是很了解。不如我帮您安排一下，先让小朋友把课程上起来，先生看到实际效果会更放心？",
+            "nextParentOnGood": "主要都是我做主了。其实我也是想问一下⋯这个价格是不是有点贵啊？和其他机构比起来不便宜。",
+            "nextParentOnWeak": "那⋯你觉得要多久才会有结果呀？我现在也未必确定。"
+          },
+          {
+            "parentMsg": "其实我也是想问一下⋯这个价格是不是有点贵啊？和外面的机构比起来不便宜喔。",
+            "hint": "避免直接辩解价格或打折。转向塑造价值——强调「CP值」「大品牌」「学习效果」，让家长自己感受到物有所值。参照资料异议5话术。",
+            "dimensions": [
+              {
+                "concept": "不驳斥价格",
+                "terms": [
+                  "其实",
+                  "来讲",
+                  "如果",
+                  "从另一角度",
+                  "换个角度",
+                  "我明白",
+                  "理解",
+                  "价格方面",
+                  "赚钱",
+                  "不容易",
+                  "辛苦"
+                ],
+                "weight": 20
+              },
+              {
+                "concept": "塑造价值",
+                "terms": [
+                  "性价比",
+                  "CP值",
+                  "服务",
+                  "师资",
+                  "老师",
+                  "专业",
+                  "效果",
+                  "进步",
+                  "能力",
+                  "跟进",
+                  "品质",
+                  "保证",
+                  "大品牌",
+                  "保障",
+                  "安全",
+                  "奶粉",
+                  "尿布",
+                  "品牌",
+                  "教育",
+                  "贪便宜",
+                  "早学早进步"
+                ],
+                "weight": 30
+              },
+              {
+                "concept": "具体化回应",
+                "terms": [
+                  "其实算下来",
+                  "平均",
+                  "每堂",
+                  "每节",
+                  "一周",
+                  "一个月",
+                  "算",
+                  "不贵",
+                  "投资",
+                  "回报",
+                  "课时",
+                  "方案",
+                  "连结",
+                  "支付",
+                  "信用卡",
+                  "台币"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "引导成交",
+                "terms": [
+                  "所以",
+                  "整体",
+                  "其实值得",
+                  "可以试",
+                  "安排",
+                  "报名",
+                  "开始",
+                  "不如",
+                  "帮您",
+                  "办理",
+                  "手续",
+                  "直接",
+                  "现在",
+                  "发给您",
+                  "确认"
+                ],
+                "weight": 25
+              }
+            ],
+            "reference": "明白，XX妈妈，赚钱不容易，这个我完全理解。但是妈妈，我们课程的CP值真的很高——小朋友平时用的东西，太便宜的您都不敢买，就好像买奶粉、尿布，我们都会选大品牌，图个安心。教育也是一样，不能贪便宜。我们是大品牌，全台累计超过五十万付费学员，靠的就是好口碑。早学早进步，迟学反而有压力。我建议可以先报48堂课时的方案，现在我传了一个连结给您，您看一下金额对不对，如果没错直接透过连结支付就可以了。",
+            "nextParentOnGood": "嗯⋯听起来好像有道理。不过我还是想再考虑一下。",
+            "nextParentOnWeak": "都挺贵的喔⋯我和先生讲一下。"
+          },
+          {
+            "parentMsg": "嗯⋯我还是想再考虑一下，不要这么急。",
+            "hint": "最后一轮，推动行动但不施压。用年龄黄金期（参照资料异议4）+ 名额紧迫 + 假设成交法收尾。也可参照资料异议7试学班/分期方案。",
+            "dimensions": [
+              {
+                "concept": "时间紧迫",
+                "terms": [
+                  "名额",
+                  "有限",
+                  "排满",
+                  "等位",
+                  "黄金期",
+                  "年龄",
+                  "趁现在",
+                  "现在",
+                  "最近",
+                  "快",
+                  "黄金阶段",
+                  "大脑发育",
+                  "神经元",
+                  "6岁",
+                  "思维能力",
+                  "提升速度",
+                  "错过",
+                  "补回来",
+                  "优惠",
+                  "24小时",
+                  "试听后"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "假设成交",
+                "terms": [
+                  "如果",
+                  "假设",
+                  "假如",
+                  "一旦",
+                  "能够",
+                  "解决",
+                  "处理好",
+                  "安排好",
+                  "没问题",
+                  "是不是",
+                  "帮您留",
+                  "帮您办理",
+                  "入学手续",
+                  "信用卡支付",
+                  "预留"
+                ],
+                "weight": 30
+              },
+              {
+                "concept": "低压收尾",
+                "terms": [
+                  "不急",
+                  "没问题",
+                  "慢慢来",
+                  "随时",
+                  "都可以",
+                  "等您",
+                  "方便",
+                  "再联系",
+                  "保持联系",
+                  "跟进",
+                  "慎重",
+                  "理解",
+                  "应该的",
+                  "考虑"
+                ],
+                "weight": 20
+              },
+              {
+                "concept": "备选方案",
+                "terms": [
+                  "试学班",
+                  "分期",
+                  "AFTEE",
+                  "免手续费",
+                  "信用卡",
+                  "4个月",
+                  "不用一次",
+                  "买这么多",
+                  "灵活",
+                  "方案"
+                ],
+                "weight": 25
+              }
+            ],
+            "reference": "完全没问题，XX妈妈，买课是大事，慎重一些是应该的。我只是想提醒您，小朋友这个年龄反而正是他学习数学的一个优势——3到6岁是大脑快速发育的黄金阶段，年龄越小的孩子思维能力提升速度就越快，错过了后面再补就难了。现在我们体验课专属优惠名额只剩3个，试听后24小时内报名还可以享受优惠。如果妈妈担心一次买太多，也可以选择试学班，学4个月，一来可以看到学习效果，二来又不用一次买这么多课；或者用AFTEE分期，分三期没有手续费。不如我现在帮您办理入学手续？",
+            "isFinal": true
+          }
+        ]
+      },
+      {
+        "id": "kid_unwilling",
+        "title": "场景二：「小朋友不想学」",
+        "desc": "家长表示小朋友自己说不想上课，这是一个常见的异议——需要区分是真抗拒还是借口，并从小朋友角度切入说服。",
+        "scenario": "你是 CC，课后电话中XX妈妈提到：",
+        "rounds": [
+          {
+            "parentMsg": "⋯小朋友说他不想学，他说课堂好无聊。",
+            "hint": "不要直接说服「课堂有趣」，先用课堂表现（互动/专注/积极）反问家长为什么觉得小朋友不喜欢，再强调家长引导责任。参照资料异议3话术。",
+            "dimensions": [
+              {
+                "concept": "共情与课堂回顾",
+                "terms": [
+                  "小朋友",
+                  "他",
+                  "其实",
+                  "正常",
+                  "理解",
+                  "明白",
+                  "刚开始",
+                  "适应",
+                  "新鲜感",
+                  "第一堂",
+                  "陌生",
+                  "互动",
+                  "专注",
+                  "积极",
+                  "表现",
+                  "跟着",
+                  "老师",
+                  "举手",
+                  "回答"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "探究原因",
+                "terms": [
+                  "为什么",
+                  "因为",
+                  "原因",
+                  "具体",
+                  "哪部分",
+                  "哪里",
+                  "哪个环节",
+                  "怎么",
+                  "觉得",
+                  "怎么说",
+                  "喜欢",
+                  "不喜欢",
+                  "觉得闷",
+                  "不肯"
+                ],
+                "weight": 30
+              },
+              {
+                "concept": "引导与教育理念",
+                "terms": [
+                  "不过",
+                  "但是",
+                  "其实",
+                  "尊重",
+                  "意愿",
+                  "考虑",
+                  "年纪还小",
+                  "家长帮",
+                  "做决定",
+                  "引导",
+                  "天生",
+                  "喜欢学习",
+                  "喜欢考试",
+                  "从小",
+                  "需要",
+                  "责任",
+                  "家长角色"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "邀请行动",
+                "terms": [
+                  "带他",
+                  "陪他",
+                  "一起",
+                  "让他",
+                  "再试",
+                  "多试",
+                  "下一堂",
+                  "体验",
+                  "观察",
+                  "了解",
+                  "帮他决定",
+                  "开始学习",
+                  "申请",
+                  "优惠",
+                  "帮您"
+                ],
+                "weight": 20
+              }
+            ],
+            "reference": "妈妈，在体验课上，小朋友整堂课都和老师互动得不错，一直跟着老师学习，专注力也很好，非常积极。想问一下妈妈为什么觉得小朋友不喜欢这个课呢？（听完后）是这样的，XX妈妈，您愿意尊重小朋友的感受，看得出来您真的很用心在为孩子着想。但是小朋友年纪还小，很多长远的事情都需要家长帮他做决定。学习也是一样的，没有小朋友天生就爱念书、爱考试，我们作为家长，需要从小就引导小朋友。不如我们现在就帮小朋友做决定，让他开始学习？",
+            "nextParentOnGood": "可能是因为之前试过其他课程，觉得闷吧。不过你说他有主动回答⋯是真的吗？",
+            "nextParentOnWeak": "他就是觉得闷，叫他去都不肯。"
+          },
+          {
+            "parentMsg": "可能是之前试过其他课程，觉得闷。但你说他课上有主动回答⋯是真的吗？",
+            "hint": "家长松动了！用老师的具体反馈佐证，对比其他课程差异，强调游戏化教学特色，引导家长帮小朋友做决定。参照资料异议3后续。",
+            "dimensions": [
+              {
+                "concept": "具体佐证",
+                "terms": [
+                  "老师",
+                  "反馈",
+                  "报告",
+                  "记录",
+                  "观察",
+                  "留意",
+                  "看到",
+                  "发现",
+                  "表现",
+                  "积极",
+                  "主动",
+                  "回答",
+                  "互动",
+                  "举手",
+                  "专注",
+                  "跟着",
+                  "整堂",
+                  "环节"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "对比差异",
+                "terms": [
+                  "不同",
+                  "分别",
+                  "我们",
+                  "这里",
+                  "特色",
+                  "区别",
+                  "最大",
+                  "优势",
+                  "独特",
+                  "其他课程",
+                  "填鸭式",
+                  "死记硬背",
+                  "游戏化",
+                  "传统",
+                  "动画",
+                  "游戏"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "家长引导责任",
+                "terms": [
+                  "尊重",
+                  "意愿",
+                  "考虑",
+                  "年纪还小",
+                  "家长帮",
+                  "做决定",
+                  "引导",
+                  "天生",
+                  "从小",
+                  "需要",
+                  "责任",
+                  "没有小朋友天生"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "推动决定",
+                "terms": [
+                  "不如",
+                  "试一下",
+                  "安排",
+                  "再来",
+                  "多试",
+                  "观察",
+                  "跟进",
+                  "看看",
+                  "了解",
+                  "确认",
+                  "帮他做决定",
+                  "开始学习",
+                  "申请",
+                  "优惠"
+                ],
+                "weight": 25
+              }
+            ],
+            "reference": "是真的！体验课老师的课后反馈写得很清楚——小朋友整堂课都和老师互动得不错，一直跟着老师学习，专注力很好，非常积极。和其他课程最大的区别是，我们是游戏化教学，和传统填鸭式完全不同，小朋友上课像玩游戏多过上课，还有动画人物陪着他一起探索。但是妈妈，您有没有考虑到，小朋友年纪还小，很多事情都需要家长帮他做决定。没有小朋友天生喜欢学习、喜欢考试，我们作为家长，需要从小就引导小朋友。不如我们现在就帮他做决定？",
+            "nextParentOnGood": "好⋯那我再带他试一堂课看看。",
+            "nextParentOnWeak": "嗯⋯我再想想吧。"
+          },
+          {
+            "parentMsg": "好⋯那我再带他试一堂课看看，但不保证他愿意来喔。",
+            "hint": "家长已经松动！感谢信任 + 确认安排 + 直接推动成交。参照资料异议3结尾话术。",
+            "dimensions": [
+              {
+                "concept": "感谢信任",
+                "terms": [
+                  "谢谢",
+                  "感谢",
+                  "好的",
+                  "没问题",
+                  "明白",
+                  "理解",
+                  "放心",
+                  "信任",
+                  "支持",
+                  "愿意",
+                  "试",
+                  "难得",
+                  "开心"
+                ],
+                "weight": 20
+              },
+              {
+                "concept": "确认跟进",
+                "terms": [
+                  "提前",
+                  "通知",
+                  "提醒",
+                  "约",
+                  "时间",
+                  "安排",
+                  "联系",
+                  "找您",
+                  "信息",
+                  "Line",
+                  "发给您",
+                  "确认",
+                  "收到"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "消除压力",
+                "terms": [
+                  "不用急",
+                  "不用担心",
+                  "慢慢来",
+                  "没压力",
+                  "轻松",
+                  "自由",
+                  "随时",
+                  "可以取消",
+                  "不介意",
+                  "先试一下",
+                  "观察"
+                ],
+                "weight": 20
+              },
+              {
+                "concept": "推动成交",
+                "terms": [
+                  "帮他做决定",
+                  "开始学习",
+                  "申请",
+                  "优惠",
+                  "办理",
+                  "手续",
+                  "好吗",
+                  "帮您",
+                  "现在",
+                  "直接",
+                  "安排",
+                  "报名"
+                ],
+                "weight": 35
+              }
+            ],
+            "reference": "太好了，XX妈妈！您愿意再带他试一次已经很难得，谢谢您的信任。不用担心，我提前一天发 Line 信息提醒您时间，如果当天他真的不想来，随时取消都没有压力。最重要的是给小朋友一个机会去尝试——小朋友年纪还小，很多事情都需要家长帮他做决定。不如我们现在就帮他做决定，让他开始学习，我去帮您申请优惠活动，好吗？",
+            "isFinal": true
+          }
+        ]
+      },
+      {
+        "id": "young_vision",
+        "title": "场景三：「年纪太小」+「视力顾虑」",
+        "desc": "家长以孩子年龄小和用眼健康为由推迟决策，需要从发展黄金期和「学习价值大于娱乐」两方面回应。参照资料异议4+6。",
+        "scenario": "你是 CC，课后电话中XX妈妈提到：",
+        "rounds": [
+          {
+            "parentMsg": "我觉得他才国小一年级而已，还小呢，不用这么急吧？",
+            "hint": "不要争辩年龄大小，而是强调「年龄越小思维能力提升速度越快」+ 大脑发育黄金阶段科学依据 + 升学面试优势。参照资料异议4话术。",
+            "dimensions": [
+              {
+                "concept": "理解年龄观点",
+                "terms": [
+                  "理解",
+                  "明白",
+                  "同意",
+                  "确实",
+                  "讲得对",
+                  "有道理",
+                  "年纪小",
+                  "一年级",
+                  "国小",
+                  "担心",
+                  "不急",
+                  "再等等"
+                ],
+                "weight": 20
+              },
+              {
+                "concept": "黄金窗口期",
+                "terms": [
+                  "黄金期",
+                  "窗口",
+                  "最佳",
+                  "大脑",
+                  "思维",
+                  "敏感期",
+                  "趁",
+                  "现在",
+                  "这个年纪",
+                  "错过",
+                  "补",
+                  "神经元",
+                  "联结",
+                  "增生",
+                  "发育程度",
+                  "成人",
+                  "70%",
+                  "速度",
+                  "优势",
+                  "反而",
+                  "提升"
+                ],
+                "weight": 35
+              },
+              {
+                "concept": "升学价值",
+                "terms": [
+                  "升读",
+                  "学校",
+                  "面试",
+                  "提问",
+                  "数学",
+                  "国小",
+                  "好学校",
+                  "优质",
+                  "私中",
+                  "准备",
+                  "竞争",
+                  "基础",
+                  "打底"
+                ],
+                "weight": 20
+              },
+              {
+                "concept": "引导行动",
+                "terms": [
+                  "试听后",
+                  "24小时",
+                  "优惠",
+                  "办理",
+                  "入学手续",
+                  "信用卡",
+                  "支付",
+                  "帮您",
+                  "现在",
+                  "报名",
+                  "开始",
+                  "安排"
+                ],
+                "weight": 25
+              }
+            ],
+            "reference": "理解您的想法，XX妈妈，您担心小朋友年纪小是很正常的。但是小朋友这个年龄反而是他学习数学的一个优势——在数学课堂上，年龄越小的孩子思维能力提升速度就越快。3到6岁是小朋友大脑快速发育的黄金阶段，这个阶段大脑神经元快速增生并且形成联结，达到顶峰。6岁时大脑的发育程度已经达到成人的70%。除此之外，如果孩子想进比较优质的国中，私中的面试环节也会出数学相关题目，不少家长都会提前带孩子练习、做面试备考。现在我们试听后24小时内报名还可以享受优惠，不如我帮您办理入学手续？",
+            "nextParentOnGood": "那⋯黄金窗口期是怎么来的啊？另外你说学习工具？",
+            "nextParentOnWeak": "我知道了，我再考虑一下。"
+          },
+          {
+            "parentMsg": "还有⋯他平时看电视、平板看太多了，我怕上网课会伤眼睛。",
+            "hint": "不要否认屏幕的影响，而是重新框架：科技教育时代电子设备不可避免，但课程带来的学习价值远大于娱乐。引导家长建立「学习优先于娱乐」的价值观。参照资料异议6话术。",
+            "dimensions": [
+              {
+                "concept": "共情视力担忧",
+                "terms": [
+                  "理解",
+                  "担心",
+                  "正常",
+                  "很多家长",
+                  "都有这个顾虑",
+                  "特别理解",
+                  "顾虑",
+                  "视力",
+                  "眼睛",
+                  "近视",
+                  "屏幕",
+                  "电子",
+                  "伤眼",
+                  "看太多"
+                ],
+                "weight": 20
+              },
+              {
+                "concept": "重新框架",
+                "terms": [
+                  "科技教育",
+                  "时代",
+                  "避免不了",
+                  "无可避免",
+                  "学习工具",
+                  "必须",
+                  "趋势",
+                  "现实",
+                  "大环境",
+                  "3C"
+                ],
+                "weight": 25
+              },
+              {
+                "concept": "价值对比",
+                "terms": [
+                  "40分钟",
+                  "一节",
+                  "知识",
+                  "技能",
+                  "成就感",
+                  "远远大于",
+                  "动画片",
+                  "游戏",
+                  "娱乐",
+                  "价值",
+                  "学习优先",
+                  "优先",
+                  "值得",
+                  "收获"
+                ],
+                "weight": 30
+              },
+              {
+                "concept": "引导价值观与成交",
+                "terms": [
+                  "价值观",
+                  "大人引导",
+                  "家长引导",
+                  "学习优先于娱乐",
+                  "习惯",
+                  "建立",
+                  "护眼模式",
+                  "护眼操",
+                  "AFTEE",
+                  "分期",
+                  "优惠",
+                  "报名",
+                  "办理",
+                  "帮您"
+                ],
+                "weight": 25
+              }
+            ],
+            "reference": "特别理解您的顾虑，XX妈妈，很多家长要报名前都会有这个顾虑。不过呢，您看，现在是科技教育时代，3C设备作为学习工具这件事，是避免不了的。我们学生端本身设计了护眼模式，可以调整屏幕亮度和色彩，每节课40分钟也是从保护视力出发的，上完课还可以做护眼操。而且这40分钟带给小朋友的知识、技能、甚至成就感，都远远大于动画片、游戏的价值。小朋友的价值观是我们大人引导出来的，要让小朋友知道，学习应该优先于娱乐！我们用卡支付或AFTEE分期都可以，不如我现在帮您办理？",
+            "isFinal": true
+          }
+        ]
+      }
+    ]
+  },
+  "quiz6_final": {
+    "quizId": "quiz6_final",
+    "isFinalDialogue": true,
+    "scenario": "你是 CC，今天小朋友（暖暖）完成了 S2 体验课。课后报告显示：小朋友互动积极，可以完成基础题目，但逆向推理需要加强。家长（暖暖妈妈）在课后电话中，可能会混合提出多个异议：要和先生商量 / 价格太贵 / 视力顾虑 / 小朋友说闷 / 担心效果 / 学员年纪太小 / 推迟决定。请你以 CC 身份<b>自由对话</b>，逐一化解异议后把握关单时机。",
+    "topics": [
+      {
+        "label": "① 询问感受",
+        "hint": "寒暄 + 问小朋友上课感受"
+      },
+      {
+        "label": "② 报告解读",
+        "hint": "学了什么 + 2-3个优点 + 1个缺点"
+      },
+      {
+        "label": "③ 观念强化",
+        "hint": "3-6岁黄金期 + 108课纲 + 课程重要性"
+      },
+      {
+        "label": "④ 课程介绍",
+        "hint": "针对家长需求介绍优势（VIP THINK / 9阶段 / 3位老师）"
+      },
+      {
+        "label": "⑤ 排雷+报价",
+        "hint": "48堂课方案 + CP值 + 优惠"
+      },
+      {
+        "label": "⑥ 异议处理",
+        "hint": "YES..BUT结构 + 化解多重异议"
+      },
+      {
+        "label": "⑦ 关单成交",
+        "hint": "把握购买信号 + 假设成交法 + Line 缴费连结"
+      },
+      {
+        "label": "⑧ 成交跟进",
+        "hint": "Line 保持联络 + 24小时 + 家长端打卡"
+      }
+    ],
+    "openingLine": "喂，你好，请问是哪位？",
+    "parentSystemPrompt": "你扮演一位台湾妈妈（暖暖妈妈），正在接听 VIP THINK 课程顾问（CC）打来的课后电话。\n\n【背景信息】\n- 你的孩子叫暖暖，6-7岁，国小一年级，今天完成了S2体验课\n- 课后报告显示：小朋友互动积极，能完成基础题，但逆向推理需要加强\n- 你对课程有兴趣但还有顾虑\n- 你是普通家长，不是教育专家\n\n【你的身份特点】\n- 使用简体中文，带台湾口语习惯（例如：喔、啦、呀、妈、先生）\n- 表达自然、口语化、不用书面语\n- 回答简短，1-3句话\n- 带着真实家长的顾虑和情绪\n\n【你可能提出的异议（随机混合）】\n你会在对话中根据CC的话术，自然地提出1-3个异议（不一定会全提）：\n1. \"要和先生商量一下\" - 决策权问题\n2. \"价格太贵/比外面贵\" - 价格顾虑\n3. \"担心小朋友长时间对着屏幕会近视\" - 视力顾虑\n4. \"小朋友说上课好闷/不想再上\" - 兴趣问题\n5. \"他现在年纪太小\" - 年龄顾虑\n6. \"担心学了几个月都看不到效果\" - 效果顾虑\n7. \"我再考虑一下/过几天再回复你\" - 拖延\n\n【反应规则 — 极其重要！】\n✅ 真实反应：\n- CC给出合理解释 → 接受或部分接受，可能再问一两个问题\n- CC话术专业 → 信任度提升，可以被说服\n- CC乱说话/答非所问 → 表现困惑：\"你说什么？\"，\"不太明白你的意思\"\n- CC一直在背台词不回应你的异议 → 表现不耐烦：\"你直接回答我\"\n- CC直接说\"我帮你报名吧\" → 警惕：\"等我再考虑一下\"\n- CC解决了你提的异议 → 松动，转移到下一个异议，或表达愿意进一步了解\n\n❌ 绝对禁止：\n- 不管CC说什么，都按固定顺序背预设台词\n- 跳过CC还没讲完的话题\n- 假装听懂乱码内容\n- 每次都回答相同的话\n- 一次性把所有异议全说出来（要等CC回应了前一个再说下一个）\n\n【对话节奏】\n- 每次只回应CC的最新那句话\n- 不要重复CC说过的内容\n- 保持真实感，像真的家长在通电话\n- 当CC专业地化解了你的3-4个异议后，可以表达松动（例如：\"听起来都挺好的\"、\"那你发些资料给我\"），但不要轻易直接成交\n- 如果CC的关单尝试太突然（没化解够异议就强行关单），你要拒绝：\"等我和先生商量一下\"\n\n【回复格式】\n- 直接说出你的反应，不需要前缀（不要写\"家长说：\"之类）\n- 保持1-3句话长度，自然聊天节奏",
+    "evaluatorSystemPrompt": "你是 VIP THINK 培训机构的资深教学评审官，专门评估 CC（课程顾问）学员在课后电话中的异议处理能力。\n\n【评分标准】（满分100分）\n\n1. 流程规范性（30分）：是否按正确顺序完成课后电话全流程\n   - 开场询问感受 → 解读课后报告 → 观念强化 → 课程介绍 → 排雷报价 → 异议处理 → 关单成交 → 成交跟进\n   - 流程不完整或顺序混乱扣分\n\n2. 信息准确性（30分）：传递的课程信息是否准确、完整、专业\n   - 品牌与课程特色（VIP THINK、9个阶段、4-6人小班、3位老师服务：排课/班导/授课）\n   - 课后报告解读（学了什么、优点、缺点、学习建议）\n   - 性价比说明（CP值、48堂课方案、AFTEE 分期）\n   - 异议处理话术（YES..BUT结构、价值塑造）\n\n3. 服务亲和力（30分）：语气、态度、沟通技巧\n   - 语气礼貌专业\n   - 有同理心，能共情家长顾虑\n   - 善用YES..BUT等沟通框架\n   - 留下跟进口子（Line / 24小时跟进）\n   - 不施压、不催促\n\n4. 话题覆盖度（10分）：是否覆盖必要话题\n   - 询问感受、报告解读、观念强化、课程介绍、报价、异议处理、关单、成交跟进\n   - 每个核心话题都有触及才算覆盖\n\n【评分规则】\n- 60分为及格线\n- 对话质量 > 对话长度，不是讲得越多分越高\n- 不要因为对话短就自动给低分\n- 识别关键词而非字面对照（例如「理解」「明白」「正常」都算\"理解\"）\n- 具体指出优点和改进方向\n\n【输出格式要求 — 极其严格】\n必须且只能输出以下 JSON 格式，不要加任何其他文字、解释、markdown标记：\n{\"score\":85,\"process\":22,\"accuracy\":25,\"rapport\":26,\"coverage\":8,\"feedback\":\"整体评语\",\"strengths\":[\"优点1\",\"优点2\",\"优点3\"],\"improvements\":[\"改进1\",\"改进2\"]}",
+    "scenarios": [
+      {
+        "id": "final_compat",
+        "title": "综合场景（自由对话）",
+        "desc": "家长混合多个异议，AI 自由应对",
+        "rounds": []
+      }
+    ]
+  }
+};
+
+const LS_PREFIX = 'vipthink_tw_after';
+let currentSection = 0;
+let completedSections = new Set();
+let quiz1Answered = false;
+let quiz1Selected = -1;
+let reportWritingSubmitted = false;
+let reportWritingScore = 0;
+let reportWritingText = '';
+let reportWritingFeedbackHTML = '';
+let quiz2Answered = false;
+let quiz2Selected = -1;
+let quiz3Answered = false;
+let quiz3Selected = -1;
+let quiz4Answered = false;
+let quiz4Selected = -1;
+let quiz4DialogueAnswered = false;
+let quiz4DialogueScore = 0;
+let quiz5Answered = false;
+let quiz5Selected = -1;
+let finalTaskSubmitted = false;
+let finalScore = 0;
+
+let studySeconds = 0;
+let timerInterval = null;
+
+function init() {
+  renderSidebar();
+  renderSections();
+  loadProgress();
+  setupQuizListeners();
+  setupReportWritingCounter();
+  restoreAllUIState();
+  startTimer();
+  loadNotes();
+}
+
+function renderSidebar() {
+  const nav = document.getElementById('sidebarNav');
+  nav.innerHTML = courseData.sections.map((s, i) => `
+    <div class="nav-section" data-index="${i}" onclick="navigateTo(${i})">
+      <div class="nav-icon">${s.icon}</div>
+      <div class="nav-info">
+        <div class="nav-label">${s.title}</div>
+        <div class="nav-sub">⏱ ${s.duration}</div>
+      </div>
+    </div>
+  `).join('');
+  updateSidebarLocks();
+}
+
+function updateSidebarLocks() {
+  document.querySelectorAll('.nav-section').forEach((el, i) => {
+    const check = canNavigateTo(i);
+    if (!check.ok && i !== currentSection) {
+      el.classList.add('locked');
+    } else {
+      el.classList.remove('locked');
+    }
+  });
+}
+
+function renderSections() {
+  const main = document.getElementById('mainContent');
+  main.innerHTML = courseData.sections.map((s, i) => `
+    <div class="section" data-section="${i}">
+      ${s.content}
+      ${s.type === 'content_quiz' ? renderQuiz(quizzes[s.quizId], i) : ''}
+      ${s.type === 'content_chart_dialogue' ? renderDialogue(quizzes[s.quizId], i) : ''}
+      <div class="section-nav-buttons">
+        <div>${i > 0 ? `<button class="btn btn-outline" onclick="navigateTo(${i-1})">← 上一章</button>` : ''}</div>
+        <div>${i < courseData.sections.length - 1 ? `<button class="btn" onclick="markComplete(${i});navigateTo(${i+1})">下一章 →</button>` : `<button class="btn btn-success" id="completeCourseBtn" onclick="tryCompleteCourse(${i})">✓ 完成课程</button>`}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function canNavigateTo(index) {
+  if (index > 0 && !quiz1Answered) return { ok: false, msg: '请先完成第1章的选择题' };
+  if (index > 0 && !reportWritingSubmitted) return { ok: false, msg: '请先完成第1章的报告解读编写练习' };
+  if (index > 0 && reportWritingScore < 60) return { ok: false, msg: '第1章报告解读编写练习得分未达60分（当前：' + reportWritingScore + '分），请重新作答' };
+  if (index > 1 && !quiz2Answered) return { ok: false, msg: '请先完成第2章的互动练习' };
+  if (index > 2 && !quiz3Answered) return { ok: false, msg: '请先完成第3章的互动练习' };
+  if (index > 3 && (!quiz4Answered || !quiz4DialogueAnswered)) return { ok: false, msg: '请先完成第4章的选择题和AI模拟对话' };
+  if (index > 3 && quiz4DialogueScore < 60) return { ok: false, msg: '第4章AI模拟对话得分未达60分，请重新作答' };
+  if (index > 4 && !quiz5Answered) return { ok: false, msg: '请先完成第5章的互动练习' };
+  return { ok: true };
+}
+
+function navigateTo(index) {
+  const check = canNavigateTo(index);
+  if (!check.ok) {
+    showToast('🔒 ' + check.msg, 'warning');
+    return;
+  }
+  currentSection = index;
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-section').forEach(n => n.classList.remove('active'));
+  const section = document.querySelector(`.section[data-section="${index}"]`);
+  if (section) section.classList.add('active');
+  const navItem = document.querySelector(`.nav-section[data-index="${index}"]`);
+  if (navItem) navItem.classList.add('active');
+  updateProgress();
+  updateNotesForSection(index);
+  saveProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+  const mhTitle = document.getElementById('mhTitle');
+  if (mhTitle) mhTitle.textContent = courseData.sections[index].title;
+}
+
+function markComplete(index) {
+  completedSections.add(index);
+  updateProgress();
+  saveProgress();
+  showToast('「' + courseData.sections[index].title + '」已完成 ✓', 'success');
+  checkCertificate();
+}
+
+// ====== 第1章：报告解读编写练习 ======
+// 语义评分标准：每个维度配备丰富的语义变体词库，通过模糊匹配+语义覆盖度综合评分
+const reportWritingCriteria = [
+  {
+    "concept": "提问授权",
+    "terms": [
+      "讲解",
+      "和您",
+      "您和我",
+      "报告",
+      "详细",
+      "让我为您",
+      "和您详细",
+      "和您一起看",
+      "讲解给您听",
+      "疑问",
+      "不理解",
+      "及时",
+      "针对性",
+      "提问",
+      "请问",
+      "和您分享",
+      "今天的表现",
+      "详细讲解",
+      "有什么问题",
+      "有什么不明白",
+      "随时问我"
+    ],
+    "weight": 15,
+    "hint": "开头要请求家长允许您进行报告解读，表达愿意详细说明并欢迎提问"
+  },
+  {
+    "concept": "学了什么（课程内容）",
+    "terms": [
+      "今天学",
+      "上的是",
+      "这堂课",
+      "主要学",
+      "课堂内容",
+      "知识点",
+      "学了",
+      "排序",
+      "枚举",
+      "数字枚举",
+      "有序枚举",
+      "三位数",
+      "读法",
+      "凑数",
+      "计算",
+      "加减法",
+      "进位",
+      "退位",
+      "20以内",
+      "思维训练",
+      "数学思维",
+      "逻辑",
+      "环节一",
+      "环节二",
+      "环节三"
+    ],
+    "weight": 15,
+    "hint": "要提到今天课堂涉及的知识点内容（排序/枚举/三位数/凑数计算等）"
+  },
+  {
+    "concept": "优点（整体表现+具体）",
+    "terms": [
+      "喜欢",
+      "主动",
+      "回答",
+      "专注",
+      "态度",
+      "端正",
+      "表现好",
+      "积极",
+      "认真",
+      "专心",
+      "掌握好",
+      "做得好",
+      "很好",
+      "不错",
+      "有序",
+      "枚举",
+      "完成",
+      "没问题",
+      "熟练",
+      "熟悉",
+      "理解得很好",
+      "一讲就懂",
+      "做得很好",
+      "很喜欢",
+      "很积极"
+    ],
+    "weight": 20,
+    "hint": "先说2-3个优点，包含整体表现（态度/专注力等）和具体知识点表现"
+  },
+  {
+    "concept": "缺点（具体明确）",
+    "terms": [
+      "还不熟",
+      "不熟练",
+      "需要加强",
+      "要加强",
+      "思路混乱",
+      "比较混乱",
+      "不清楚",
+      "不明确",
+      "有序思考",
+      "分步思考",
+      "需要练习",
+      "多练习",
+      "巩固",
+      "还需要",
+      "需要时间",
+      "未达到",
+      "不够"
+    ],
+    "weight": 20,
+    "hint": "提出1个具体可改进的缺点，要具体明确（如凑数计算不熟练），不要模糊"
+  },
+  {
+    "concept": "学习建议",
+    "terms": [
+      "建议",
+      "继续",
+      "跟着",
+      "持续",
+      "长期",
+      "多练习",
+      "练习",
+      "巩固",
+      "打好基础",
+      "基础",
+      "系统性",
+      "下一步",
+      "后续",
+      "之后",
+      "课程",
+      "报名",
+      "级别",
+      "班级",
+      "我的建议",
+      "我建议",
+      "可以考虑",
+      "建议您",
+      "推荐",
+      "帮他",
+      "帮小朋友",
+      "继续学",
+      "继续跟"
+    ],
+    "weight": 15,
+    "hint": "给出明确的下一步学习建议，引导家长考虑持续学习"
+  },
+  {
+    "concept": "话术自然度",
+    "terms": [
+      "妈妈",
+      "暖暖",
+      "小朋友",
+      "孩子",
+      "他",
+      "老师",
+      "今天",
+      "刚刚",
+      "其实",
+      "不过",
+      "所以",
+      "整体来讲",
+      "您",
+      "你",
+      "我",
+      "呀",
+      "啦",
+      "喔",
+      "嗯",
+      "哦"
+    ],
+    "weight": 15,
+    "hint": "语气自然，使用口语表达，称呼得体，像真实对话而非念稿"
+  }
+];
+
+// 文本归一化：消除英语/国语差异，去除所有干扰字符（空格、标点、不可见字符等）
+function normalizeText(text) {
+  if (!text) return '';
+  return text
+    // 去除所有空白（包括零宽空格、不间断空格等）
+    .replace(/[\s\u00A0\u2000-\u200B\u202F\u205F\u3000\ufeff]/g, '')
+    // 去除所有标点符号（中英文）
+    .replace(/[，。！？、；：""''【】《》（）\-\—…·～～\/\\\<\>\[\]\{\}\(\)\*\+\=\|\`\~\!\@\#\$\%\^\&\;\:\'\"\,\.\?\/]/g, '')
+    // 英语→普通话统一映射
+    .replace(/的/g, '的')
+    .replace(/了/g, '了')
+    .replace(/不/g, '不')
+    .replace(/是/g, '是')
+    .replace(/𠮶/g, '那')
+    .replace(/的/g, '们')
+    .replace(/什/g, '什')
+    .replace(/些/g, '些');
+}
+
+// 语义模糊匹配：综合多种策略判断文本是否语义覆盖了某概念
+// 返回 0~1 的覆盖率分数
+function semanticMatch(text, terms) {
+  if (!text || !terms || terms.length === 0) return 0;
+  const normText = normalizeText(text);
+  let strongMatches = 0;
+  let weakMatches = 0;
+
+  terms.forEach(term => {
+    const normTerm = normalizeText(term);
+    if (!normTerm || normTerm.length < 1) return;
+
+    // 策略1：精确匹配（术语完整出现在文本中）
+    if (normText.includes(normTerm)) { strongMatches++; return; }
+
+    // 策略2：核心子串匹配（去掉语气词后再匹配）
+    const core = normTerm.replace(/[的了吗这吧啊呀哦嗯喔了着过在到被把将]/g, '');
+    if (core.length >= 2 && normText.includes(core)) { strongMatches += 0.8; return; }
+
+    // 策略3：三元组匹配（任意连续3字 → 中等强度匹配）
+    if (normTerm.length >= 3) {
+      for (let i = 0; i <= normTerm.length - 3; i++) {
+        const trigram = normTerm.substring(i, i + 3);
+        if (normText.includes(trigram)) { weakMatches += 0.7; return; }
+      }
+      // 降级：二元组匹配
+      for (let i = 0; i <= normTerm.length - 2; i++) {
+        const bigram = normTerm.substring(i, i + 2);
+        if (normText.includes(bigram)) { weakMatches += 0.5; return; }
+      }
+    }
+
+    // 策略4：单字匹配（术语中每个汉字逐一检查，至少命中50%的单字）
+    if (normTerm.length >= 2) {
+      let charHits = 0;
+      for (let c of normTerm) {
+        if (normText.includes(c)) charHits++;
+      }
+      if (charHits / normTerm.length >= 0.5) { weakMatches += 0.3; return; }
+    }
+  });
+
+  // 命中 min(2, terms.length) 个即视为该维度基本覆盖
+  // 大幅放宽评分标准
+  const denominator = Math.min(2, terms.length);
+  let coverage = Math.min(1, (strongMatches + weakMatches * 0.6) / denominator);
+
+  // 保底机制：只要有任何匹配，该维度至少给40%基础分
+  if ((strongMatches > 0 || weakMatches > 0) && coverage < 0.4) {
+    coverage = 0.4;
+  }
+
+  return Math.round(coverage * 100) / 100;
+}
+
+// 话术自然度专用评分（维度6）
+function scoreNaturalness(text) {
+  let score = 0;
+  const t = text;
+
+  // 1. 英语口语标记（的/了/不/是/这么/这/𠮶/了/啊/啵/什么/吓）
+  const cantoneseMarkers = ['的','了','不','是','这么','这','𠮶','了','啊','啵','什么','吓','的','什','些','他'];
+  let cantoCount = 0;
+  cantoneseMarkers.forEach(m => { if (t.includes(m)) cantoCount++; });
+  if (cantoCount >= 3) score += 40;
+  else if (cantoCount >= 1) score += 20;
+
+  // 2. 称呼得体（使用妈咪/爸爸/小朋友名/孩子等）
+  const addressOK = ['妈咪','爸爸','暖暖','小朋友','孩子','家长','您','你'];
+  let addrCount = 0;
+  addressOK.forEach(a => { if (t.includes(a)) addrCount++; });
+  if (addrCount >= 2) score += 25;
+  else if (addrCount >= 1) score += 10;
+
+  // 3. 对话感（有提问/互动语言，而非单向陈述）
+  const dialogueMarkers = ['您觉得','你觉得','有没','有没有','可以吗','是不是','是不','有没有','任何问题','随时','问我'];
+  let dialCount = 0;
+  dialogueMarkers.forEach(d => { if (t.includes(d)) dialCount++; });
+  if (dialCount >= 1) score += 20;
+
+  // 4. 文本长度合理（太短=不完整，适中=自然）
+  const len = t.length;
+  if (len >= 100 && len <= 600) score += 15;
+  else if (len >= 50) score += 8;
+
+  return Math.min(100, score);
+}
+
+function submitReportWriting() {
+  const input = document.getElementById('reportWritingInput');
+  const btn = document.getElementById('reportWritingBtn');
+
+  // 如果已经提交过（按钮显示「重新提交」），点击时清空答题框让用户重新作答
+  if (reportWritingSubmitted && btn && btn.textContent.includes('重新提交')) {
+    input.value = '';
+    const counter = document.getElementById('reportWritingCount');
+    if (counter) counter.textContent = '0';
+    const feedbackEl = document.getElementById('reportWritingFeedback');
+    if (feedbackEl) { feedbackEl.innerHTML = ''; feedbackEl.classList.remove('show'); }
+    const warnEl = document.getElementById('reportWritingScoreWarning');
+    if (warnEl) { warnEl.innerHTML = ''; warnEl.style.display = 'none'; }
+    btn.textContent = '提交答案 ✨';
+    input.focus();
+    showToast('已清空答题框，请重新作答', 'info');
+    return;
+  }
+
+  const text = (input.value || '').trim();
+  if (!text || text.length < 30) {
+    showToast('请至少输入30字以上的报告解读内容', 'warning');
+    return;
+  }
+
+  let totalScore = 0;
+  let totalWeight = 0;
+  const dimensionResults = [];
+
+// 严格语义匹配（专用于报告解读的内容维度）
+// 规则：只接受精确匹配和核心子串匹配，不接受二元组/单字弱匹配，无保底分
+// 目的：避免开头话术中的通用词（如「进步」「理解」「强项」）误触其他维度满分
+function strictSemanticMatch(text, terms) {
+  if (!text || !terms || terms.length === 0) return 0;
+  const normText = normalizeText(text);
+  let strongMatches = 0;
+
+  terms.forEach(term => {
+    const normTerm = normalizeText(term);
+    if (!normTerm || normTerm.length < 1) return;
+
+    // 策略1：精确匹配
+    if (normText.includes(normTerm)) { strongMatches++; return; }
+
+    // 策略2：核心子串匹配（去掉语气词后再匹配，至少2字）
+    const core = normTerm.replace(/[的了吗这吧啊呀哦嗯喔了着过在到被把将]/g, '');
+    if (core.length >= 2 && normText.includes(core)) { strongMatches += 0.8; return; }
+
+    // 不使用三元组/二元组/单字弱匹配 —— 内容维度要求实质性覆盖
+  });
+
+  // 命中 min(2, terms.length) 个即满分，但没有保底——0命中就是0分
+  const denominator = Math.min(3, terms.length);
+  const coverage = Math.min(1, strongMatches / denominator);
+  return Math.round(coverage * 100) / 100;
+}
+
+  reportWritingCriteria.forEach((c, idx) => {
+    totalWeight += c.weight;
+    let dimScore, ratio;
+
+    if (idx === 5) {
+      // 第6维度「话术自然度」：使用专用启发式评分
+      const natScore = scoreNaturalness(text);
+      ratio = natScore / 100;
+      dimScore = Math.round((natScore / 100) * c.weight);
+      totalScore += dimScore;
+      dimensionResults.push({
+        concept: c.concept,
+        score: dimScore,
+        maxScore: c.weight,
+        found: natScore >= 40,
+        ratio: ratio,
+        hint: c.hint,
+        isNaturalness: true,
+        natScore: natScore
+      });
+    } else if (idx === 0) {
+      // 维度1「提问授权」：使用标准语义匹配（保留宽松匹配，因为开头部分确实需要这些词）
+      const coverage = semanticMatch(text, c.terms);
+      ratio = coverage;
+      dimScore = Math.round(coverage * c.weight);
+      totalScore += dimScore;
+      dimensionResults.push({
+        concept: c.concept,
+        score: dimScore,
+        maxScore: c.weight,
+        found: coverage >= 0.25,
+        ratio: ratio,
+        hint: c.hint,
+        isNaturalness: false
+      });
+    } else {
+      // 维度2-5（内容维度：学了什么/优点/缺点/学习建议）：使用严格模式
+      // 必须有实质性内容覆盖才给分，避免通用词误触
+      const coverage = strictSemanticMatch(text, c.terms);
+      ratio = coverage;
+      dimScore = Math.round(coverage * c.weight);
+      totalScore += dimScore;
+      dimensionResults.push({
+        concept: c.concept,
+        score: dimScore,
+        maxScore: c.weight,
+        found: coverage >= 0.25,
+        ratio: ratio,
+        hint: c.hint,
+        isNaturalness: false,
+        strictMode: true
+      });
+    }
+  });
+
+  // Normalize to 100 scale
+  const finalScoreNorm = Math.round((totalScore / totalWeight) * 100);
+
+  // Build feedback HTML
+  let dimsHtml = '<div class="eval-dimensions">';
+  dimensionResults.forEach(d => {
+    const stars = d.ratio >= 0.8 ? '⭐⭐⭐⭐⭐' : d.ratio >= 0.5 ? '⭐⭐⭐☆☆' : '⭐⭐☆☆☆';
+    const color = d.found ? '#10b981' : '#f59e0b';
+    const borderC = d.ratio >= 0.5 ? '#10b981' : '#f59e0b';
+    let detailHtml = '';
+    if (d.isNaturalness) {
+      const ns = d.natScore || 0;
+      detailHtml = `<div style="font-size:11px;color:#64748b;margin-top:4px;">英语口语标记‧称呼得体‧对话感‧文本长度 → 原始分：${ns}/100</div>`;
+    }
+    dimsHtml += `
+      <div class="eval-dim" style="border-color:${borderC}">
+        <h4 style="color:${color}">${d.concept}</h4>
+        <div class="stars">${stars}</div>
+        <div style="font-size:13px;color:#64748b;">${d.score}/${d.maxScore}分</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:4px;">${d.hint}</div>
+        ${detailHtml}
+      </div>`;
+  });
+  dimsHtml += '</div>';
+
+  const scoreClass = finalScoreNorm >= 70 ? 'high' : finalScoreNorm >= 50 ? 'medium' : 'low';
+  const scoreColor = finalScoreNorm >= 70 ? '#065f46' : finalScoreNorm >= 50 ? '#92400e' : '#991b1b';
+  const borderColor = finalScoreNorm >= 70 ? '#10b981' : finalScoreNorm >= 50 ? '#f59e0b' : '#ef4444';
+
+  // Reference answer
+  const refAnswer = `
+    <div style="margin-top:20px;padding:18px;background:#f0fdf4;border-radius:10px;border:2px solid #86efac;">
+      <div style="font-weight:700;color:#166534;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">📖 满分参考答案</div>
+      <div style="font-size:13px;line-height:1.9;color:#374151;background:#fff;padding:14px;border-radius:8px;">
+        <p><strong>暖暖妈咪，对对老师已经将完整的课后测评报告给了我。</strong>等我和您详细讲解下暖暖今日的表现，等我的一起看下他的强项和可以进步的地方。<strong>在我讲解的过程当中您有任何疑问或者不理解的地方，您及时和我说哈，我和您针对性的讲解。</strong></p>
+        <p>今日暖暖上的是思维训练课，这堂课主要学了<strong>排序、数字枚举、三位数认识</strong>和<strong>凑数计算</strong>这些内容。</p>
+        <p>首先讲下暖暖的<strong>优点</strong>：暖暖好<strong>喜欢课堂</strong>，<strong>会主动回答问题</strong>，<strong>专注力和理解能力都OK</strong>，学习态度非常端正。知识点方面：<strong>环节一排序能够完成并且做到有序枚举</strong>；<strong>环节二数字枚举也没问题</strong>，对于三位数理解得很好，一讲就知为什么0不可以在最前面，<strong>三位数的读法都好熟练</strong>。</p>
+        <p>不过老师有留意到一个<strong>可以进步的地方</strong>：<strong>环节三的凑数计算方面，暖暖20以内的进退位加减法是会的，但还未够熟练</strong>。特别是<strong>如何枚举凑数这部分思路会比较混乱</strong>，虽然带领着他是知道下一步如何枚举的，但<strong>有序思考和分步思考的意识需要加强</strong>，这些都需要多练习去巩固。</p>
+        <p>所以整体来讲，暖暖的基础是不错的。我的建议暖暖可以<strong>继续跟着我们的课程学习</strong>，通过后续系统性的练习，帮暖暖把<strong>有序思考和分步思考的能力打好基础</strong>。</p>
+      </div>
+    </div>`;
+
+  const feedbackEl = document.getElementById('reportWritingFeedback');
+  feedbackEl.innerHTML = `
+    <div class="score-display">
+      <div class="score-circle ${scoreClass}" style="border-color:${borderColor};color:${scoreColor};background:${finalScoreNorm>=70?'#ecfdf5':finalScoreNorm>=50?'#fffbeb':'#fef2f2'};">${finalScoreNorm}</div>
+      <div style="font-size:14px;font-weight:600;color:${scoreColor}">综合得分 / 100</div>
+    </div>
+    ${dimsHtml}
+    <div style="font-size:12px;color:#64748b;margin-top:12px;line-height:1.7;">
+      💡 <strong>评分说明：</strong>采用语义评分（非关键词匹配）。系统检测文内是否语义覆盖各维度核心概念，并综合话术自然度给出得分，满分100分。
+    </div>
+    ${refAnswer}
+  `;
+  feedbackEl.classList.add('show');
+
+  // Save text and feedback for state restoration
+  reportWritingText = text;
+  reportWritingFeedbackHTML = feedbackEl.innerHTML;
+
+  // Update state
+  reportWritingSubmitted = true;
+  reportWritingScore = finalScoreNorm;
+  btn.disabled = false;
+  btn.textContent = '重新提交 🔄';
+
+  // Low-score warning: block chapter unlock + show inline warning
+  if (finalScoreNorm < 60) {
+    const warnEl = document.getElementById('reportWritingScoreWarning');
+    if (warnEl) {
+      warnEl.innerHTML = '<div style="margin-top:12px;padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;font-size:13px;line-height:1.7;">' +
+        '<strong style="color:#dc2626;">⚠️ 得分未达60分，第2章尚未解锁。</strong><br>' +
+        '<span style="color:#64748b;">请参考上方评分回馈和满分参考答案，修改后重新提交。每个维度达到2颗星以上方可解锁下一章。</span></div>';
+      warnEl.style.display = 'block';
+    }
+    showToast('❌ 得分 ' + finalScoreNorm + ' 分，未达60分门禁，第2章尚未解锁。请参考回馈修改后重新提交', 'warning');
+  } else {
+    const warnEl = document.getElementById('reportWritingScoreWarning');
+    if (warnEl) { warnEl.innerHTML = ''; warnEl.style.display = 'none'; }
+    showToast('✅ 提交成功！得分：' + finalScoreNorm + ' 分，第2章已解锁', 'success');
+  }
+
+  saveProgress();
+  updateSidebarLocks();
+}
+
+// 字数统计
+function setupReportWritingCounter() {
+  const input = document.getElementById('reportWritingInput');
+  const counter = document.getElementById('reportWritingCount');
+  if (!input || !counter) return;
+  input.addEventListener('input', function() {
+    counter.textContent = this.value.length;
+  });
+}
+
+function tryCompleteCourse(index) {
+  if (!finalTaskSubmitted) {
+    showToast('请先完成终极考核并提交答案', 'warning');
+    return;
+  }
+  if (finalScore < 60) {
+    showToast('终极考核得分未达60分（当前' + finalScore + '分），请重新作答', 'warning');
+    return;
+  }
+  markComplete(index);
+}
+
+function updateProgress() {
+  const total = courseData.sections.length;
+  const viewed = new Set([...completedSections, currentSection]);
+  const pct = Math.round((viewed.size / total) * 100);
+  document.getElementById('progressPercent').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+  const mpbFill = document.getElementById('mpbFill');
+  if (mpbFill) mpbFill.style.width = pct + '%';
+  document.querySelectorAll('.nav-section').forEach((el, i) => {
+    if (completedSections.has(i)) el.classList.add('completed');
+  });
+}
+
+function renderQuiz(quiz, sectionIndex) {
+  if (!quiz || quiz.isDialogue) return '';
+  return `
+    <div class="quiz-card" id="quiz-${quiz.quizId || sectionIndex}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <span style="font-size:24px;">✍️</span>
+        <h3 style="font-size:16px;font-weight:700;">互动练习：选择题</h3>
+      </div>
+      <div class="quiz-question">${quiz.question}</div>
+      <div class="quiz-options">
+        ${quiz.options.map((opt, oi) => `
+          <div class="quiz-option" data-option="${oi}" onclick="selectQuizOption(this, ${oi}, '${quiz.quizId || sectionIndex}')">
+            <span class="quiz-option-label">${opt.label}</span>
+            <span>${opt.text}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="quiz-feedback" id="feedback-${quiz.quizId || sectionIndex}"></div>
+    </div>
+  `;
+}
+
+function selectQuizOption(el, optionIndex, quizId) {
+  const quiz = quizzes[quizId];
+  if (!quiz) return;
+  
+  // Check if already answered
+  if (quizId === 'quiz1' && quiz1Answered) return;
+  if (quizId === 'quiz2' && quiz2Answered) return;
+  if (quizId === 'quiz3' && quiz3Answered) return;
+  if (quizId === 'quiz4' && quiz4Answered) return;
+  if (quizId === 'quiz5' && quiz5Answered) return;
+  
+  const isCorrect = optionIndex === quiz.correct;
+  const feedbackEl = document.getElementById('feedback-' + quizId);
+  const quizCard = document.getElementById('quiz-' + quizId);
+  
+  // Mark options
+  const options = el.parentNode.querySelectorAll('.quiz-option');
+  options.forEach((opt, i) => {
+    opt.classList.remove('selected');
+    if (i === quiz.correct) opt.classList.add('correct');
+    if (i === optionIndex && !isCorrect) opt.classList.add('wrong');
+    opt.style.pointerEvents = 'none';
+  });
+  
+  // Show feedback
+  if (isCorrect) {
+    feedbackEl.innerHTML = quiz.feedback_correct;
+    feedbackEl.className = 'quiz-feedback correct show';
+    quizCard.classList.add('answered-correct');
+  } else {
+    feedbackEl.innerHTML = quiz.feedback_wrong;
+    feedbackEl.className = 'quiz-feedback wrong show';
+    quizCard.classList.add('answered-wrong');
+  }
+  
+  // Update state
+  if (quizId === 'quiz1') { quiz1Answered = true; quiz1Selected = optionIndex; }
+  if (quizId === 'quiz2') { quiz2Answered = true; quiz2Selected = optionIndex; }
+  if (quizId === 'quiz3') { quiz3Answered = true; quiz3Selected = optionIndex; }
+  if (quizId === 'quiz4') { quiz4Answered = true; quiz4Selected = optionIndex; }
+  if (quizId === 'quiz5') { quiz5Answered = true; quiz5Selected = optionIndex; }
+  
+  saveProgress();
+  updateSidebarLocks();
+}
+
+function renderDialogue(quiz, sectionIndex) {
+  if (!quiz || !quiz.isDialogue || !quiz.scenarios) return '';
+
+  // Build scenario cards
+  let scenarioCards = '<div style="margin-bottom:20px;"><h4 style="font-size:14px;font-weight:700;color:#4338ca;margin-bottom:10px;">🎭 请选择异议场景：</h4><div style="display:flex;flex-direction:column;gap:10px;">';
+  quiz.scenarios.forEach((sc, idx) => {
+    scenarioCards += `
+      <div class="scenario-card" data-scenario="${sc.id}" onclick="selectScenario('${sc.id}')" style="padding:14px;border-radius:10px;border:2px solid #e2e8f0;cursor:pointer;transition:all .2s;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="background:#4338ca;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">${idx+1}</span>
+          <strong style="font-size:14px;color:#1e293b;">${sc.title}</strong>
+        </div>
+        <p style="font-size:12px;color:#64748b;margin:0;line-height:1.5;">${sc.desc}</p>
+        <div style="margin-top:6px;font-size:11px;color:#94a3b8;">共 ${sc.rounds.length} 轮对话</div>
+      </div>`;
+  });
+  scenarioCards += '</div></div>';
+
+  // Chat UI (initially hidden)
+  const chatUI = `
+    <div id="dialogueChatArea" style="display:none;">
+      <div id="dialogueScenarioBanner" class="dialogue-scenario" style="margin-bottom:16px;"></div>
+
+      <!-- Chat history -->
+      <div id="chatHistory" class="chat-history" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;max-height:420px;overflow-y:auto;padding:8px;"></div>
+
+      <!-- Round info -->
+      <div id="roundInfo" style="display:none;background:#eff6ff;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;">
+        <span style="color:#2563eb;font-weight:600;">💬 第 <span id="currentRoundNum">1</span>/${'<span id="totalRounds">3</span>'} 轮</span>
+        <span id="roundHint" style="color:#64748b;margin-left:12px;display:none;"></span>
+      </div>
+
+      <!-- Current parent message -->
+      <div id="currentParentMsg" class="customer-bubble" style="display:none;"></div>
+
+      <!-- Input area -->
+      <div id="inputArea" style="display:none;">
+        <textarea class="reply-input" id="dialogueInput" placeholder="输入你的回应话术..." style="min-height:100px;" rows="3"></textarea>
+        <div class="dialogue-actions" style="margin-top:10px;">
+          <button class="btn" id="submitDialogueBtn" onclick="submitDialogueRound()">发送回应 📤</button>
+          <button class="btn btn-outline" onclick="resetAllDialogue()">🔄 换个场景</button>
+        </div>
+      </div>
+
+      <!-- Per-round feedback -->
+      <div id="roundFeedback" class="ai-feedback-panel"></div>
+
+      <!-- Final summary -->
+      <div id="finalSummary" class="ai-feedback-panel" style="display:none;"></div>
+    </div>`;
+
+  return `
+    <div class="dialogue-container" id="dialogue-container">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <span style="font-size:24px;">🤖</span>
+        <h3 style="font-size:16px;font-weight:700;">互动练习：AI模拟对话（多轮）</h3>
+      </div>
+      <div id="scenarioSelector">${scenarioCards}</div>
+      ${chatUI}
+    </div>`;
+}
+
+// ====== 多轮对话系统状态 ======
+let activeScenarioId = null;
+let currentRoundIdx = 0;
+let roundScores = [];
+let chatMessages = [];
+
+// 选择场景
+function selectScenario(scenarioId) {
+  const quiz = quizzes['quiz4_dialogue'];
+  const sc = quiz.scenarios.find(s => s.id === scenarioId);
+  if (!sc) return;
+
+  activeScenarioId = scenarioId;
+  currentRoundIdx = 0;
+  roundScores = [];
+  chatMessages = [];
+
+  // Highlight selected card
+  document.querySelectorAll('.scenario-card').forEach(card => {
+    card.style.borderColor = card.dataset.scenario === scenarioId ? '#4338bc' : '#e2e8f0';
+    card.style.background = card.dataset.scenario === scenarioId ? '#eef2ff' : '#fff';
+  });
+
+  // Show chat area, hide selector
+  document.getElementById('scenarioSelector').style.display = 'none';
+  document.getElementById('dialogueChatArea').style.display = 'block';
+
+  // Set scenario banner
+  const banner = document.getElementById('dialogueScenarioBanner');
+  banner.innerHTML = `<strong>📋 场景：</strong>${sc.scenario}`;
+
+  // Set round count
+  const totalRoundsEl = document.getElementById('totalRounds');
+  if (totalRoundsEl) totalRoundsEl.textContent = sc.rounds.length;
+
+  // Clear and start first round
+  document.getElementById('chatHistory').innerHTML = '';
+  document.getElementById('roundFeedback').innerHTML = '';
+  document.getElementById('roundFeedback').className = 'ai-feedback-panel';
+  document.getElementById('finalSummary').style.display = 'none';
+
+  startRound(0);
+}
+
+// 启动某一轮对话
+function startRound(roundIdx) {
+  const quiz = quizzes['quiz4_dialogue'];
+  const sc = quiz.scenarios.find(s => s.id === activeScenarioId);
+  if (!sc || roundIdx >= sc.rounds.length) return;
+
+  currentRoundIdx = roundIdx;
+  const rd = sc.rounds[roundIdx];
+
+  // Update round info
+  document.getElementById('roundInfo').style.display = 'block';
+  document.getElementById('currentRoundNum').textContent = roundIdx + 1;
+  const hintEl = document.getElementById('roundHint');
+  hintEl.style.display = 'inline';
+  hintEl.textContent = '💡 ' + rd.hint;
+
+  // Show parent message
+  const parentMsgEl = document.getElementById('currentParentMsg');
+  parentMsgEl.style.display = 'block';
+  parentMsgEl.innerHTML = `<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;"><span style="font-size:14px;">👨‍👩‍👧</span><strong style="font-size:12px;color:#64748b;">家长</strong></div>${rd.parentMsg}`;
+
+  // Show input area, clear previous feedback
+  document.getElementById('inputArea').style.display = 'block';
+  document.getElementById('roundFeedback').innerHTML = '';
+  document.getElementById('roundFeedback').className = 'ai-feedback-panel';
+
+  const input = document.getElementById('dialogueInput');
+  input.value = '';
+  input.disabled = false;
+  input.focus();
+
+  // Scroll to bottom of chat area
+  scrollToChatBottom();
+}
+
+// 提交某一轮回应
+function submitDialogueRound() {
+  const quiz = quizzes['quiz4_dialogue'];
+  const sc = quiz.scenarios.find(s => s.id === activeScenarioId);
+  if (!sc || currentRoundIdx >= sc.rounds.length) return;
+
+  const rd = sc.rounds[currentRoundIdx];
+  const input = document.getElementById('dialogueInput');
+  const text = input.value.trim();
+
+  if (!text) {
+    showToast('请先输入你的回应内容', 'warning');
+    return;
+  }
+
+  // Add CC message to chat history
+  addChatMessage('cc', text);
+
+  // Score this round using semantic matching (same formula as report writing)
+  let totalWeight = 0;
+  let totalScore = 0;
+  let dimResults = [];
+
+  rd.dimensions.forEach(dim => {
+    totalWeight += dim.weight;
+    const coverage = semanticMatch(text, dim.terms);
+    const dimScore = Math.round(coverage * dim.weight);
+    totalScore += dimScore;
+    dimResults.push({
+      concept: dim.concept,
+      score: dimScore,
+      maxScore: dim.weight,
+      coverage: coverage
+    });
+  });
+
+  // Normalize to /100 scale
+  const roundScoreNorm = Math.round((totalScore / totalWeight) * 100);
+  roundScores.push(roundScoreNorm);
+
+  // Show CC bubble in chat with mini-score badge
+  addChatBubbleWithScore(text, roundScoreNorm);
+
+  // Build per-round feedback HTML
+  let fbHtml = '<div style="padding:16px;background:#f8fafc;border-radius:10px;border-left:4px solid #4338ca;margin-top:12px;">';
+  fbHtml += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+    <div class="score-circle ${roundScoreNorm >= 70 ? 'high' : roundScoreNorm >= 50 ? 'medium' : 'low'}" style="width:40px;height:40px;font-size:16px;flex-shrink:0;">${roundScoreNorm}</div>
+    <div>
+      <div style="font-weight:700;font-size:14px;color:#1e293b;">第${currentRoundIdx+1}轮得分：${roundScoreNorm}/100</div>
+      <div style="font-size:11px;color:#64748b;">维度详情 👇</div>
+    </div>`;
+
+  fbHtml += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;">';
+  dimResults.forEach(d => {
+    const pct = d.coverage >= 0.7 ? '✅' : d.coverage >= 0.3 ? '🟡' : '❌';
+    fbHtml += `<div style="font-size:12px;padding:4px 8px;background:${d.coverage>=0.5?'#dcfce7':'#fef3c7'};border-radius:6px;">
+      <span style="color:#1e293b">${d.concept}</span> 
+      <span style="float:right;font-weight:600;color:${d.coverage>=0.5?'#166534':'#92400e'}">${d.score}/${d.maxScore} ${pct}</span>
+    </div>`;
+  });
+  fbHtml += '</div>';
+
+  // Reference answer for this round
+  fbHtml += `<details style="margin-top:10px;"><summary style="cursor:pointer;font-size:13px;font-weight:600;color:#2563eb;padding:4px 0;">📖 查看本轮参考答案</summary>
+    <div style="margin-top:8px;padding:12px;background:#fff;border-radius:8px;font-size:13px;line-height:1.8;color:#374151;border:1px solid #e2e8f0;">${rd.reference}</div></details>`;
+
+  fbHtml += '</div>';
+
+  const fbEl = document.getElementById('roundFeedback');
+  fbEl.innerHTML = fbHtml;
+  fbEl.className = 'ai-feedback-panel show';
+
+  // Hide input until user reads feedback
+  document.getElementById('inputArea').style.display = 'none';
+
+  // Determine if there's a next round
+  if (rd.isFinal) {
+    // End conversation - show final summary after a delay
+    setTimeout(() => showFinalSummary(sc), 800);
+  } else {
+    // Show "next round" button - parent will respond based on score quality
+    setTimeout(() => showNextRoundButton(rd), 500);
+  }
+
+  saveProgress();
+}
+
+// 在聊天记录中添加消息
+function addChatMessage(role, text) {
+  const history = document.getElementById('chatHistory');
+  if (role === 'parent') {
+    history.innerHTML += `<div class="customer-bubble" style="animation:fadeInUp .3s ease;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;"><span style="font-size:14px;">👨‍👩‍👧</span><strong style="font-size:12px;color:#64748b;">家长</strong></div>
+      ${text}
+    </div>`;
+  } else {
+    chatMessages.push({ role: 'cc', text: text });
+  }
+  scrollToChatBottom();
+}
+
+function addChatBubbleWithScore(text, score) {
+  const history = document.getElementById('chatHistory');
+  const color = score >= 70 ? '#10b981' : score >= 50 ? '#f59e0b' : '#ef4444';
+  history.innerHTML += `<div style="background:${score>=70?'#ecfdf5':score>=50?'#fffbeb':'#fef2f2'};border:1px solid ${color};border-radius:12px;padding:12px 14px;margin-left:20px;animation:fadeInUp .3s ease;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+      <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:14px;">💼</span><strong style="font-size:12px;color:#64748b;">你（CC）</strong></div>
+      <span style="font-size:11px;font-weight:700;color:${color};background:${color}15;padding:2px 8px;border-radius:10px;">${score}分</span>
+    </div>
+    <div style="font-size:13px;line-height:1.7;color:#374151;">${text.replace(/\n/g, '<br>')}</div>
+  </div>`;
+  scrollToChatBottom();
+}
+
+// 显示「下一轮」按钮，并根据本轮得分决定家长的下一句话
+function showNextRoundButton(roundData) {
+  const lastScore = roundScores[roundScores.length - 1] || 0;
+  const nextParentMsg = lastScore >= 60 ? roundData.nextParentOnGood : roundData.nextParentOnWeak;
+
+  const fbEl = document.getElementById('roundFeedback');
+
+  // Add "continue" button
+  fbEl.innerHTML += `
+    <div style="margin-top:14px;text-align:center;">
+      <button class="btn" onclick="goToNextRound()" style="font-size:14px;padding:10px 28px;">
+        继续下一轮 💬
+      </button>
+      ${lastScore < 60 ? '<div style="margin-top:8px;font-size:12px;color:#f59e0b;">⚠️ 本轮得分偏低，家长会更坚持立场，但你可以尝试挽回来！</div>' : ''}
+    </div>`;
+}
+
+// 进入下一轮
+function goToNextRound() {
+  const quiz = quizzes['quiz4_dialogue'];
+  const sc = quiz.scenarios.find(s => s.id === activeScenarioId);
+  if (!sc) return;
+
+  const nextIdx = currentRoundIdx + 1;
+  if (nextIdx >= sc.rounds.length) {
+    showFinalSummary(sc);
+    return;
+  }
+
+  // Get parent's response based on last round score
+  const lastRoundData = sc.rounds[currentRoundIdx];
+  const lastScore = roundScores[roundScores.length - 1] || 0;
+  const parentResponse = lastScore >= 60 ? lastRoundData.nextParentOnGood : lastRoundData.nextParentOnWeak;
+
+  // Add parent response to chat
+  addChatMessage('parent', parentResponse);
+
+  // Start next round
+  startRound(nextIdx);
+}
+
+// 显示最终总结
+function showFinalSummary(scenario) {
+  const avgScore = roundScores.length > 0
+    ? Math.round(roundScores.reduce((a, b) => a + b, 0) / roundScores.length)
+    : 0;
+
+  // Update state
+  quiz4DialogueAnswered = true;
+  quiz4DialogueScore = avgScore;
+
+  // Build full reference dialogue
+  let refHtml = '<div style="margin-top:16px;padding:16px;background:#eff6ff;border-radius:10px;border:2px solid #93c5fd;">';
+  refHtml += '<div style="font-weight:700;color:#1e40af;font-size:14px;margin-bottom:12px;display:flex;align-items:center;gap:6px;">📖 完整参考对话</div>';
+
+  scenario.rounds.forEach((rd, i) => {
+    refHtml += `<div style="margin-bottom:14px;${i < scenario.rounds.length-1 ? 'padding-bottom:14px;border-bottom:1px dashed #bfdbfe;' : ''}">
+      <div style="font-weight:600;font-size:12px;color:#3b82f6;margin-bottom:6px;">── 第${i+1}轮 ──</div>
+      <div style="font-size:13px;line-height:1.7;color:#374151;">
+        <div style="margin:6px 0;padding:8px 12px;background:#fef3c7;border-radius:8px;"><strong style="color:#92400e;">👨‍👩‍👧 家长：</strong>${rd.parentMsg}</div>
+        <div style="margin:6px 0;padding:8px 12px;background:#dcfce7;border-radius:8px;"><strong style="color:#166534;">💼 CC（参考）：</strong>${rd.reference}</div>
+        ${rd.isFinal ? '' : `<div style="margin:6px 0;padding:8px 12px;background:#f3f4f6;border-radius:8px;font-size:12px;color:#6b7280;"><em>→ （若CC回应得好）家长继续：${rd.nextParentOnGood}</div>
+        <div style="margin:6px 0;padding:8px 12px;background:#f3f4f6;border-radius:8px;font-size:12px;color:#6b7280;"><em>→ （若CC回应一般）家长继续：${rd.nextParentOnWeak}</div>`}
+      </div>
+    </div>`;
+  });
+  refHtml += '</div>';
+
+  const summaryEl = document.getElementById('finalSummary');
+  const passed = avgScore >= 60;
+
+  summaryEl.innerHTML = `
+    <div style="padding:24px;background:linear-gradient(135deg,#667eea76,#764ba276);border-radius:14px;text-align:center;margin-top:16px;">
+      <div style="font-size:48px;margin-bottom:4px;">${passed ? '🎉' : '📝'}</div>
+      <div class="score-circle ${avgScore >= 70 ? 'high' : avgScore >= 50 ? 'medium' : 'low'}" style="width:72px;height:72px;font-size:28px;margin:0 auto 12px;">${avgScore}</div>
+      <div style="font-size:16px;font-weight:700;color:#1e293b;">对话练习完成！</div>
+      <div style="font-size:13px;color:#475569;">综合平均得分：${avgScore}/100 · 共${roundScores.length}轮 · ${passed ? '✅ 通过' : '❌ 未通过（需≥60分）'}</div>
+
+      <div style="margin-top:16px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;">
+        ${roundScores.map((s, i) => `
+          <div style="padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;background:${s>=70?'#dcfce7':s>=50?'#fef3c7':'#fee2e2'};color:${s>=70?'#166534':s>=50?'#92400e':'#991b1b'};">
+            第${i+1}轮：${s}分
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    ${refHtml}
+    <div style="margin-top:14px;text-align:center;">
+      <button class="btn btn-outline" onclick="resetAllDialogue()">🔄 换个场景再试</button>
+    </div>
+  `;
+  summaryEl.style.display = 'block';
+
+  // Hide input area
+  document.getElementById('inputArea').style.display = 'none';
+  document.getElementById('currentParentMsg').style.display = 'none';
+  document.getElementById('roundInfo').style.display = 'none';
+
+  saveProgress();
+  updateSidebarLocks();
+  showToast('对话练习完成！平均得分：' + avgScore + ' 分', passed ? 'success' : 'info');
+  scrollToChatBottom();
+}
+
+// 重置全部对话（回到场景选择）
+function resetAllDialogue() {
+  activeScenarioId = null;
+  currentRoundIdx = 0;
+  roundScores = [];
+  chatMessages = [];
+
+  // Reset UI
+  document.getElementById('scenarioSelector').style.display = 'block';
+  document.getElementById('dialogueChatArea').style.display = 'none';
+  document.getElementById('chatHistory').innerHTML = '';
+  document.getElementById('roundFeedback').innerHTML = '';
+  document.getElementById('roundFeedback').className = 'ai-feedback-panel';
+  document.getElementById('finalSummary').style.display = 'none';
+  document.getElementById('finalSummary').innerHTML = '';
+
+  // Reset scenario cards
+  document.querySelectorAll('.scenario-card').forEach(card => {
+    card.style.borderColor = '#e2e8f0';
+    card.style.background = '#fff';
+  });
+}
+
+function scrollToChatBottom() {
+  const el = document.getElementById('chatHistory');
+  if (el) setTimeout(() => { el.scrollTop = el.scrollHeight; }, 100);
+}
+
+// ====== 第6章 终极考核对话系统（自由对话 + AI 评分模式）======
+// 参照「台湾团队课后服务流程及话术」成功经验：AI 扮演家长 + AI 综合评分
+let finalExchangeCount = 0;
+let finalConversation = [];
+let finalSubmitted = false;
+let finalPendingCall = false;
+let finalActiveTopicIdx = -1;
+
+// ============================================================
+// AI API 配置（公司统一直连 DeepSeek — 学员无需配置）
+// Key 已做简单混淆（hex 编码），运行时还原
+// ============================================================
+// ============================================================
+// AI API 配置（小米 MiMo — 终极考核专用，密钥构建时注入）
+// Key 在构建时由 _build.js 以 hex 混淆形式注入，运行时还原
+// ============================================================
+const _HEX2 = '736b2d637765776465737462366a6437697a646b3035336d376f327a3572613134386e6e6767616c31386b757631376f303167';   // 占位符，_build.js 构建时替换为 hex 混淆 key
+function _rK2() {
+  // 安全保护：未注入（仍是占位符）时返回空，避免把占位符当 key 发出去
+  if (!_HEX2 || _HEX2.indexOf('__') === 0) return '';
+  let o = '';
+  for (let i = 0; i < _HEX2.length; i += 2) o += String.fromCharCode(parseInt(_HEX2.substr(i, 2), 16));
+  return o;
+}
+const MIMO_API_URL = 'https://api.xiaomimimo.com/v1/chat/completions';
+const MIMO_MODEL = 'mimo-v2.5-pro';
+
+// OpenAI 兼容客户端（轻量 fetch 封装，模拟 client.chat.completions.create）
+function createOpenAIClient({ apiKey, baseURL }) {
+  return {
+    chat: {
+      completions: {
+        async create(body, timeoutMs = 25000) {
+          const ctrl = new AbortController();
+          const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+          try {
+            const payload = {
+              ...body,
+              model: body.model || MIMO_MODEL,
+              // mimo-v2.5-pro 需关闭 thinking 才能自定义 temperature；max_tokens 参数名映射
+              thinking: { type: 'disabled' },
+              max_completion_tokens: body.max_completion_tokens || body.max_tokens || 500
+            };
+            delete payload.max_tokens;
+            const response = await fetch(baseURL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + apiKey
+              },
+              body: JSON.stringify(payload),
+              signal: ctrl.signal
+            });
+            if (!response.ok) {
+              const errText = await response.text();
+              let errMsg = 'AI 服务暂时不可用 (' + response.status + ')';
+              try { const j = JSON.parse(errText); errMsg = j.error?.message || j.message || errMsg; } catch(e) {}
+              throw new Error(errMsg);
+            }
+            return await response.json();
+          } catch (err) {
+            if (err.name === 'AbortError') throw new Error('AI 回应超时，请重试');
+            throw err;
+          } finally {
+            clearTimeout(timer);
+          }
+        }
+      }
+    }
+  };
+}
+const mimoClient = createOpenAIClient({ apiKey: _rK2(), baseURL: MIMO_API_URL });
+async function callMiMo(body, timeoutMs) { return mimoClient.chat.completions.create(body, timeoutMs); }
+
+// MiMo 健康检查（TTL 缓存）
+let mimoAvailable = null;
+let mimoCheckedAt = 0;
+async function checkMiMoHealth() {
+  const ttl = mimoAvailable ? 5 * 60 * 1000 : 30 * 1000;
+  if (mimoAvailable !== null && Date.now() - mimoCheckedAt < ttl) return mimoAvailable;
+  try {
+    const data = await callMiMo({ model: MIMO_MODEL, messages: [{ role: 'user', content: 'ping' }], max_tokens: 1, temperature: 0 }, 15000);
+    mimoAvailable = !!(data && data.choices);
+  } catch (e) {
+    console.warn('MiMo 健康检查失败:', e.message);
+    mimoAvailable = false;
+  }
+  mimoCheckedAt = Date.now();
+  return mimoAvailable;
+}
+
+// 学员练习限流（每小时100次）
+let _finalCallCount = 0;
+let _finalCallHour = Math.floor(Date.now() / 3600000);
+function _checkFinalRateLimit() {
+  const nowHour = Math.floor(Date.now() / 3600000);
+  if (nowHour !== _finalCallHour) { _finalCallHour = nowHour; _finalCallCount = 0; }
+  if (_finalCallCount >= 100) return false;
+  _finalCallCount++;
+  return true;
+}
+// 渲染话题标签栏
+function renderFinalTopicsBar() {
+  const quiz = quizzes['quiz6_final'];
+  const bar = document.getElementById('finalTopicsBar');
+  if (!bar) return;
+  bar.innerHTML = quiz.topics.map((t, i) =>
+    '<span id="final-topic-' + i + '" style="padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;background:#e2e8f0;color:#64748b;">' + t.label + '</span>'
+  ).join('');
+}
+
+// 简单的话题识别
+function inferFinalTopic(userText) {
+  const text = (userText || '').toLowerCase();
+  const topicKeywords = [
+    {
+        "idx": 0,
+        "keys": [
+            "今天",
+            "上课",
+            "感受",
+            "怎么",
+            "觉得",
+            "开心",
+            "喜欢",
+            "体验",
+            "上课怎么样"
+        ]
+    },
+    {
+        "idx": 1,
+        "keys": [
+            "报告",
+            "学了",
+            "进步",
+            "表现",
+            "互动",
+            "积极",
+            "回答",
+            "解读",
+            "优点",
+            "缺点"
+        ]
+    },
+    {
+        "idx": 2,
+        "keys": [
+            "黄金期",
+            "黄金",
+            "关键期",
+            "大脑",
+            "思维",
+            "错过",
+            "关键",
+            "重要",
+            "108课纲",
+            "私中"
+        ]
+    },
+    {
+        "idx": 3,
+        "keys": [
+            "师资",
+            "老师",
+            "专业",
+            "介绍",
+            "产品",
+            "课程",
+            "特色",
+            "3位老师",
+            "排课",
+            "班导",
+            "授课",
+            "小班",
+            "VIP THINK"
+        ]
+    },
+    {
+        "idx": 4,
+        "keys": [
+            "方案",
+            "课包",
+            "课时",
+            "价格",
+            "优惠",
+            "性价比",
+            "折扣",
+            "分期",
+            "AFTEE",
+            "信用卡",
+            "CP值",
+            "台币",
+            "48堂"
+        ]
+    },
+    {
+        "idx": 5,
+        "keys": [
+            "理解",
+            "明白",
+            "不过",
+            "但是",
+            "顾虑",
+            "担心",
+            "商量",
+            "先生",
+            "异议",
+            "考虑"
+        ]
+    },
+    {
+        "idx": 6,
+        "keys": [
+            "不如",
+            "今天",
+            "帮您",
+            "安排",
+            "报名",
+            "办理",
+            "确认",
+            "预留",
+            "时段",
+            "关单",
+            "成交",
+            "缴费",
+            "连结"
+        ]
+    },
+    {
+        "idx": 7,
+        "keys": [
+            "line",
+            "Line",
+            "24小时",
+            "随时",
+            "找我",
+            "跟进",
+            "回复",
+            "决定",
+            "入学指南",
+            "家长端",
+            "打卡"
+        ]
+    }
+];
+  for (const t of topicKeywords) {
+    if (t.keys.some(k => text.indexOf(k.toLowerCase()) >= 0)) return t.idx;
+  }
+  return -1;
+}
+
+function updateFinalTopicHighlight(idx) {
+  if (idx < 0) return;
+  finalActiveTopicIdx = idx;
+  const quiz = quizzes['quiz6_final'];
+  for (let i = 0; i < quiz.topics.length; i++) {
+    const el = document.getElementById('final-topic-' + i);
+    if (!el) continue;
+    if (i === idx) {
+      el.style.background = '#2563eb';
+      el.style.color = '#fff';
+    } else if (i < idx) {
+      el.style.background = '#dcfce7';
+      el.style.color = '#065f46';
+    } else {
+      el.style.background = '#e2e8f0';
+      el.style.color = '#64748b';
+    }
+  }
+  const topicLabel = document.getElementById('finalCurrentTopic');
+  if (topicLabel) topicLabel.textContent = quiz.topics[idx].label;
+}
+
+// 添加一条消息到对话区
+function addFinalMessage(role, text) {
+  const history = document.getElementById('finalChatHistory');
+  if (!history) return;
+  const placeholder = history.querySelector('div[style*="text-align:center"]');
+  if (placeholder) placeholder.remove();
+
+  const isUser = role === 'user';
+  const avatar = isUser ? '🧑‍💼' : '👩';
+  const roleLabel = isUser ? 'CC（你）' : '家长';
+  const bubbleStyle = isUser
+    ? 'background:#dbeafe;border-left:4px solid #2563eb;color:#1e3a8a;'
+    : 'background:#fff;border-left:4px solid #94a3b8;color:#1e293b;';
+  const alignStyle = isUser ? 'align-items:flex-end;' : 'align-items:flex-start;';
+
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;flex-direction:column;' + alignStyle;
+  div.innerHTML =
+    '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">' +
+      '<span style="font-size:14px;">' + avatar + '</span>' +
+      '<strong style="font-size:12px;color:#64748b;">' + roleLabel + '</strong>' +
+    '</div>' +
+    '<div style="max-width:85%;padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.7;' + bubbleStyle + '">' +
+      text.replace(/\n/g, '<br>') +
+    '</div>';
+  history.appendChild(div);
+  scrollFinalChatBottom();
+}
+
+function scrollFinalChatBottom() {
+  const el = document.getElementById('finalChatHistory');
+  if (el) setTimeout(() => { el.scrollTop = el.scrollHeight; }, 100);
+}
+
+// ============================================================
+// 开始考核
+// ============================================================
+function startFinalExam() {
+  const quiz = quizzes['quiz6_final'];
+
+  finalExchangeCount = 0;
+  finalConversation = [];
+  finalSubmitted = false;
+  finalPendingCall = false;
+  finalActiveTopicIdx = -1;
+
+  document.getElementById('finalStartArea').style.display = 'none';
+  document.getElementById('finalSummaryArea').style.display = 'none';
+
+  document.getElementById('finalChatHistory').style.display = 'flex';
+  document.getElementById('finalChatHistory').innerHTML = '';
+  document.getElementById('finalInputArea').style.display = 'block';
+  document.getElementById('finalMetaBar').style.display = 'flex';
+  document.getElementById('finalEndBtn').style.display = 'none';
+  document.getElementById('finalSubmitDialogueBtn').style.display = 'inline-block';
+  document.getElementById('finalSubmitDialogueBtn').disabled = false;
+  document.getElementById('finalTypingIndicator').style.display = 'none';
+  document.getElementById('finalExchangeCount').textContent = '0';
+  document.getElementById('finalCurrentTopic').textContent = '-';
+
+  document.getElementById('finalTopicsBar').style.display = 'flex';
+  renderFinalTopicsBar();
+
+  addFinalMessage('parent', quiz.openingLine);
+  finalConversation.push({ role: 'parent', content: quiz.openingLine });
+  finalExchangeCount++;
+  document.getElementById('finalExchangeCount').textContent = finalExchangeCount;
+
+  const input = document.getElementById('finalDialogueInput');
+  input.value = '';
+  input.disabled = false;
+  input.placeholder = '输入你的回应话术...（Ctrl+Enter 发送）';
+  input.focus();
+}
+
+// ============================================================
+// 发送消息并获取 AI 家长回复
+// ============================================================
+async function submitFinalMessage() {
+  if (finalSubmitted || finalPendingCall) return;
+  const quiz = quizzes['quiz6_final'];
+  const input = document.getElementById('finalDialogueInput');
+  const text = (input.value || '').trim();
+  if (!text) { showToast('请先输入回应话术', 'warning'); return; }
+  if (text.length < 4) { showToast('回应至少4个字', 'warning'); return; }
+
+  if (!_checkFinalRateLimit()) {
+    showToast('本小时练习次数已达上限，请稍后再试', 'warning');
+    return;
+  }
+
+  addFinalMessage('user', text);
+  finalConversation.push({ role: 'user', content: text });
+  finalExchangeCount++;
+  document.getElementById('finalExchangeCount').textContent = finalExchangeCount;
+
+  const topicIdx = inferFinalTopic(text);
+  if (topicIdx >= 0) updateFinalTopicHighlight(topicIdx);
+
+  input.value = '';
+  input.disabled = true;
+  document.getElementById('finalSubmitDialogueBtn').disabled = true;
+  document.getElementById('finalTypingIndicator').style.display = 'block';
+  finalPendingCall = true;
+
+  try {
+    const messages = [
+      { role: 'system', content: quiz.parentSystemPrompt },
+      ...finalConversation.slice(-12).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content })),
+      { role: 'user', content: text }
+    ];
+
+    const data = await callMiMo({
+      messages: messages,
+      max_tokens: 120,
+      temperature: 0.3
+    });
+
+    const parentReply = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content ? data.choices[0].message.content : '').trim() || '（家长未回应，请继续）';
+
+    addFinalMessage('parent', parentReply);
+    finalConversation.push({ role: 'parent', content: parentReply });
+    finalExchangeCount++;
+    document.getElementById('finalExchangeCount').textContent = finalExchangeCount;
+
+    if (finalExchangeCount >= 6) {
+      document.getElementById('finalEndBtn').style.display = 'inline-block';
+    }
+  } catch (err) {
+    console.error('AI 家长调用失败:', err);
+    showToast('⚠️ AI 家长回应失败：' + (err.message || '未知错误') + '，请重试', 'warning');
+    finalExchangeCount--;
+    document.getElementById('finalExchangeCount').textContent = finalExchangeCount;
+  } finally {
+    finalPendingCall = false;
+    document.getElementById('finalTypingIndicator').style.display = 'none';
+    input.disabled = false;
+    document.getElementById('finalSubmitDialogueBtn').disabled = false;
+    input.focus();
+  }
+}
+
+// ============================================================
+// 结束对话并触发 AI 评分
+// ============================================================
+async function endFinalConversation() {
+  if (finalSubmitted || finalPendingCall) return;
+  if (finalExchangeCount < 4) {
+    showToast('对话轮数过少（至少 4 轮），请继续对话', 'warning');
+    return;
+  }
+
+  if (!confirm('确定要结束对话并提交 AI 评分吗？结束后将无法继续追加对话。')) {
+    return;
+  }
+
+  finalSubmitted = true;
+  document.getElementById('finalSubmitDialogueBtn').disabled = true;
+  document.getElementById('finalEndBtn').disabled = true;
+  document.getElementById('finalDialogueInput').disabled = true;
+
+  const summaryEl = document.getElementById('finalSummaryArea');
+  summaryEl.style.display = 'block';
+  summaryEl.innerHTML = '<div style="text-align:center;padding:30px;"><div style="font-size:14px;color:#64748b;">⏳ AI 评分官综合分析中，请稍候（约 5-10 秒）...</div></div>';
+
+  try {
+    await evaluateFinalWithAI();
+  } catch (err) {
+    console.error('AI 评分失败:', err);
+    finalSubmitted = false;
+    document.getElementById('finalSubmitDialogueBtn').disabled = false;
+    document.getElementById('finalEndBtn').disabled = false;
+    document.getElementById('finalDialogueInput').disabled = false;
+    summaryEl.innerHTML = '<div style="padding:16px;background:#fef2f2;border-radius:8px;color:#991b1b;">⚠️ AI 评分失败：' + (err.message || '未知错误') + '<br><br>请稍后重试。</div>';
+  }
+}
+
+// ============================================================
+// AI 综合评分
+// ============================================================
+async function evaluateFinalWithAI() {
+  const quiz = quizzes['quiz6_final'];
+
+  const conversationText = finalConversation.map(m =>
+    (m.role === 'user' ? '🧑‍💼 CC' : '👩 家长') + '：' + m.content
+  ).join('\n');
+
+  const evalMessages = [
+    { role: 'system', content: quiz.evaluatorSystemPrompt },
+    { role: 'user', content: '以下是 CC 学员的课后电话对话记录，请进行综合评分：\n\n' + conversationText + '\n\n共 ' + finalExchangeCount + ' 轮对话（家长 + CC 合计）。' }
+  ];
+
+  const data = await callMiMo({
+    messages: evalMessages,
+    max_tokens: 500,
+    temperature: 0.3,
+    response_format: { type: 'json_object' }
+  });
+
+  const rawText = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content ? data.choices[0].message.content : '').trim();
+
+  let result;
+  try {
+    const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+    result = JSON.parse(jsonMatch ? jsonMatch[0] : rawText);
+  } catch (e) {
+    console.warn('AI 评分 JSON 解析失败，原始返回:', rawText);
+    result = {
+      score: 65, process: 20, accuracy: 20, rapport: 18, coverage: 7,
+      feedback: 'AI 评分解析出现问题，已给予基础分数。建议重做以获得准确评分。',
+      strengths: ['完成了对话'],
+      improvements: ['可再详细一些']
+    };
+  }
+
+  finalScore = Math.min(Math.max(parseInt(result.score) || 0, 0), 100);
+  finalTaskSubmitted = true;
+  showToast('终极考核已完成，得分：' + finalScore + '分', finalScore >= 60 ? 'success' : 'warning');
+
+  renderFinalScoreFeedback(result);
+  saveProgress();
+  updateSidebarLocks();
+  checkCertificate();
+}
+
+// ============================================================
+// 渲染评分反馈
+// ============================================================
+function renderFinalScoreFeedback(result) {
+  const scoreClass = finalScore >= 80 ? 'high' : finalScore >= 60 ? 'medium' : 'low';
+  const scoreLabel = finalScore >= 80 ? '优秀' : finalScore >= 60 ? '通过' : '未通过';
+
+  const html =
+    '<div class="score-display">' +
+      '<div class="score-circle ' + scoreClass + '" style="width:80px;height:80px;font-size:32px;">' + finalScore + '</div>' +
+      '<p style="margin-top:8px;font-size:16px;font-weight:700;">' + scoreLabel + '（满分100分）</p>' +
+    '</div>' +
+    '<div class="eval-dimensions" style="margin-top:20px;">' +
+      '<div class="eval-dim"><h4>流程规范性</h4><div class="stars">' + '⭐'.repeat(Math.round((result.process || 0) / 6)) + '</div><p style="font-size:24px;font-weight:800;color:var(--primary);">' + (result.process || 0) + '<span style="font-size:14px;color:var(--text-secondary);">/30</span></p></div>' +
+      '<div class="eval-dim"><h4>信息准确性</h4><div class="stars">' + '⭐'.repeat(Math.round((result.accuracy || 0) / 6)) + '</div><p style="font-size:24px;font-weight:800;color:var(--primary);">' + (result.accuracy || 0) + '<span style="font-size:14px;color:var(--text-secondary);">/30</span></p></div>' +
+      '<div class="eval-dim"><h4>服务亲和力</h4><div class="stars">' + '⭐'.repeat(Math.round((result.rapport || 0) / 6)) + '</div><p style="font-size:24px;font-weight:800;color:var(--primary);">' + (result.rapport || 0) + '<span style="font-size:14px;color:var(--text-secondary);">/30</span></p></div>' +
+      '<div class="eval-dim"><h4>话题覆盖度</h4><div class="stars">' + '⭐'.repeat(Math.ceil((result.coverage || 0) / 2)) + '</div><p style="font-size:24px;font-weight:800;color:var(--accent);">' + (result.coverage || 0) + '<span style="font-size:14px;color:var(--text-secondary);">/10</span></p></div>' +
+    '</div>' +
+    '<div style="margin-top:16px;font-size:13px;color:var(--text-secondary);">📝 共 ' + finalExchangeCount + ' 轮对话（家长 + CC 合计）</div>' +
+    '<div style="margin-top:20px;padding:16px;background:#f8fafc;border-radius:10px;border-left:4px solid var(--primary);">' +
+      '<strong>📋 AI 评语：</strong>' +
+      '<p style="margin-top:6px;line-height:1.8;color:var(--text);">' + (result.feedback || '') + '</p>' +
+      ((result.strengths && result.strengths.length) ? '<p style="margin-top:10px;"><strong>✅ 优点：</strong>' + result.strengths.map(s => '<span style="display:inline-block;background:#dcfce7;padding:2px 8px;border-radius:4px;margin:2px 4px 2px 0;font-size:12px;">' + s + '</span>').join('') + '</p>' : '') +
+      ((result.improvements && result.improvements.length) ? '<p style="margin-top:10px;"><strong>💡 改进方向：</strong>' + result.improvements.map(s => '<span style="display:inline-block;background:#fef3c7;padding:2px 8px;border-radius:4px;margin:2px 4px 2px 0;font-size:12px;">' + s + '</span>').join('') + '</p>' : '') +
+    '</div>' +
+    '<div style="margin-top:20px;padding-top:16px;border-top:2px dashed var(--border);text-align:center;">' +
+      '<p style="font-size:14px;color:var(--text-secondary);margin-bottom:12px;">' + (finalScore >= 60 ? '✅ 已通过！如想继续练习可以重做一次' : '❌ 未能通过，建议重做练习（重点关注 AI 给出的改进方向）') + '</p>' +
+      '<button class="btn" onclick="resetFinalDialogue()" style="min-width:180px;">🔄 重新作答</button>' +
+    '</div>';
+
+  const summaryEl = document.getElementById('finalSummaryArea');
+  summaryEl.innerHTML = html;
+  summaryEl.style.display = 'block';
+  summaryEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============================================================
+// 重置（重新作答）
+// ============================================================
+function resetFinalDialogue() {
+  finalExchangeCount = 0;
+  finalConversation = [];
+  finalSubmitted = false;
+  finalPendingCall = false;
+  finalActiveTopicIdx = -1;
+  finalTaskSubmitted = false;
+  finalScore = 0;
+
+  document.getElementById('finalStartArea').style.display = 'block';
+  document.getElementById('finalChatHistory').style.display = 'none';
+  document.getElementById('finalChatHistory').innerHTML = '';
+  document.getElementById('finalMetaBar').style.display = 'none';
+  document.getElementById('finalInputArea').style.display = 'none';
+  document.getElementById('finalSummaryArea').style.display = 'none';
+  document.getElementById('finalTopicsBar').style.display = 'none';
+  document.getElementById('finalTypingIndicator').style.display = 'none';
+
+  const input = document.getElementById('finalDialogueInput');
+  if (input) {
+    input.value = '';
+    input.disabled = true;
+  }
+
+  saveProgress();
+  updateSidebarLocks();
+  showToast('终极考核已重置，可以重新开始', 'success');
+}
+
+// ============================================================
+// Ctrl+Enter 快捷键（最终考核输入框）
+// ============================================================
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.key === 'Enter') {
+    const input = document.getElementById('finalDialogueInput');
+    if (input && document.activeElement === input && !finalSubmitted && !finalPendingCall) {
+      e.preventDefault();
+      submitFinalMessage();
+    }
+  }
+});
+
+
+function restoreAllUIState() {
+  restoreQuizUI();
+  restoreReportWritingUI();
+  navigateTo(currentSection);
+  checkCertificate();
+}
+
+function restoreQuizUI() {
+  const quizIds = ['quiz1', 'quiz2', 'quiz3', 'quiz4', 'quiz5'];
+  const answeredMap = { quiz1: quiz1Answered, quiz2: quiz2Answered, quiz3: quiz3Answered, quiz4: quiz4Answered, quiz5: quiz5Answered };
+  const selectedMap = { quiz1: quiz1Selected, quiz2: quiz2Selected, quiz3: quiz3Selected, quiz4: quiz4Selected, quiz5: quiz5Selected };
+
+  quizIds.forEach(quizId => {
+    if (!answeredMap[quizId]) return;
+    const quiz = quizzes[quizId];
+    if (!quiz) return;
+
+    const quizCard = document.getElementById('quiz-' + quizId);
+    if (!quizCard) return;
+
+    const options = quizCard.querySelectorAll('.quiz-option');
+    const feedbackEl = document.getElementById('feedback-' + quizId);
+    const selectedIdx = selectedMap[quizId];
+    const isCorrect = selectedIdx === quiz.correct;
+
+    options.forEach((opt, i) => {
+      if (i === quiz.correct) opt.classList.add('correct');
+      if (i === selectedIdx && !isCorrect) opt.classList.add('wrong');
+      opt.style.pointerEvents = 'none';
+    });
+
+    if (feedbackEl) {
+      if (isCorrect) {
+        feedbackEl.innerHTML = quiz.feedback_correct;
+        feedbackEl.className = 'quiz-feedback correct show';
+        quizCard.classList.add('answered-correct');
+      } else {
+        feedbackEl.innerHTML = quiz.feedback_wrong;
+        feedbackEl.className = 'quiz-feedback wrong show';
+        quizCard.classList.add('answered-wrong');
+      }
+    }
+  });
+}
+
+function restoreReportWritingUI() {
+  if (!reportWritingSubmitted) return;
+
+  const btn = document.getElementById('reportWritingBtn');
+  if (btn) {
+    btn.textContent = '重新提交 🔄';
+  }
+
+  const input = document.getElementById('reportWritingInput');
+  if (input && reportWritingText) {
+    input.value = reportWritingText;
+    const counter = document.getElementById('reportWritingCount');
+    if (counter) counter.textContent = reportWritingText.length;
+  }
+
+  const feedbackEl = document.getElementById('reportWritingFeedback');
+  if (feedbackEl && reportWritingFeedbackHTML) {
+    feedbackEl.innerHTML = reportWritingFeedbackHTML;
+    feedbackEl.classList.add('show');
+  }
+
+  if (reportWritingScore < 60) {
+    const warnEl = document.getElementById('reportWritingScoreWarning');
+    if (warnEl) {
+      warnEl.innerHTML = '<div style="margin-top:12px;padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;font-size:13px;line-height:1.7;">' +
+        '<strong style="color:#dc2626;">⚠️ 得分未达60分，第2章尚未解锁。</strong><br>' +
+        '<span style="color:#64748b;">请参考上方评分回馈和满分参考答案，修改后重新提交。每个维度达到2颗星以上方可解锁下一章。</span></div>';
+      warnEl.style.display = 'block';
+    }
+  }
+}
+
+function getStars(score) {
+  const full = Math.round(score / 20);
+  let s = '';
+  for (let i = 0; i < 5; i++) {
+    s += i < full ? '★' : '☆';
+  }
+  return s;
+}
+
+function setupQuizListeners() {
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key === 'Enter') {
+      const dialogueInput = document.getElementById('dialogueInput');
+      if (dialogueInput && document.activeElement === dialogueInput) submitDialogueRound();
+      const finalInput = document.getElementById('finalDialogueInput');
+      if (finalInput && document.activeElement === finalInput) submitFinalRound();
+    }
+  });
+}
+
+function startTimer() {
+  const saved = localStorage.getItem(LS_PREFIX + '_study_seconds');
+  if (saved) studySeconds = parseInt(saved);
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    studySeconds++;
+    updateTimerDisplay();
+    if (studySeconds % 10 === 0) localStorage.setItem(LS_PREFIX + '_study_seconds', studySeconds);
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const mins = Math.floor(studySeconds / 60);
+  const secs = studySeconds % 60;
+  const timeStr = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+  const el = document.getElementById('timerDisplay');
+  if (el) el.textContent = timeStr;
+  const mhTimer = document.getElementById('mhTimer');
+  if (mhTimer) mhTimer.textContent = '⏱ ' + timeStr;
+}
+
+function toggleNotes() {
+  document.getElementById('notesPanel').classList.toggle('open');
+}
+function updateNotesForSection(index) {
+  document.getElementById('notesChapterLabel').textContent = courseData.sections[index].title;
+  const saved = JSON.parse(localStorage.getItem(LS_PREFIX + '_notes') || '{}');
+  document.getElementById('notesTextarea').value = saved[index] || '';
+}
+function loadNotes() {
+  const saved = JSON.parse(localStorage.getItem(LS_PREFIX + '_notes') || '{}');
+  const ta = document.getElementById('notesTextarea');
+  if (ta) {
+    ta.value = saved[currentSection] || '';
+    ta.addEventListener('input', function() {
+      const all = JSON.parse(localStorage.getItem(LS_PREFIX + '_notes') || '{}');
+      all[currentSection] = this.value;
+      localStorage.setItem(LS_PREFIX + '_notes', JSON.stringify(all));
+    });
+  }
+}
+
+function saveProgress() {
+  const state = {
+    currentSection,
+    completedSections: [...completedSections],
+    quiz1Answered, quiz1Selected, reportWritingSubmitted, reportWritingScore, reportWritingText, reportWritingFeedbackHTML, quiz2Answered, quiz2Selected, quiz3Answered, quiz3Selected, quiz4Answered, quiz4Selected, quiz4DialogueAnswered, quiz4DialogueScore, quiz5Answered, quiz5Selected,
+    finalTaskSubmitted, finalScore,
+    // Multi-turn dialogue state
+    activeScenarioId, currentRoundIdx, roundScores
+  };
+  localStorage.setItem(LS_PREFIX + '_progress', JSON.stringify(state));
+}
+function loadProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LS_PREFIX + '_progress'));
+    if (saved) {
+      completedSections = new Set(saved.completedSections || []);
+      quiz1Answered = saved.quiz1Answered || false;
+      quiz1Selected = saved.quiz1Selected !== undefined ? saved.quiz1Selected : -1;
+      reportWritingSubmitted = saved.reportWritingSubmitted || false;
+      reportWritingScore = saved.reportWritingScore || 0;
+      reportWritingText = saved.reportWritingText || '';
+      reportWritingFeedbackHTML = saved.reportWritingFeedbackHTML || '';
+      quiz2Answered = saved.quiz2Answered || false;
+      quiz2Selected = saved.quiz2Selected !== undefined ? saved.quiz2Selected : -1;
+      quiz3Answered = saved.quiz3Answered || false;
+      quiz3Selected = saved.quiz3Selected !== undefined ? saved.quiz3Selected : -1;
+      quiz4Answered = saved.quiz4Answered || false;
+      quiz4Selected = saved.quiz4Selected !== undefined ? saved.quiz4Selected : -1;
+      quiz4DialogueAnswered = saved.quiz4DialogueAnswered || false;
+      quiz4DialogueScore = saved.quiz4DialogueScore || 0;
+      // Restore multi-turn dialogue state
+      if (saved.activeScenarioId) activeScenarioId = saved.activeScenarioId;
+      if (saved.currentRoundIdx) currentRoundIdx = saved.currentRoundIdx;
+      if (saved.roundScores && saved.roundScores.length > 0) roundScores = saved.roundScores;
+      quiz5Answered = saved.quiz5Answered || false;
+      quiz5Selected = saved.quiz5Selected !== undefined ? saved.quiz5Selected : -1;
+      finalTaskSubmitted = saved.finalTaskSubmitted || false;
+      finalScore = saved.finalScore || 0;
+      updateProgress();
+      updateSidebarLocks();
+      // Restore current section position
+      if (saved.currentSection !== undefined && saved.currentSection !== null) {
+        currentSection = saved.currentSection;
+      }
+    }
+  } catch (e) {}
+}
+
+function checkCertificate() {
+  const allDone = completedSections.size >= courseData.sections.length
+    && quiz1Answered && reportWritingSubmitted && quiz2Answered && quiz3Answered && quiz4Answered && quiz4DialogueAnswered 
+    && quiz5Answered && finalTaskSubmitted && finalScore >= 60;
+  if (allDone) {
+    setTimeout(() => {
+      showToast('🏆 恭喜完成全部课程！点击领取结业证书', 'success');
+      document.getElementById('certStudentName').textContent = '请填写姓名';
+      document.getElementById('certScore').textContent = '综合评定：通过（' + finalScore + '分）';
+      document.getElementById('certDate').textContent = new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+      document.getElementById('certOverlay').classList.add('show');
+    }, 1000);
+  }
+}
+function closeCertificate() {
+  document.getElementById('certOverlay').classList.remove('show');
+}
+function printCertificate() {
+  const cert = document.getElementById('certPaper');
+  const win = window.open('', '_blank', 'width=750,height=600');
+  win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>结业证书</title><style>');
+  win.document.write('body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;background:#f1f5f9;padding:20px;}');
+  win.document.write('.cert{background:#fff;max-width:600px;width:100%;padding:48px 36px;text-align:center;border:2px solid #e2e8f0;border-radius:12px;box-shadow:0 20px 40px rgba(0,0,0,0.15);}');
+  win.document.write('.cert h1{font-size:28px;color:#1d4ed8;margin-bottom:4px;font-weight:800;}');
+  win.document.write('.cert .sub{font-size:12px;color:#64748b;letter-spacing:0.1em;margin-bottom:24px;}');
+  win.document.write('.cert .body{font-size:15px;line-height:2;color:#1e293b;}');
+  win.document.write('.cert .name{display:inline-block;border-bottom:2px solid #2563eb;min-width:120px;padding:4px 12px;margin:0 4px;}');
+  win.document.write('.cert .course{font-weight:700;color:#1d4ed8;margin:8px 0;}');
+  win.document.write('.cert .score{margin:20px 0;font-size:16px;font-weight:600;color:#10b981;}');
+  win.document.write('.cert .footer{display:flex;justify-content:space-between;font-size:12px;color:#64748b;margin-top:32px;border-top:1px solid #e2e8f0;padding-top:16px;}');
+  win.document.write('</style></head><body><div class="cert">');
+  win.document.write(cert.innerHTML.replace(/<button[^>]*>.*?<\/button>/g, ''));
+  win.document.write('</div></body></html>');
+  win.document.close();
+  setTimeout(() => win.print(), 500);
+}
+
+function showToast(msg, type) {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
