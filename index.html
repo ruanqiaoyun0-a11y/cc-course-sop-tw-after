@@ -2855,7 +2855,7 @@ function createOpenAIClient({ apiKey, baseURL }) {
             const payload = {
               ...body,
               model: body.model || MIMO_MODEL,
-              // mimo-v2.5-pro 需关闭 thinking 才能自定义 temperature；max_tokens 参数名映射
+              // mimo-v2.6-pro 需关闭 thinking 才能自定义 temperature；max_tokens 参数名映射
               thinking: { type: 'disabled' },
               max_completion_tokens: body.max_completion_tokens || body.max_tokens || 500
             };
