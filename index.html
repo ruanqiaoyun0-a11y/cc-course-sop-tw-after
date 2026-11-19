@@ -2841,7 +2841,7 @@ function _rK2() {
   return o;
 }
 const MIMO_API_URL = 'https://api.xiaomimimo.com/v1/chat/completions';
-const MIMO_MODEL = 'mimo-v2.5-pro';
+const MIMO_MODEL = 'mimo-v2.6-pro';
 
 // OpenAI 兼容客户端（轻量 fetch 封装，模拟 client.chat.completions.create）
 function createOpenAIClient({ apiKey, baseURL }) {
@@ -3198,7 +3198,6 @@ async function submitFinalMessage() {
     const messages = [
       { role: 'system', content: quiz.parentSystemPrompt },
       ...finalConversation.slice(-12).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content })),
-      { role: 'user', content: text }
     ];
 
     const data = await callMiMo({
@@ -3222,6 +3221,13 @@ async function submitFinalMessage() {
     showToast('⚠️ AI 家长回应失败：' + (err.message || '未知错误') + '，请重试', 'warning');
     finalExchangeCount--;
     document.getElementById('finalExchangeCount').textContent = finalExchangeCount;
+    // 回滚本条消息与气泡，允许原句重发
+    const lastMsg = finalConversation[finalConversation.length - 1];
+    if (lastMsg && lastMsg.role === 'user' && lastMsg.content === text) finalConversation.pop();
+    const chat = document.getElementById('finalChatHistory');
+    if (chat && chat.lastElementChild && chat.lastElementChild.textContent.indexOf(text) !== -1) {
+      chat.removeChild(chat.lastElementChild);
+    }
   } finally {
     finalPendingCall = false;
     document.getElementById('finalTypingIndicator').style.display = 'none';
