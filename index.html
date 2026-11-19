@@ -1713,8 +1713,8 @@ let timerInterval = null;
 
 function init() {
   renderSidebar();
-  renderSections();
   loadProgress();
+  renderSections();
   setupQuizListeners();
   setupReportWritingCounter();
   restoreAllUIState();
@@ -3407,7 +3407,7 @@ function restoreAllUIState() {
 
 function restoreQuizUI() {
   courseData.sections.forEach((_, chIdx) => {
-    chapterQuizArr(chIdx).forEach((q) => {
+    chapterQuizArr(chIdx).forEach((q, qi) => {
       const st = quizState[q.id];
       const quizCard = document.getElementById('quiz-' + q.id);
       if (!quizCard) return;
@@ -3424,6 +3424,8 @@ function restoreQuizUI() {
           feedbackEl.className = 'quiz-feedback correct show';
         }
         quizCard.classList.add('answered-correct');
+        // 重新套用逐题解锁（修复刷新后后题仍锁定的问题）
+        quizCard.classList.remove('quiz-item-locked');
       } else if (st && st.selected >= 0) {
         // 答错过但未答对：恢复红项，其余选项可继续重试
         if (st.selected !== q.correct && options[st.selected]) {
@@ -3431,6 +3433,8 @@ function restoreQuizUI() {
           options[st.selected].style.pointerEvents = 'none';
         }
         quizCard.classList.add('answered-wrong');
+        const prevSolved = qi === 0 || !!(quizState[chapterQuizArr(chIdx)[qi - 1].id] || {}).solved;
+        quizCard.classList.toggle('quiz-item-locked', !prevSolved);
         if (feedbackEl) {
           feedbackEl.innerHTML = buildExplainHTML(q, false);
           feedbackEl.className = 'quiz-feedback wrong show';
