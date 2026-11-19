@@ -110,6 +110,13 @@ body {
 .quiz-option-label { width: 30px; height: 30px; min-width: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
 .quiz-feedback { display: none; margin-top: 16px; padding: 16px; border-radius: var(--radius-sm); font-size: 14px; line-height: 1.7; }
 .quiz-feedback.show { display: block; }
+.chapter-quiz-block { margin: 24px 0; }
+.chapter-quiz-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+.chapter-quiz-header h3 { font-size: 16px; font-weight: 700; margin: 0; }
+.chapter-quiz-progress { font-size: 13px; font-weight: 600; color: #4338ca; background: #eef2ff; padding: 4px 12px; border-radius: 14px; }
+.quiz-item-locked { opacity: 0.55; pointer-events: none; }
+.explain-body { margin-top: 8px; line-height: 1.7; }
+
 .quiz-feedback.correct { background: #ecfdf5; color: #065f46; }
 .quiz-feedback.wrong { background: #fef2f2; color: #991b1b; }
 .dialogue-container { background: var(--card); border-radius: var(--radius); padding: 28px; margin: 24px 0; box-shadow: var(--shadow-lg); border: 2px solid var(--border); }
@@ -337,7 +344,7 @@ const courseData = {
    "icon": "4",
    "type": "content_chart_dialogue",
    "quizId": "quiz4_dialogue",
-   "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第四章</span>\n        <h1>异议处理实战</h1>\n        <span class=\"duration\">⏱ 预估时长：15-20分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🤔 异议处理核心思路</div>\n        <div class=\"highlight-box\" style=\"border-left-color:#7c3aed;\">\n          <strong>核心认知：</strong>当家长说「我再考虑下」「要和家人商量」「迟些再回复你」时，切勿简单回应「好啊，等你消息」。「我再考虑一下」不是一个结果，而是一个信号——它通常意味着家长的顾虑未被完全解决、价值感知不足，或缺乏紧迫感。我们的目标不是「逼单」，而是帮助家长完成决策所需的心理过程。\n        </div>\n        <div style=\"background:#f5f3ff;padding:20px;border-radius:8px;margin:16px 0;\">\n          <div style=\"font-weight:700;font-size:16px;color:#7c3aed;margin-bottom:12px;\">🗣️ 沟通方式：YES…BUT…</div>\n          <p style=\"font-size:14px;line-height:1.9;\">一定要先表示你的理解，不要直接驳斥家长的想法，不同的观点会消磨你们之间的好感。<br>\n          <strong>YES：</strong>「我完全理解您的想法…」　→　先共情<br>\n          <strong>BUT：</strong>「不过，从专业角度…」　→　再引导</p>\n        </div>\n        <div style=\"display:flex;gap:12px;flex-wrap:wrap;\">\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;border-radius:8px;padding:14px;border:1px solid #e2e8f0;\">\n            <div style=\"font-weight:700;color:#4338ca;margin-bottom:6px;\">第一步：搞清楚考虑什么</div>\n            <p style=\"font-size:12px;color:#475569;line-height:1.7;\">将模糊的「考虑」具体化为可讨论的议题（价格、效果、时间等）。<br><br>「完全理解，帮孩子选课程真是要慎重。为了帮您考虑得更周全，可以跟我分享下，您目前最想『考虑』或『比较』的主要是哪一方面呢？是课程时间安排、效果，还是其它因素？这样我可以提供更准确的信息给您。」</p>\n          </div>\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;border-radius:8px;padding:14px;border:1px solid #e2e8f0;\">\n            <div style=\"font-weight:700;color:#4338ca;margin-bottom:6px;\">第二步：搞清楚谁说了算</div>\n            <p style=\"font-size:12px;color:#475569;line-height:1.7;\">了解决策结构和核心决策标准，为后续提供针对性信息铺垫。<br><br>「明白，和家人商量是应该的。一般来说，您和先生最看重哪几个方面？比如小朋友的兴趣还是 CP 值方面？我整理份重点资料给您，等您商量的时候可以更清晰。」</p>\n          </div>\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;border-radius:8px;padding:14px;border:1px solid #e2e8f0;\">\n            <div style=\"font-weight:700;color:#4338ca;margin-bottom:6px;\">第三步：假设问题解决</div>\n            <p style=\"font-size:12px;color:#475569;line-height:1.7;\">假设问题解决了，家长是否会买单，从而判断是真实原因还是借口。<br><br>「妈妈，如果我们可以解决您最担心的那个问题，是不是您就会比较容易作出决定呢？例如：这样如果先生同意，是不是就会继续学习呀？」</p>\n          </div>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">💬 七大常见异议及应对话术</div>\n        <p style=\"margin-bottom:16px;font-size:14px;\">以下按台湾实际服务场景整理，CC 需先归类异议类型，再套用对应思路与话术：</p>\n\n        <div style=\"background:#fef2f2;border-left:4px solid #ef4444;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#991b1b;margin-bottom:8px;\">异议1️⃣ 看到简体字 / 公司是广州（信任类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            「妈妈，因为我们是环球企业，有新加坡、美国、澳洲等地区，所以界面会有简体字、英文、繁体，这是很正常的。」<br>\n            「我们这边是专门负责台湾学员的，台湾是我们重要的服务地区，班级专为台湾学生量身打造，教学内容妈妈不用担心，VIP THINK 的课程内容不仅 100% 覆盖台湾校内考点，还有思维拓展的内容。」<br>\n            「如果您看到公司地址是广州，是因为我们也有大量的大陆学员，其实我们的学员遍布全球，公司总部是在香港喔，台湾也有我们的公司，您也可以看我们公司的 Google Maps 资讯。」<br>\n            「支付方式我们支持卡支付（Visa／MasterCard 等）和 AFTEE 分期。虽然是美金付款页面，但您付款的时候是按照台币计算的，请放心。」\n          </p>\n        </div>\n\n        <div style=\"background:#fffbeb;border-left:4px solid #f59e0b;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#92400e;margin-bottom:8px;\">异议2️⃣ 我需要和先生商量（决策人问题）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>尊重先生想法，但引导妈妈拿主意——日常辅导多是妈妈负责，先生不了解孩子学习状况；可提议致电给先生完整介绍。<br>\n            「了解，肯定要尊重先生的想法。不过其实更建议您拿主意，平常大多是妈妈在负责盯孩子功课，先生很少参与辅导。报这个课程不只是帮孩子减轻学习压力，更是帮您分担重担。很多爸爸只看重最后成绩，却不清楚分数不会凭空提升，还是需要您来做决定。」<br>\n            「之前聊天您也说过，孩子数学一直是您在带。先生没有陪同孩子上过课，并不清楚孩子真实的学习状况，全程都是我跟您对接沟通，您去问先生，他其实没有概念，说到底这件事还是得您来判断。依照您对先生的了解，您觉得他会愿意支持孩子加强数理思维吗？」<br>\n            「妈妈，不妨给小朋友一个体验的机会。如果今天是先生单独带孩子上课，回头突然跟您说要报名课程、要支出一笔费用，您一时也很难马上认同。不如先让孩子正式上课体验，先生亲眼看到上课效果会更直观。现在报名也不会立刻开课，教务老师还要安排班级，我可以先帮您登记入学资料，您有看到我在 Line 上传给您的连结吗？点开就能核对相关资讯。」<br>\n            <strong>（对方坚持要和先生沟通）</strong>「当然我也明白，您确实需要和先生好好讨论。不过学习规划这种专业的事交给专业团队最稳妥。您方便说一下先生晚上几点回家吗？到时候我致电过去，当面跟你们两位完整介绍课程内容，先生有任何疑问也能直接问我。不管最后要不要报名，先完整了解整套课程体系，也方便您和先生多方比较、挑选适合孩子的学习方案。」\n          </p>\n        </div>\n\n        <div style=\"background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#1e40af;margin-bottom:8px;\">异议3️⃣ 孩子说不喜欢 / 不想学（教育理念类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>用课堂表现佐证 + 家长引导责任 + 108 课纲升学压力 + 黄金启蒙期。<br>\n            「妈妈，其实刚刚体验课整堂课下来，小朋友很投入，全程都愿意跟着老师动脑，专注力也很在线，上课态度很积极耶。想请问妈妈为什么会觉得小朋友不喜欢上数学呢？」<br>\n            （听完后）「嗯嗯，我完全懂您的想法。XX妈妈，您愿意尊重小朋友的感受，看得出来您真的很用心在为孩子着想。不过小朋友年纪还小，很多长远的规划还是需要家长帮忙把关、做决定。就像小朋友本来都爱零食、不爱正餐，但我们身为家长，都清楚要多让孩子吃青菜、少吃油炸，才对身体好。」<br>\n            「学习也是一样的道理，没有小朋友天生就爱念书、爱考试。但现在 108 课纲重视长期思维能力，小朋友国小把数学逻辑打底，国中、高中在校排名才稳，未来才有机会靠繁星推荐挤进国立名校。而且小朋友越往上念，校内课业压力只会越来越重，之后安亲班、补习时间全部挤在一起，很难再腾出完整时段打底数学思维，现在刚好是黄金启蒙期。」<br>\n            「趁现在刚好合适，我们先帮孩子把学习规划定下来，我现在立刻帮您预留体验优惠名额，您看可以吗？」\n          </p>\n        </div>\n\n        <div style=\"background:#f0fdf4;border-left:4px solid #10b981;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#065f46;margin-bottom:8px;\">异议4️⃣ 不着急学习 / 小朋友年纪小（教育理念类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>3-6 岁大脑黄金期科学依据 + 私中面试准备 + 24 小时优惠紧迫感。<br>\n            「理解您的想法，XX妈妈，您担心小朋友年纪小，但是小朋友这个年龄反而是他学习数学的一个优势。您知道吗，在数学的课堂上，年龄越小的小朋友思维能力提升的速度就越快。」<br>\n            「妈妈，3 到 6 岁是小朋友大脑快速发育的黄金阶段，又是培养思维能力的关键时期。这个阶段，小朋友的大脑神经元快速增生并且形成联结，达到顶峰。当小朋友受到足够的思维训练刺激，神经元处理资讯的速度会越来越快，6 岁时大脑的发育程度已经达到成人的 70%。但是，一旦超过 6 岁，神经元的增长就会减慢。所以，3 到 6 岁是开发小朋友数学思维的关键期，错过这个黄金时段，效果可能就会差很多了。」<br>\n            「除此之外，如果孩子想进比较优质的国中，私中的面试环节也会出数学相关题目，像是基础运算、分类逻辑这类题型。不少家长都会提前带孩子练习、做面试备考，经过训练和完全没练习过的孩子，面试时的表现差距会非常大。」<br>\n            「现在我们试听后 24 小时内报名还可以享受XXXX（赠送课时）优惠，我现在帮您办理入学手续，您是用信用卡支付吗？」\n          </p>\n        </div>\n\n        <div style=\"background:#fefce8;border-left:4px solid #eab308;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#854d0e;margin-bottom:8px;\">异议5️⃣ 价格太贵 / 我还要考虑（价格类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>回归价值 + 重要性——教育选大品牌、CP 值高、早学早进步。<br>\n            「妈妈，我真的懂赚钱辛苦，但我们这个课程 CP 值真的很高。平常小朋友要用的东西，太便宜的您一定不敢买，就像奶粉、尿布我们都会选大品牌，图个安心。教育本来就有价格区间，给小朋友上的课千万别贪便宜，要是内容浅、学不到东西，白白浪费孩子宝贵的童年时间。我们全台累计超过五十万付费学员，就是靠好口碑，孩子爱上、也真的学到东西。」<br>\n            「XX妈妈，您相信我，越早打底进步越快，等到落后再补只会让孩子压力更大。我们大人工作，无非就是希望小孩读书可以轻松一点，您一定也不想每天陪写作业鸡飞狗跳吧？专业的事交给专业团队处理最合适。我们课程完整覆盖国小校内考点，额外再加逻辑思维拓展内容，成绩稳定往上走，孩子自信心也会大幅提升。」<br>\n            「我们先报 48 堂课的方案，连结我刚传给您，您点开确认金额无误，直接透过连结付款就可以囉。」\n          </p>\n        </div>\n\n        <div style=\"background:#f5f3ff;border-left:4px solid #8b5cf6;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#6d28d9;margin-bottom:8px;\">异议6️⃣ 视力不好，不想上在线课（视力类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>护眼设计（护眼模式／40 分钟课时／护眼操）+ 3C 价值观引导 + AFTEE 分期。<br>\n            「特别理解您的顾虑，我很多家长报名前都会有这个顾虑，所以我们学生端本身设计了护眼模式，可以调整上课屏幕的亮度跟色彩，调到孩子看着最舒服的状态。」<br>\n            「每节课时间设计在 40 分钟，一方面符合小朋友的注意力习惯，也是从保护孩子的视力出发的。另外我们还设计了一套护眼操，孩子上完课就可以做一下眼保健操，让眼睛休息休息。」<br>\n            「不过您想啊，现在是科技教育时代，3C 设备作为学习工具这件事是避免不了的。所以要减少小朋友接触电子设备的时间，一定要减少在对小朋友有害的事情上面，比如减少看动画片、玩游戏的时间。我们的课程一节就是 40 分钟，但这 40 分钟带给小朋友的知识、技能、甚至成就感，都远远大于动画片、游戏的价值。如果可以把 3C 变成他最好的学习伴侣，而不是玩游戏的工具，这其实就是我们额外的收获。」<br>\n            「小朋友的价值观是我们大人引导出来的！我跟您一起，帮小朋友建立一个好的学习习惯，可以令他终身受益。我帮小朋友办理入学手续，之后帮他做详细的学习规划，可以分期付款喔，还支持 AFTEE。」\n          </p>\n        </div>\n\n        <div style=\"background:#ecfeff;border-left:4px solid #06b6d4;border-radius:8px;padding:16px;\">\n          <div style=\"font-weight:700;color:#155e75;margin-bottom:8px;\">异议7️⃣ 一次买太多 / 想分期（付款方式类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>先探询真实顾虑（担心坚持不了／看不到效果／太忙），再分情况回应；坚持分期 → 推荐试学班或 AFTEE。<br>\n            「明白的，妈妈，您是不是有些担心小朋友坚持不了啊？」<br>\n            <strong>· 情况1 对数学不感兴趣：</strong>「您完全不用担心，VIP THINK 的课程是游戏化教学，跟传统填鸭式的教学方法不同，不是一味做题目、套公式，课程里面有很多趣味化的设计，可以提升小朋友的学习兴趣。而且我们引进了小朋友喜欢的动画人物，会陪着小朋友一起思考、探索、解决问题。很多小朋友课程结束都不肯下线，所以完全不用担心他会对我们的课程不感兴趣。」<br>\n            <strong>· 情况2 看不到效果：</strong>「在课程内容设计上，我们课程 100% 覆盖校内考点，会比校内进度快 2 个月，小朋友还会学到很多学校里面学不了的解题技巧。很多小朋友家长跟我反映，学一段时间之后，计算速度和准确率都有提升，遇到应用题也可以轻松应对，成绩都进步很多。」<br>\n            <strong>· 情况3 太忙、兴趣班多：</strong>「现在小朋友都很忙，我很多学生都有 3-4 个兴趣班。我们课程按照小朋友的时间安排就可以了，可以选择的上课时间非常灵活，每天都有课，您将小朋友的空闲时间发给我，我来帮他安排，后面上课就和其他兴趣班一样，固定时间学习就可以了。」<br>\n            <strong>（不是担心坚持，只是不想一次买太多）</strong>「明白，这样妈妈可以选择试学班，可以学 4 个月，一来可以看到小朋友的学习效果，二来又不用一次买这么多课。或者妈妈也可以选择 AFTEE，可以分三期，没有手续费。」\n          </p>\n        </div>\n      </div>\n      <div class=\"card\" style=\"margin-top:24px;\">\n        <div class=\"card-title\">✍️ 互动练习：异议处理选择题</div>\n        <p style=\"margin-bottom:16px;font-size:14px;\">学完上面的异议处理话术，以下选择题可以帮你检测理解程度：</p>\n        <div class=\"quiz-card\" id=\"quiz-quiz4\" style=\"box-shadow:none;border:2px solid var(--border);margin:0;\">\n          <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:12px;\">\n            <span style=\"font-size:24px;\">✍️</span>\n            <h3 style=\"font-size:16px;font-weight:700;\">互动练习：选择题</h3>\n          </div>\n          <div class=\"quiz-question\">异议处理时应该使用什么沟通方式？</div>\n          <div class=\"quiz-options\">\n            <div class=\"quiz-option\" data-option=\"0\" onclick=\"selectQuizOption(this, 0, 'quiz4')\">\n              <span class=\"quiz-option-label\">A</span>\n              <span>直接驳斥家长的想法</span>\n            </div>\n            <div class=\"quiz-option\" data-option=\"1\" onclick=\"selectQuizOption(this, 1, 'quiz4')\">\n              <span class=\"quiz-option-label\">B</span>\n              <span>用 YES…BUT… 的沟通方式，先表示理解</span>\n            </div>\n            <div class=\"quiz-option\" data-option=\"2\" onclick=\"selectQuizOption(this, 2, 'quiz4')\">\n              <span class=\"quiz-option-label\">C</span>\n              <span>忽略家长的异议直接关单</span>\n            </div>\n            <div class=\"quiz-option\" data-option=\"3\" onclick=\"selectQuizOption(this, 3, 'quiz4')\">\n              <span class=\"quiz-option-label\">D</span>\n              <span>同意家长所有观点</span>\n            </div>\n          </div>\n          <div class=\"quiz-feedback\" id=\"feedback-quiz4\"></div>\n        </div>\n      </div>"
+   "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第四章</span>\n        <h1>异议处理实战</h1>\n        <span class=\"duration\">⏱ 预估时长：15-20分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🤔 异议处理核心思路</div>\n        <div class=\"highlight-box\" style=\"border-left-color:#7c3aed;\">\n          <strong>核心认知：</strong>当家长说「我再考虑下」「要和家人商量」「迟些再回复你」时，切勿简单回应「好啊，等你消息」。「我再考虑一下」不是一个结果，而是一个信号——它通常意味着家长的顾虑未被完全解决、价值感知不足，或缺乏紧迫感。我们的目标不是「逼单」，而是帮助家长完成决策所需的心理过程。\n        </div>\n        <div style=\"background:#f5f3ff;padding:20px;border-radius:8px;margin:16px 0;\">\n          <div style=\"font-weight:700;font-size:16px;color:#7c3aed;margin-bottom:12px;\">🗣️ 沟通方式：YES…BUT…</div>\n          <p style=\"font-size:14px;line-height:1.9;\">一定要先表示你的理解，不要直接驳斥家长的想法，不同的观点会消磨你们之间的好感。<br>\n          <strong>YES：</strong>「我完全理解您的想法…」　→　先共情<br>\n          <strong>BUT：</strong>「不过，从专业角度…」　→　再引导</p>\n        </div>\n        <div style=\"display:flex;gap:12px;flex-wrap:wrap;\">\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;border-radius:8px;padding:14px;border:1px solid #e2e8f0;\">\n            <div style=\"font-weight:700;color:#4338ca;margin-bottom:6px;\">第一步：搞清楚考虑什么</div>\n            <p style=\"font-size:12px;color:#475569;line-height:1.7;\">将模糊的「考虑」具体化为可讨论的议题（价格、效果、时间等）。<br><br>「完全理解，帮孩子选课程真是要慎重。为了帮您考虑得更周全，可以跟我分享下，您目前最想『考虑』或『比较』的主要是哪一方面呢？是课程时间安排、效果，还是其它因素？这样我可以提供更准确的信息给您。」</p>\n          </div>\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;border-radius:8px;padding:14px;border:1px solid #e2e8f0;\">\n            <div style=\"font-weight:700;color:#4338ca;margin-bottom:6px;\">第二步：搞清楚谁说了算</div>\n            <p style=\"font-size:12px;color:#475569;line-height:1.7;\">了解决策结构和核心决策标准，为后续提供针对性信息铺垫。<br><br>「明白，和家人商量是应该的。一般来说，您和先生最看重哪几个方面？比如小朋友的兴趣还是 CP 值方面？我整理份重点资料给您，等您商量的时候可以更清晰。」</p>\n          </div>\n          <div style=\"flex:1;min-width:200px;background:#f8fafc;border-radius:8px;padding:14px;border:1px solid #e2e8f0;\">\n            <div style=\"font-weight:700;color:#4338ca;margin-bottom:6px;\">第三步：假设问题解决</div>\n            <p style=\"font-size:12px;color:#475569;line-height:1.7;\">假设问题解决了，家长是否会买单，从而判断是真实原因还是借口。<br><br>「妈妈，如果我们可以解决您最担心的那个问题，是不是您就会比较容易作出决定呢？例如：这样如果先生同意，是不是就会继续学习呀？」</p>\n          </div>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">💬 七大常见异议及应对话术</div>\n        <p style=\"margin-bottom:16px;font-size:14px;\">以下按台湾实际服务场景整理，CC 需先归类异议类型，再套用对应思路与话术：</p>\n\n        <div style=\"background:#fef2f2;border-left:4px solid #ef4444;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#991b1b;margin-bottom:8px;\">异议1️⃣ 看到简体字 / 公司是广州（信任类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            「妈妈，因为我们是环球企业，有新加坡、美国、澳洲等地区，所以界面会有简体字、英文、繁体，这是很正常的。」<br>\n            「我们这边是专门负责台湾学员的，台湾是我们重要的服务地区，班级专为台湾学生量身打造，教学内容妈妈不用担心，VIP THINK 的课程内容不仅 100% 覆盖台湾校内考点，还有思维拓展的内容。」<br>\n            「如果您看到公司地址是广州，是因为我们也有大量的大陆学员，其实我们的学员遍布全球，公司总部是在香港喔，台湾也有我们的公司，您也可以看我们公司的 Google Maps 资讯。」<br>\n            「支付方式我们支持卡支付（Visa／MasterCard 等）和 AFTEE 分期。虽然是美金付款页面，但您付款的时候是按照台币计算的，请放心。」\n          </p>\n        </div>\n\n        <div style=\"background:#fffbeb;border-left:4px solid #f59e0b;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#92400e;margin-bottom:8px;\">异议2️⃣ 我需要和先生商量（决策人问题）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>尊重先生想法，但引导妈妈拿主意——日常辅导多是妈妈负责，先生不了解孩子学习状况；可提议致电给先生完整介绍。<br>\n            「了解，肯定要尊重先生的想法。不过其实更建议您拿主意，平常大多是妈妈在负责盯孩子功课，先生很少参与辅导。报这个课程不只是帮孩子减轻学习压力，更是帮您分担重担。很多爸爸只看重最后成绩，却不清楚分数不会凭空提升，还是需要您来做决定。」<br>\n            「之前聊天您也说过，孩子数学一直是您在带。先生没有陪同孩子上过课，并不清楚孩子真实的学习状况，全程都是我跟您对接沟通，您去问先生，他其实没有概念，说到底这件事还是得您来判断。依照您对先生的了解，您觉得他会愿意支持孩子加强数理思维吗？」<br>\n            「妈妈，不妨给小朋友一个体验的机会。如果今天是先生单独带孩子上课，回头突然跟您说要报名课程、要支出一笔费用，您一时也很难马上认同。不如先让孩子正式上课体验，先生亲眼看到上课效果会更直观。现在报名也不会立刻开课，教务老师还要安排班级，我可以先帮您登记入学资料，您有看到我在 Line 上传给您的连结吗？点开就能核对相关资讯。」<br>\n            <strong>（对方坚持要和先生沟通）</strong>「当然我也明白，您确实需要和先生好好讨论。不过学习规划这种专业的事交给专业团队最稳妥。您方便说一下先生晚上几点回家吗？到时候我致电过去，当面跟你们两位完整介绍课程内容，先生有任何疑问也能直接问我。不管最后要不要报名，先完整了解整套课程体系，也方便您和先生多方比较、挑选适合孩子的学习方案。」\n          </p>\n        </div>\n\n        <div style=\"background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#1e40af;margin-bottom:8px;\">异议3️⃣ 孩子说不喜欢 / 不想学（教育理念类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>用课堂表现佐证 + 家长引导责任 + 108 课纲升学压力 + 黄金启蒙期。<br>\n            「妈妈，其实刚刚体验课整堂课下来，小朋友很投入，全程都愿意跟着老师动脑，专注力也很在线，上课态度很积极耶。想请问妈妈为什么会觉得小朋友不喜欢上数学呢？」<br>\n            （听完后）「嗯嗯，我完全懂您的想法。XX妈妈，您愿意尊重小朋友的感受，看得出来您真的很用心在为孩子着想。不过小朋友年纪还小，很多长远的规划还是需要家长帮忙把关、做决定。就像小朋友本来都爱零食、不爱正餐，但我们身为家长，都清楚要多让孩子吃青菜、少吃油炸，才对身体好。」<br>\n            「学习也是一样的道理，没有小朋友天生就爱念书、爱考试。但现在 108 课纲重视长期思维能力，小朋友国小把数学逻辑打底，国中、高中在校排名才稳，未来才有机会靠繁星推荐挤进国立名校。而且小朋友越往上念，校内课业压力只会越来越重，之后安亲班、补习时间全部挤在一起，很难再腾出完整时段打底数学思维，现在刚好是黄金启蒙期。」<br>\n            「趁现在刚好合适，我们先帮孩子把学习规划定下来，我现在立刻帮您预留体验优惠名额，您看可以吗？」\n          </p>\n        </div>\n\n        <div style=\"background:#f0fdf4;border-left:4px solid #10b981;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#065f46;margin-bottom:8px;\">异议4️⃣ 不着急学习 / 小朋友年纪小（教育理念类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>3-6 岁大脑黄金期科学依据 + 私中面试准备 + 24 小时优惠紧迫感。<br>\n            「理解您的想法，XX妈妈，您担心小朋友年纪小，但是小朋友这个年龄反而是他学习数学的一个优势。您知道吗，在数学的课堂上，年龄越小的小朋友思维能力提升的速度就越快。」<br>\n            「妈妈，3 到 6 岁是小朋友大脑快速发育的黄金阶段，又是培养思维能力的关键时期。这个阶段，小朋友的大脑神经元快速增生并且形成联结，达到顶峰。当小朋友受到足够的思维训练刺激，神经元处理资讯的速度会越来越快，6 岁时大脑的发育程度已经达到成人的 70%。但是，一旦超过 6 岁，神经元的增长就会减慢。所以，3 到 6 岁是开发小朋友数学思维的关键期，错过这个黄金时段，效果可能就会差很多了。」<br>\n            「除此之外，如果孩子想进比较优质的国中，私中的面试环节也会出数学相关题目，像是基础运算、分类逻辑这类题型。不少家长都会提前带孩子练习、做面试备考，经过训练和完全没练习过的孩子，面试时的表现差距会非常大。」<br>\n            「现在我们试听后 24 小时内报名还可以享受XXXX（赠送课时）优惠，我现在帮您办理入学手续，您是用信用卡支付吗？」\n          </p>\n        </div>\n\n        <div style=\"background:#fefce8;border-left:4px solid #eab308;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#854d0e;margin-bottom:8px;\">异议5️⃣ 价格太贵 / 我还要考虑（价格类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>回归价值 + 重要性——教育选大品牌、CP 值高、早学早进步。<br>\n            「妈妈，我真的懂赚钱辛苦，但我们这个课程 CP 值真的很高。平常小朋友要用的东西，太便宜的您一定不敢买，就像奶粉、尿布我们都会选大品牌，图个安心。教育本来就有价格区间，给小朋友上的课千万别贪便宜，要是内容浅、学不到东西，白白浪费孩子宝贵的童年时间。我们全台累计超过五十万付费学员，就是靠好口碑，孩子爱上、也真的学到东西。」<br>\n            「XX妈妈，您相信我，越早打底进步越快，等到落后再补只会让孩子压力更大。我们大人工作，无非就是希望小孩读书可以轻松一点，您一定也不想每天陪写作业鸡飞狗跳吧？专业的事交给专业团队处理最合适。我们课程完整覆盖国小校内考点，额外再加逻辑思维拓展内容，成绩稳定往上走，孩子自信心也会大幅提升。」<br>\n            「我们先报 48 堂课的方案，连结我刚传给您，您点开确认金额无误，直接透过连结付款就可以囉。」\n          </p>\n        </div>\n\n        <div style=\"background:#f5f3ff;border-left:4px solid #8b5cf6;border-radius:8px;padding:16px;margin-bottom:14px;\">\n          <div style=\"font-weight:700;color:#6d28d9;margin-bottom:8px;\">异议6️⃣ 视力不好，不想上在线课（视力类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>护眼设计（护眼模式／40 分钟课时／护眼操）+ 3C 价值观引导 + AFTEE 分期。<br>\n            「特别理解您的顾虑，我很多家长报名前都会有这个顾虑，所以我们学生端本身设计了护眼模式，可以调整上课屏幕的亮度跟色彩，调到孩子看着最舒服的状态。」<br>\n            「每节课时间设计在 40 分钟，一方面符合小朋友的注意力习惯，也是从保护孩子的视力出发的。另外我们还设计了一套护眼操，孩子上完课就可以做一下眼保健操，让眼睛休息休息。」<br>\n            「不过您想啊，现在是科技教育时代，3C 设备作为学习工具这件事是避免不了的。所以要减少小朋友接触电子设备的时间，一定要减少在对小朋友有害的事情上面，比如减少看动画片、玩游戏的时间。我们的课程一节就是 40 分钟，但这 40 分钟带给小朋友的知识、技能、甚至成就感，都远远大于动画片、游戏的价值。如果可以把 3C 变成他最好的学习伴侣，而不是玩游戏的工具，这其实就是我们额外的收获。」<br>\n            「小朋友的价值观是我们大人引导出来的！我跟您一起，帮小朋友建立一个好的学习习惯，可以令他终身受益。我帮小朋友办理入学手续，之后帮他做详细的学习规划，可以分期付款喔，还支持 AFTEE。」\n          </p>\n        </div>\n\n        <div style=\"background:#ecfeff;border-left:4px solid #06b6d4;border-radius:8px;padding:16px;\">\n          <div style=\"font-weight:700;color:#155e75;margin-bottom:8px;\">异议7️⃣ 一次买太多 / 想分期（付款方式类）</div>\n          <p style=\"font-size:13px;line-height:1.9;color:#374151;\">\n            <strong>思路：</strong>先探询真实顾虑（担心坚持不了／看不到效果／太忙），再分情况回应；坚持分期 → 推荐试学班或 AFTEE。<br>\n            「明白的，妈妈，您是不是有些担心小朋友坚持不了啊？」<br>\n            <strong>· 情况1 对数学不感兴趣：</strong>「您完全不用担心，VIP THINK 的课程是游戏化教学，跟传统填鸭式的教学方法不同，不是一味做题目、套公式，课程里面有很多趣味化的设计，可以提升小朋友的学习兴趣。而且我们引进了小朋友喜欢的动画人物，会陪着小朋友一起思考、探索、解决问题。很多小朋友课程结束都不肯下线，所以完全不用担心他会对我们的课程不感兴趣。」<br>\n            <strong>· 情况2 看不到效果：</strong>「在课程内容设计上，我们课程 100% 覆盖校内考点，会比校内进度快 2 个月，小朋友还会学到很多学校里面学不了的解题技巧。很多小朋友家长跟我反映，学一段时间之后，计算速度和准确率都有提升，遇到应用题也可以轻松应对，成绩都进步很多。」<br>\n            <strong>· 情况3 太忙、兴趣班多：</strong>「现在小朋友都很忙，我很多学生都有 3-4 个兴趣班。我们课程按照小朋友的时间安排就可以了，可以选择的上课时间非常灵活，每天都有课，您将小朋友的空闲时间发给我，我来帮他安排，后面上课就和其他兴趣班一样，固定时间学习就可以了。」<br>\n            <strong>（不是担心坚持，只是不想一次买太多）</strong>「明白，这样妈妈可以选择试学班，可以学 4 个月，一来可以看到小朋友的学习效果，二来又不用一次买这么多课。或者妈妈也可以选择 AFTEE，可以分三期，没有手续费。」\n          </p>\n        </div>\n      </div>\n"
   },
   {
    "id": "s5",
@@ -354,137 +361,12 @@ const courseData = {
    "duration": "8-10分钟",
    "icon": "6",
    "type": "content",
-   "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第六章</span>\n        <h1>成交后跟进</h1>\n        <span class=\"duration\">⏱ 预估时长：8-10分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🎉 成交后的定心丸</div>\n        <div class=\"script-block\">\n<strong>【参考话术】</strong><br><br>\n「恭喜妈妈！XX正式成为我们 VIP THINK 的学员了！我传您对应的老师的 line@，妈妈可以先添加，很快会有老师跟您确认正式上课时间，也安排入学前的定级测评。」<br><br>\n「还有呀妈妈，现在报名还有个打卡赠课活动：您稍后可以 po 一张XX的专属海报到 FB／IG 等等社交软体，24 小时后截图上传到家长端，我们就会送 8000 豌豆币，可以兑换正式课！之后每个星期打卡一次，都有奖励，8000 豌豆币就可以换一堂。记得做呀！」<br><br>\n「再次谢谢妈妈您的信任！我们很有信心XX会在这里玩得开心、学得进步。如果有任何问题，随时在 Line 上跟我们说，我们都会协助您处理！祝您和XX有个愉快的晚上，下次课上见！」\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📋 成交后的完整流程</div>\n        <div class=\"flow-steps\">\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">1</div>\n            <h4>给予鼓励和信心</h4>\n            <p>恭喜家长，表达对小朋友学习的信心</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">2</div>\n            <h4>确认并完善客户资料</h4>\n            <p>在后台写好跟进记录、注意事项</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">3</div>\n            <h4>引入班导概念</h4>\n            <p>突显服务质素，让家长感受到专业</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">4</div>\n            <h4>介绍转介绍活动</h4>\n            <p>打卡赠课，鼓励分享 FB／IG 动态</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">5</div>\n            <h4>发送入学指南</h4>\n            <p>24小时内必须发，否则会触犯质检</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">6</div>\n            <h4>发送课时确认函</h4>\n            <p>对应购买的课包版本，24小时内必须发</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">7</div>\n            <h4>发送打卡教程</h4>\n            <p>解释打卡的意义，提供一键生成工具</p>\n          </div>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📖 发送入学指南</div>\n        <div class=\"highlight-box warning\">\n          <strong>⚠️ 重要规则：</strong><br>\n          • 不同课包的入学指南不同，注意发送家长购买的对应版本<br>\n          • <strong>24小时内必须发</strong>，否则会触犯质检<br>\n          • 发送后要在后台记录，方便后续跟进\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🧾 发送课时确认函</div>\n        <div class=\"highlight-box warning\">\n          <strong>⚠️ 重要规则：</strong><br>\n          • 根据不同课包，发送家长购买的对应版本<br>\n          • <strong>24小时内必须发</strong>，否则会触犯质检\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📱 发送打卡教程</div>\n        <p style=\"margin-bottom:12px;\">部分家长可能对打卡有抵触，需要耐心解释：</p>\n        <div class=\"script-block\">\n<strong>【应对话术】</strong><br><br>\n「我理解，打卡真的很简单的，VIP THINK 80% 的学员其实都是转介绍来的，当然口碑也是可以的，所以这个分享赠课也是额外给到您的福利喔。分享打卡也是记录小朋友的成长呢，希望您能谅解，后续我也会每个礼拜提醒您的，图片和文案都是一键生成的，非常简单，1 分钟就搞定了。」\n        </div>\n        <div class=\"highlight-box success\" style=\"margin-top:16px;\">\n          <strong>✅ 关键要点：</strong>解释打卡的价值（记录成长 + 获得奖励），并强调操作简单（一键生成），减少家长的抗拒感。\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🏆 终极考核</div>\n        <p style=\"margin-bottom:16px;\">恭喜你来到最后一章！<b>终极考核为自由对话模式</b>，你将以 CC 身份与 AI 家长通话，系统会根据你的综合表现（流程、准确、亲和、覆盖）由 AI 评分官评分。覆盖 8 个话题流程即可提交结束。</p>\n        <div class=\"final-task-container\" id=\"finalTaskContainer\">\n          <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:12px;\">\n            <span style=\"font-size:24px;\">🏆</span>\n            <h3 style=\"font-size:16px;font-weight:700;\">终极考核：CC 课后电话自由对话</h3>\n          </div>\n\n          <!-- Scenario banner -->\n          <div id=\"finalScenarioBanner\" class=\"dialogue-scenario\" style=\"margin-bottom:16px;\">\n            <strong>📋 场景：</strong>你是 CC，今天小朋友「暖暖」完成了 <b>S4-魔法水源</b>体验课（同班 3 人）。<br>\n            · 基本信息：暖暖／女孩／6岁10个月／国小一年级<br>\n            · 课前：性格外向，有在上画图班；数感一般，50 以内加减法还不太会<br>\n            · 陪同：妈妈有陪<br>\n            · 表现：喜欢课堂、主动回答、专注/理解 OK、态度端正；环节一有序枚举 ✓；环节二三位数读法熟练 ✓；环节三凑数 20 内进退位加减法「会但不熟」，枚举凑数不熟练，思路较混乱，有序/分步思考需加强<br>\n            · 匹配阶段：是，基础中<br>\n            <span style=\"color:#94a3b8;\">家长在课后电话中，可能会混合提出多个异议（要和先生商量 / 价格太贵 / 视力顾虑 / 小朋友说闷 / 担心效果 / 年纪太小 / 推迟决定）。</span><br><br>\n            <strong>📞 点击「开始通话」后，AI 家长（暖暖妈妈）将接通，你自由应对即可。</strong>\n          </div>\n\n          <!-- 话题标签（动态高亮） -->\n          <div id=\"finalTopicsBar\" style=\"display:none;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px;\"></div>\n\n          <!-- 对话轮数 + 当前话题 -->\n          <div id=\"finalMetaBar\" style=\"display:none;background:#eff6ff;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;\">\n            <span style=\"color:#2563eb;font-weight:600;\">📞 对话轮数：<b id=\"finalExchangeCount\">0</b></span>\n            <span style=\"color:#64748b;font-size:12px;\">📍 当前话题：<b id=\"finalCurrentTopic\">-</b></span>\n          </div>\n\n          <!-- Chat history -->\n          <div id=\"finalChatHistory\" class=\"chat-history\" style=\"display:none;flex-direction:column;gap:12px;margin-bottom:16px;max-height:420px;overflow-y:auto;padding:12px;background:#fafbfc;border-radius:12px;border:1px solid #e8ecf0;\">\n            <div style=\"text-align:center;color:var(--text-secondary);padding:20px;font-size:13px;\">👇 点击「开始通话」开始 CC 课后电话模拟</div>\n          </div>\n\n          <!-- Input area -->\n          <div id=\"finalInputArea\" style=\"display:none;\">\n            <textarea class=\"reply-input\" id=\"finalDialogueInput\" placeholder=\"输入你的回应话术...（Ctrl+Enter 发送）\" style=\"min-height:100px;\" rows=\"3\"></textarea>\n            <div class=\"dialogue-actions\" style=\"margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;\">\n              <button class=\"btn\" id=\"finalSubmitDialogueBtn\" onclick=\"submitFinalMessage()\">📤 发送回应</button>\n              <button class=\"btn\" id=\"finalEndBtn\" onclick=\"endFinalConversation()\" style=\"display:none;background:var(--accent);\">🏁 结束对话 & AI 评分</button>\n              <button class=\"btn btn-outline\" onclick=\"resetFinalDialogue()\">🔄 重新开始</button>\n            </div>\n            <div id=\"finalTypingIndicator\" style=\"display:none;margin-top:8px;padding:6px 12px;background:#f1f5f9;border-radius:6px;font-size:12px;color:#64748b;font-style:italic;\">\n              <span style=\"display:inline-block;animation:blink 1.2s infinite;\">●●●</span> AI 家长正在思考回应...\n            </div>\n          </div>\n\n          <!-- Start button -->\n          <div id=\"finalStartArea\" style=\"text-align:center;padding:20px;\">\n            <button class=\"btn\" onclick=\"startFinalExam()\" style=\"font-size:16px;padding:14px 32px;\">📞 开始通话</button>\n          </div>\n\n          <!-- Final feedback (AI 评分结果) -->\n          <div id=\"finalSummaryArea\" class=\"ai-feedback-panel\" style=\"display:none;\"></div>\n        </div>\n      </div>"
+   "content": "<div class=\"section-header\">\n        <span class=\"section-badge\">第六章</span>\n        <h1>成交后跟进</h1>\n        <span class=\"duration\">⏱ 预估时长：8-10分钟</span>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🎉 成交后的定心丸</div>\n        <div class=\"script-block\">\n<strong>【参考话术】</strong><br><br>\n「恭喜妈妈！XX正式成为我们 VIP THINK 的学员了！我传您对应的老师的 line@，妈妈可以先添加，很快会有老师跟您确认正式上课时间，也安排入学前的定级测评。」<br><br>\n「还有呀妈妈，现在报名还有个打卡赠课活动：您稍后可以 po 一张XX的专属海报到 FB／IG 等等社交软体，24 小时后截图上传到家长端，我们就会送 8000 豌豆币，可以兑换正式课！之后每个星期打卡一次，都有奖励，8000 豌豆币就可以换一堂。记得做呀！」<br><br>\n「再次谢谢妈妈您的信任！我们很有信心XX会在这里玩得开心、学得进步。如果有任何问题，随时在 Line 上跟我们说，我们都会协助您处理！祝您和XX有个愉快的晚上，下次课上见！」\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📋 成交后的完整流程</div>\n        <div class=\"flow-steps\">\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">1</div>\n            <h4>给予鼓励和信心</h4>\n            <p>恭喜家长，表达对小朋友学习的信心</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">2</div>\n            <h4>确认并完善客户资料</h4>\n            <p>在后台写好跟进记录、注意事项</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">3</div>\n            <h4>引入班导概念</h4>\n            <p>突显服务品质，让家长感受到专业</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">4</div>\n            <h4>介绍转介绍活动</h4>\n            <p>打卡赠课，鼓励分享 FB／IG 动态</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">5</div>\n            <h4>发送入学指南</h4>\n            <p>24小时内必须发，否则会触犯质检</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">6</div>\n            <h4>发送课时确认函</h4>\n            <p>对应购买的课包版本，24小时内必须发</p>\n          </div>\n          <div class=\"flow-arrow\" style=\"color:#10b981;\">→</div>\n          <div class=\"flow-step\" style=\"border-color:#10b981;\">\n            <div class=\"step-num\" style=\"background:#10b981;\">7</div>\n            <h4>发送打卡教程</h4>\n            <p>解释打卡的意义，提供一键生成工具</p>\n          </div>\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📖 发送入学指南</div>\n        <div class=\"highlight-box warning\">\n          <strong>⚠️ 重要规则：</strong><br>\n          • 不同课包的入学指南不同，注意发送家长购买的对应版本<br>\n          • <strong>24小时内必须发</strong>，否则会触犯质检<br>\n          • 发送后要在后台记录，方便后续跟进\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">🧾 发送课时确认函</div>\n        <div class=\"highlight-box warning\">\n          <strong>⚠️ 重要规则：</strong><br>\n          • 根据不同课包，发送家长购买的对应版本<br>\n          • <strong>24小时内必须发</strong>，否则会触犯质检\n        </div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-title\">📱 发送打卡教程</div>\n        <p style=\"margin-bottom:12px;\">部分家长可能对打卡有抵触，需要耐心解释：</p>\n        <div class=\"script-block\">\n<strong>【应对话术】</strong><br><br>\n「我理解，打卡真的很简单的，VIP THINK 80% 的学员其实都是转介绍来的，当然口碑也是可以的，所以这个分享赠课也是额外给到您的福利喔。分享打卡也是记录小朋友的成长呢，希望您能谅解，后续我也会每个礼拜提醒您的，图片和文案都是一键生成的，非常简单，1 分钟就搞定了。」\n        </div>\n        <div class=\"highlight-box success\" style=\"margin-top:16px;\">\n          <strong>✅ 关键要点：</strong>解释打卡的价值（记录成长 + 获得奖励），并强调操作简单（一键生成），减少家长的抗拒感。\n        </div>\n      </div>\n      <div class=\"card\">\n        <div id=\"quizslot-ch6\"></div>\n      <div class=\"card-title\">🏆 终极考核</div>\n        <p style=\"margin-bottom:16px;\">恭喜你来到最后一章！<b>终极考核为自由对话模式</b>，你将以 CC 身份与 AI 家长通话，系统会根据你的综合表现（流程、准确、亲和、覆盖）由 AI 评分官评分。覆盖 8 个话题流程即可提交结束。</p>\n        <div class=\"final-task-container\" id=\"finalTaskContainer\">\n          <div style=\"display:flex;align-items:center;gap:8px;margin-bottom:12px;\">\n            <span style=\"font-size:24px;\">🏆</span>\n            <h3 style=\"font-size:16px;font-weight:700;\">终极考核：CC 课后电话自由对话</h3>\n          </div>\n\n          <!-- Scenario banner -->\n          <div id=\"finalScenarioBanner\" class=\"dialogue-scenario\" style=\"margin-bottom:16px;\">\n            <strong>📋 场景：</strong>你是 CC，今天小朋友「暖暖」完成了 <b>S4-魔法水源</b>体验课（同班 3 人）。<br>\n            · 基本信息：暖暖／女孩／6岁10个月／国小一年级<br>\n            · 课前：性格外向，有在上画图班；数感一般，50 以内加减法还不太会<br>\n            · 陪同：妈妈有陪<br>\n            · 表现：喜欢课堂、主动回答、专注/理解 OK、态度端正；环节一有序枚举 ✓；环节二三位数读法熟练 ✓；环节三凑数 20 内进退位加减法「会但不熟」，枚举凑数不熟练，思路较混乱，有序/分步思考需加强<br>\n            · 匹配阶段：是，基础中<br>\n            <span style=\"color:#94a3b8;\">家长在课后电话中，可能会混合提出多个异议（要和先生商量 / 价格太贵 / 视力顾虑 / 小朋友说闷 / 担心效果 / 年纪太小 / 推迟决定）。</span><br><br>\n            <strong>📞 点击「开始通话」后，AI 家长（暖暖妈妈）将接通，你自由应对即可。</strong>\n          </div>\n\n          <!-- 话题标签（动态高亮） -->\n          <div id=\"finalTopicsBar\" style=\"display:none;margin-bottom:12px;flex-wrap:wrap;gap:6px;\"></div>\n\n          <!-- 对话轮数 + 当前话题 -->\n          <div id=\"finalMetaBar\" style=\"display:none;background:#eff6ff;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;\">\n            <span style=\"color:#2563eb;font-weight:600;\">📞 对话轮数：<b id=\"finalExchangeCount\">0</b></span>\n            <span style=\"color:#64748b;font-size:12px;\">📍 当前话题：<b id=\"finalCurrentTopic\">-</b></span>\n          </div>\n\n          <!-- Chat history -->\n          <div id=\"finalChatHistory\" class=\"chat-history\" style=\"display:none;flex-direction:column;gap:12px;margin-bottom:16px;max-height:420px;overflow-y:auto;padding:12px;background:#fafbfc;border-radius:12px;border:1px solid #e8ecf0;\">\n            <div style=\"text-align:center;color:var(--text-secondary);padding:20px;font-size:13px;\">👇 点击「开始通话」开始 CC 课后电话模拟</div>\n          </div>\n\n          <!-- Input area -->\n          <div id=\"finalInputArea\" style=\"display:none;\">\n            <textarea class=\"reply-input\" id=\"finalDialogueInput\" placeholder=\"输入你的回应话术...（Ctrl+Enter 发送）\" style=\"min-height:100px;\" rows=\"3\"></textarea>\n            <div class=\"dialogue-actions\" style=\"margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;\">\n              <button class=\"btn\" id=\"finalSubmitDialogueBtn\" onclick=\"submitFinalMessage()\">📤 发送回应</button>\n              <button class=\"btn\" id=\"finalEndBtn\" onclick=\"endFinalConversation()\" style=\"display:none;background:var(--accent);\">🏁 结束对话 & AI 评分</button>\n              <button class=\"btn btn-outline\" onclick=\"resetFinalDialogue()\">🔄 重新开始</button>\n            </div>\n            <div id=\"finalTypingIndicator\" style=\"display:none;margin-top:8px;padding:6px 12px;background:#f1f5f9;border-radius:6px;font-size:12px;color:#64748b;font-style:italic;\">\n              <span style=\"display:inline-block;animation:blink 1.2s infinite;\">●●●</span> AI 家长正在思考回应...\n            </div>\n          </div>\n\n          <!-- Start button -->\n          <div id=\"finalStartArea\" style=\"text-align:center;padding:20px;\">\n            <button class=\"btn\" onclick=\"startFinalExam()\" style=\"font-size:16px;padding:14px 32px;\">📞 开始通话</button>\n          </div>\n\n          <!-- Final feedback (AI 评分结果) -->\n          <div id=\"finalSummaryArea\" class=\"ai-feedback-panel\" style=\"display:none;\"></div>\n        </div>\n      </div>"
   }
  ]
 };
 
 const quizzes = {
- "quiz1": {
-  "quizId": "quiz1",
-  "question": "下列哪一位 CC 解读课后报告的做法，符合标准话术结构？",
-  "options": [
-   {
-    "label": "A",
-    "text": "先取得妈妈同意再讲解，接着说学了什么、2-3 个优点、1 个待加强点，最后给学习建议"
-   },
-   {
-    "label": "B",
-    "text": "拿到老师反馈后直接逐字念给妈妈听，确保信息传递准确、不遗漏任何细节"
-   },
-   {
-    "label": "C",
-    "text": "先把小朋友的缺点讲清楚让妈妈着急，再简单带过优点，最后顺势介绍价格"
-   },
-   {
-    "label": "D",
-    "text": "先问妈妈小朋友在家表现如何，再凭自己的印象补充说说今天课堂的情况"
-   }
-  ],
-  "correct": 0,
-  "feedback_correct": "✅ <strong>正确！</strong>解读报告要先取得家长同意（提问授权），再按「学了什么 → 2-3 个优点 → 1 个待加强点 → 学习建议」的顺序讲解，过程中保持互动。先讲优点建立信心，再委婉提出改进方向，为后续观念强化和关单做铺垫。",
-  "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是A。逐字念稿缺少互动，先讲缺点会打击家长信心，凭印象说会显得不专业。标准做法是：提问授权 → 学了什么 → 2-3 个优点 → 1 个待加强点 → 学习建议。请返回第一章重温话术框架。"
- },
- "quiz2": {
-  "quizId": "quiz2",
-  "question": "观念强化的标准话术结构，下列哪一个是正确的？",
-  "options": [
-   {
-    "label": "A",
-    "text": "痛点 → 课程介绍 → 优惠名额 → 假设成交"
-   },
-   {
-    "label": "B",
-    "text": "追问求证 → 归因分析 → 痛点确认 → 紧迫性"
-   },
-   {
-    "label": "C",
-    "text": "痛点 → 归因和解决方案 → 追问求证 → 紧迫性"
-   },
-   {
-    "label": "D",
-    "text": "归因分析 → 痛点 → 紧迫性 → 报价方案"
-   }
-  ],
-  "correct": 2,
-  "feedback_correct": "✅ <strong>正确！</strong>观念强化按「痛点 → 归因和解决方案 → 追问求证 → 紧迫性」展开：先接住家长的痛点，立刻接归因和解决机制，再用一句提问把话题交回家长求证，最后把「不解决会怎样」说到具体时间点。核心纪律：禁止「接住痛点 → 直接报价」。",
-  "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是C。观念强化必须是「痛点 → 归因和解决方案 → 追问求证 → 紧迫性」：接住痛点后马上讲归因和解决机制，用追问求证代替断言，紧迫感只讲课程事实与学习缺口、不承诺提分。请重温第二章话术结构。"
- },
- "quiz3": {
-  "quizId": "quiz3",
-  "question": "CC 决定采用「反推」方式报价，下列路径正确的是？",
-  "options": [
-   {
-    "label": "A",
-    "text": "先报总价 → 拆分单价 → 提升价值 → 关单"
-   },
-   {
-    "label": "B",
-    "text": "先提优惠 → 再报总价 → 拆分单价 → 关单"
-   },
-   {
-    "label": "C",
-    "text": "先讲价值 → 再报单价 → 最后报总价 → 关单"
-   },
-   {
-    "label": "D",
-    "text": "先报单价 → 提升价值 → 再报总价 → 关单"
-   }
-  ],
-  "correct": 3,
-  "feedback_correct": "✅ <strong>正确！</strong>反推＝先报单价＋提升价值＋再报总价＋关单；正报＝先报总价＋拆分单价＋提升价值＋关单。总价低的方案可以选正报，课单价低的方案可以选反推，两种路径不要都讲。",
-  "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是D。注意区分：反推是「先报单价 → 提升价值 → 再报总价 → 关单」；「先报总价 → 拆分单价」是正报。总价低的选正报，课单价低的选反推。请重温第三章报价方式。"
- },
- "quiz4": {
-  "quizId": "quiz4",
-  "question": "家长说：「我再考虑一下。」按照异议处理步骤，第二步「判断」要判断的是什么？",
-  "options": [
-   {
-    "label": "A",
-    "text": "判断家长是真的要考虑，还是已经决定不报名了"
-   },
-   {
-    "label": "B",
-    "text": "判断这是藉口还是真实原因——藉口层出不穷，真实原因藏在细节里"
-   },
-   {
-    "label": "C",
-    "text": "判断家长什么时候有空，方便下一次打电话过去跟进"
-   },
-   {
-    "label": "D",
-    "text": "判断该报 48 堂还是先报试学班，直接替家长做好决定"
-   }
-  ],
-  "correct": 1,
-  "feedback_correct": "✅ <strong>正确！</strong>「我再考虑一下」不是一个结果，而是一个信号。第二步要判断这是藉口还是真实原因：藉口层出不穷、无理取闹；真实原因藏在细节里——总结问题，找到根源顾虑，再按场景解决。",
-  "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是B。异议处理步骤是「倾听 → 判断 → 复述 → 解决」：判断的关键是分辨藉口和真实原因，真实原因藏在细节里，找到根源顾虑才能对症解决。请重温第四章异议处理流程。"
- },
- "quiz5": {
-  "quizId": "quiz5",
-  "question": "关于关单的时机与节奏，下列哪一项叙述是正确的？",
-  "options": [
-   {
-    "label": "A",
-    "text": "关单要固定在报价之后的环节进行，顺序不能被打乱，否则流程就乱了"
-   },
-   {
-    "label": "B",
-    "text": "黄金关单时间是 24 小时，超过 24 小时就不用再跟进这位家长了"
-   },
-   {
-    "label": "C",
-    "text": "前几轮用「软关」试探，多轮之后再「硬关」，时机成熟才正式关单"
-   },
-   {
-    "label": "D",
-    "text": "关单要等家长主动提出报名，CC 主动开口会让家长觉得压力太大"
-   }
-  ],
-  "correct": 2,
-  "feedback_correct": "✅ <strong>正确！</strong>关单是在时机成熟的时候，而不是固定在哪个流程中：前几轮「软关」（不逼决策），多轮之后「硬关」（确认成交）。关单应该是随时随地多次的心理暗示传递；黄金关单 48 小时，课前做好挖需，课后顺水推舟。",
-  "feedback_wrong": "❌ <strong>不正确。</strong>正确答案是C。关单不固定在某个环节，而是时机成熟时进行：前几轮「软关」，多轮后「硬关」；黄金关单时间是 48 小时；课前做好挖需，课后顺水推舟。请重温第五章关单要点。"
- },
  "quiz4_dialogue": {
   "isDialogue": true,
   "scenarios": [
@@ -1260,18 +1142,18 @@ const quizzes = {
    },
    {
     "label": "② 报告解读",
-    "hint": "学了什么 + 2-3个优点 + 1个缺点"
+    "hint": "学了什么 + 2-3个优点 + 1个待加强点"
    },
    {
     "label": "③ 观念强化",
-    "hint": "3-6岁黄金期 + 108课纲 + 课程重要性"
+    "hint": "标准话术结构：痛点→归因和解决方案→追问求证→紧迫性 + 108课纲重要性"
    },
    {
     "label": "④ 课程介绍",
-    "hint": "针对家长需求介绍优势（VIP THINK / 9阶段 / 3位老师）"
+    "hint": "针对家长需求介绍优势（VIP THINK / 9阶段 / 4-6人小班 / 3位老师）"
    },
    {
-    "label": "⑤ 排雷+报价",
+    "label": "⑤ 学习规划+报价",
     "hint": "48堂课方案 + CP值 + 优惠"
    },
    {
@@ -1288,8 +1170,8 @@ const quizzes = {
    }
   ],
   "openingLine": "喂，你好，请问是哪位？",
-  "parentSystemPrompt": "你扮演一位台湾妈妈（暖暖妈妈），正在接听 VIP THINK 课程顾问（CC）打来的课后电话。\n\n【背景信息】\n- 你的孩子叫暖暖，6岁10个月，国小一年级，女孩，今天完成了 S4-魔法水源体验课（同班 3 人）\n- 课前情况：性格外向，有在上画图班；数感一般，50 以内的加减法还不太会\n- 体验课陪同：你有在画面里陪著小朋友上课\n- 体验课老师反馈（你已经知道的）：\n  · 孩子整体表现：喜欢课堂，会主动回答问题，专注力 OK、理解能力 OK、学习态度端正\n  · 环节一排序能完成，能有序枚举\n  · 环节二数字枚举也没问题，三位数理解的很好，三位数的读法熟练\n  · 环节三凑数计算 20 以内进退位加减法是会的，但还不熟，对于如何枚举凑数不熟练，思路会比较混乱，有序思考、分步思考意识需加强，需要多练习巩固\n  · 匹配阶段：是，基础中\n- 你对课程有兴趣但还有顾虑，你是普通家长，不是教育专家\n\n【你的身份特点】\n- 使用简体中文，带台湾口语习惯（例如：喔、啦、呀、妈、先生、谢谢、不好意思）\n- 表达自然、口语化、不用书面语\n- 回答简短，1-3 句话\n- 带着真实家长的顾虑和情绪\n\n【你可能提出的异议（随机混合）】\n你会在对话中根据CC的话术，自然地提出 1-3 个异议（不一定会全提）：\n1. \"要和先生商量一下\" - 决策权问题\n2. \"价格太贵 / 比外面贵\" - 价格顾虑\n3. \"担心小朋友长时间对着屏幕会近视\" - 视力顾虑\n4. \"小朋友说上课好闷 / 不想再上\" - 兴趣问题\n5. \"他现在年纪太小\" - 年龄顾虑\n6. \"担心学了几个月都看不到效果\" - 效果顾虑\n7. \"我再考虑一下 / 过几天再回复你\" - 拖延\n\n【反应规则 — 极其重要！】\n✅ 真实反应：\n- CC 给出合理解释 → 接受或部分接受，可能再问一两个问题\n- CC 话术专业 → 信任度提升，可以被说服\n- CC 乱说话 / 答非所问 → 表现困惑：\"你说什么？\"，\"不太明白你的意思\"\n- CC 一直在背台词不回应你的异议 → 表现不耐烦：\"你直接回答我\"\n- CC 直接说\"我帮你报名吧\" → 警惕：\"等我再考虑一下\"\n- CC 解决了你提的异议 → 松动，转移到下一个异议，或表达愿意进一步了解\n- 你已经知道孩子情况（上面的反馈清单），CC 如果说错或漏掉关键点（如环节三薄弱点），可以指出：\"你说他都会，但你刚才说的跟老师跟我说的好像不一样喔\"\n\n❌ 绝对禁止：\n- 不管 CC 说什么，都按固定顺序背预设台词\n- 跳过 CC 还没讲完的话题\n- 假装听懂乱码内容\n- 每次都回答相同的话\n- 一次性把所有异议全说出来（要等 CC 回应了前一个再说下一个）\n\n【对话节奏】\n- 每次只回应 CC 的最新那句话\n- 不要重复 CC 说过的内容\n- 保持真实感，像真的家长在通电话\n- 当 CC 专业地化解了你的 3-4 个异议后，可以表达松动（例如：\"听起来都挺好的\"、\"那你发些资料给我\"），但不要轻易直接成交\n- 如果 CC 的关单尝试太突然（没化解够异议就强行关单），你要拒绝：\"等我和先生商量一下\"\n\n【回复格式】\n- 直接说出你的反应，不需要前缀（不要写\"家长说：\"之类）\n- 保持 1-3 句话长度，自然聊天节奏",
-  "evaluatorSystemPrompt": "你是 VIP THINK 培训机构的资深教学评审官，专门评估 CC（课程顾问）学员在课后电话中的异议处理能力。\n\n【评分标准】（满分100分）\n\n1. 流程规范性（30分）：是否按正确顺序完成课后电话全流程\n   - 开场询问感受 → 解读课后报告 → 观念强化 → 课程介绍 → 排雷报价 → 异议处理 → 关单成交 → 成交跟进\n   - 流程不完整或顺序混乱扣分\n\n2. 信息准确性（30分）：传递的课程信息是否准确、完整、专业\n   - 品牌与课程特色（VIP THINK、9个阶段、4-6人小班、3位老师服务：排课/班导/授课）\n   - 课后报告解读：暖暖今天上的是 S4-魔法水源（同班 3 人），课前数感一般（50 以内加减法还不熟）\n     · 优点要提到：喜欢课堂、主动回答、专注力/理解能力/学习态度端正、有序枚举、三位数熟练、三位数读法熟练\n     · 缺点要明确：凑数计算 20 以内进退位加减法「会但不熟」、枚举凑数不熟练、思路较混乱、有序思考与分步思考意识需加强、需要多练习巩固\n     · 学习建议：建议继续在 S4 级别学习打好基础（或具体级别建议）\n   - 性价比说明（CP值、48堂课方案、AFTEE 分期）\n   - 异议处理话术（YES..BUT结构、价值塑造）\n\n3. 服务亲和力（30分）：语气、态度、沟通技巧\n   - 语气礼貌专业\n   - 有同理心，能共情家长顾虑\n   - 善用 YES..BUT 等沟通框架\n   - 留下跟进口子（钉钉/24小时跟进）\n   - 不施压、不催促\n\n4. 话题覆盖度（10分）：是否覆盖必要话题\n   - 询问感受、报告解读（S4-魔法水源具体表现）、观念强化、课程介绍、报价、异议处理、关单、成交跟进\n   - 每个核心话题都有触及才算覆盖\n\n【评分规则】\n- 60分为及格线\n- 对话质量 > 对话长度，不是讲得越多分越高\n- 不要因为对话短就自动给低分\n- 识别关键词而非字面对照（例如「理解」「明白」「正常」都算\"理解\"）\n- 具体指出优点和改进方向\n\n【输出格式要求 — 极其严格】\n必须且只能输出以下 JSON 格式，不要加任何其他文字、解释、markdown标记：\n{\"score\":85,\"process\":22,\"accuracy\":25,\"rapport\":26,\"coverage\":8,\"feedback\":\"整体评语\",\"strengths\":[\"优点1\",\"优点2\",\"优点3\"],\"improvements\":[\"改进1\",\"改进2\"]}",
+  "parentSystemPrompt": "你扮演一位台湾妈妈（暖暖妈妈），正在接听 VIP THINK 课程顾问（CC）打来的课后电话。\n\n【背景信息】\n- 你的孩子叫暖暖，6岁10个月，国小一年级，女孩，今天完成了 S4-魔法水源体验课（同班 3 人）\n- 课前情况：性格外向，有在上画图班；数感一般，50 以内的加减法还不太会\n- 体验课陪同：你有在画面里陪着小朋友上课\n- 体验课老师反馈（你已经知道的）：\n  · 孩子整体表现：喜欢课堂，会主动回答问题，专注力 OK、理解能力 OK、学习态度端正\n  · 环节一排序能完成，能有序枚举\n  · 环节二数字枚举也没问题，三位数理解的很好，三位数的读法熟练\n  · 环节三凑数计算 20 以内进退位加减法是会的，但还不熟，对于如何枚举凑数不熟练，思路会比较混乱，有序思考、分步思考意识需加强，需要多练习巩固\n  · 匹配阶段：是，基础中\n- 你对课程有兴趣但还有顾虑，你是普通家长，不是教育专家\n\n【你的身份特点】\n- 使用简体中文，带台湾口语习惯（例如：喔、啦、呀、妈、先生、谢谢、不好意思）\n- 表达自然、口语化、不用书面语\n- 回答简短，1-3 句话\n- 带着真实家长的顾虑和情绪\n\n【你可能提出的异议（随机混合）】\n你会在对话中根据CC的话术，自然地提出 1-3 个异议（不一定会全提）：\n1. \"要和先生商量一下\" - 决策权问题\n2. \"价格太贵 / 比外面贵\" - 价格顾虑\n3. \"担心小朋友长时间对着屏幕会近视\" - 视力顾虑\n4. \"小朋友说上课好闷 / 不想再上\" - 兴趣问题\n5. \"他现在年纪太小\" - 年龄顾虑\n6. \"担心学了几个月都看不到效果\" - 效果顾虑\n7. \"我再考虑一下 / 过几天再回复你\" - 拖延\n\n【反应规则 — 极其重要！】\n✅ 真实反应：\n- CC 给出合理解释 → 接受或部分接受，可能再问一两个问题\n- CC 话术专业 → 信任度提升，可以被说服\n- CC 乱说话 / 答非所问 → 表现困惑：\"你说什么？\"，\"不太明白你的意思\"\n- CC 一直在背台词不回应你的异议 → 表现不耐烦：\"你直接回答我\"\n- CC 直接说\"我帮你报名吧\" → 警惕：\"等我再考虑一下\"\n- CC 解决了你提的异议 → 松动，转移到下一个异议，或表达愿意进一步了解\n- 你已经知道孩子情况（上面的反馈清单），CC 如果说错或漏掉关键点（如环节三薄弱点），可以指出：\"你说他都会，但你刚才说的跟老师跟我说的好像不一样喔\"\n\n❌ 绝对禁止：\n- 不管 CC 说什么，都按固定顺序背预设台词\n- 跳过 CC 还没讲完的话题\n- 假装听懂乱码内容\n- 每次都回答相同的话\n- 一次性把所有异议全说出来（要等 CC 回应了前一个再说下一个）\n\n【对话节奏】\n- 每次只回应 CC 的最新那句话\n- 不要重复 CC 说过的内容\n- 保持真实感，像真的家长在通电话\n- 当 CC 专业地化解了你的 3-4 个异议后，可以表达松动（例如：\"听起来都挺好的\"、\"那你发些资料给我\"），但不要轻易直接成交\n- 如果 CC 的关单尝试太突然（没化解够异议就强行关单），你要拒绝：\"等我和先生商量一下\"\n\n【回复格式】\n- 直接说出你的反应，不需要前缀（不要写\"家长说：\"之类）\n- 保持 1-3 句话长度，自然聊天节奏",
+  "evaluatorSystemPrompt": "你是 VIP THINK 培训机构的资深教学评审官，专门评估 CC（课程顾问）学员在课后电话中的异议处理能力。\n\n【评分标准】（满分100分）\n\n1. 流程规范性（30分）：是否按正确顺序完成课后电话全流程\n   - 开场询问感受 → 解读课后报告 → 观念强化 → 课程介绍 → 学习规划 → 报价 → 异议处理 → 关单成交 → 成交后跟进\n   - 流程不完整或顺序混乱扣分\n\n2. 信息准确性（30分）：传递的课程信息是否准确、完整、专业\n   - 品牌与课程特色（VIP THINK、9个阶段、4-6人小班、3位老师服务：排课/班导/授课）\n   - 课后报告解读：暖暖今天上的是 S4-魔法水源（同班 3 人），课前数感一般（50 以内加减法还不熟）\n     · 优点要提到：喜欢课堂、主动回答、专注力/理解能力/学习态度端正、有序枚举、三位数枚举与读法熟练\n     · 缺点要明确：凑数计算 20 以内进退位加减法「会但不熟」、枚举凑数不熟练、思路较混乱、有序思考与分步思考意识需加强、需要多练习巩固\n     · 学习建议：建议继续在 S4 级别学习打好基础（或具体级别建议）\n   - 性价比说明（CP值、48堂课方案、AFTEE 分期）\n   - 异议处理话术（YES..BUT结构、价值塑造）\n\n3. 服务亲和力（30分）：语气、态度、沟通技巧\n   - 语气礼貌专业\n   - 有同理心，能共情家长顾虑\n   - 善用 YES..BUT 等沟通框架\n   - 留下跟进口子（钉钉/24小时跟进）\n   - 不施压、不催促\n\n4. 话题覆盖度（10分）：是否覆盖必要话题\n   - 询问感受、报告解读（S4-魔法水源具体表现）、观念强化、课程介绍、报价、异议处理、关单、成交跟进\n   - 每个核心话题都有触及才算覆盖\n\n【评分规则】\n- 60分为及格线\n- 对话质量 > 对话长度，不是讲得越多分越高\n- 不要因为对话短就自动给低分\n- 识别关键词而非字面对照（例如「理解」「明白」「正常」都算\"理解\"）\n- 具体指出优点和改进方向\n\n【输出格式要求 — 极其严格】\n必须且只能输出以下 JSON 格式，不要加任何其他文字、解释、markdown标记：\n{\"score\":85,\"process\":22,\"accuracy\":25,\"rapport\":26,\"coverage\":8,\"feedback\":\"整体评语\",\"strengths\":[\"优点1\",\"优点2\",\"优点3\"],\"improvements\":[\"改进1\",\"改进2\"]}",
   "scenarios": [
    {
     "id": "final_compat",
@@ -1301,25 +1183,528 @@ const quizzes = {
  }
 };
 
+const chapterQuizzes = {
+ "ch1": [
+  {
+   "id": "ch1_q1",
+   "question": "下列哪一位 CC 解读课后报告的做法，符合标准话术结构？",
+   "options": [
+    "先取得妈妈同意再讲解，接着说学了什么、2-3 个优点、1 个待加强点，最后给学习建议",
+    "先把小朋友的缺点讲清楚让妈妈着急，再简单带过优点，最后顺势介绍价格",
+    "拿到老师反馈后直接逐字念给妈妈听，确保信息传递准确、不遗漏任何细节",
+    "先问妈妈小朋友在家表现如何，再凭自己的印象补充说说今天课堂的情况"
+   ],
+   "correct": 0,
+   "explain": "解读报告的标准结构是「提问授权 → 学了什么 → 2-3 个优点 → 1 个待加强点 → 学习建议」。逐字念稿缺少互动；先讲缺点会打击家长信心；凭印象说会不专业。"
+  },
+  {
+   "id": "ch1_q2",
+   "question": "课后电话的完整流程，正确的顺序是？",
+   "options": [
+    "开场询问感受 → 解读课后报告 → 观念强化 → 课程介绍 → 学习规划 → 报价 → 异议处理 → 关单",
+    "开场询问感受 → 观念强化 → 解读课后报告 → 学习规划 → 课程介绍 → 异议处理 → 报价 → 关单",
+    "开场询问感受 → 解读课后报告 → 课程介绍 → 观念强化 → 报价 → 学习规划 → 关单 → 异议处理",
+    "开场询问感受 → 课程介绍 → 解读课后报告 → 报价 → 观念强化 → 学习规划 → 关单 → 异议处理"
+   ],
+   "correct": 0,
+   "explain": "八个步骤的顺序是「01 开场询问感受 → 02 解读课后报告 → 03 观念强化 → 04 课程介绍 → 05 学习规划 → 06 报价 → 07 异议处理 → 08 关单」。观念强化必须在课程介绍之前——先把「为什么要学」立住，后面介绍课程才有的放矢。"
+  },
+  {
+   "id": "ch1_q3",
+   "question": "解读报告时，开头先向妈妈说「我先跟您讲解一下今天的课堂表现，有疑问随时跟我说」，主要是为了？",
+   "options": [
+    "争取缓冲时间，趁家长回应的时候赶紧翻资料，确认老师反馈的细节",
+    "先给家长打预防针，暗示报告里缺点比较多，请家长提前做好心理准备",
+    "取得家长的「提问授权」，让家长愿意听下去，讲解过程中保持互动而不是单向输出",
+    "测试家长今天心情如何，如果家长不愿意听，就直接跳过报告解读进入报价"
+   ],
+   "correct": 2,
+   "explain": "这就是「提问授权」——先征得家长同意、邀请家长随时提问，把单向输出变成双向沟通。家长主动提的问题要先记下来，归到对应环节回应，不要立刻跑题。"
+  },
+  {
+   "id": "ch1_q4",
+   "question": "解读报告时讲优点和缺点，正确的做法是？",
+   "options": [
+    "缺点讲得越多越好，家长越焦虑越容易尽快报名，优点简单带过就行",
+    "优点缺点各讲一半，保持客观中立，让家长自己判断小朋友的真实水平",
+    "只讲优点不讲缺点，先让家长开心，缺点留到家长问起的时候再说",
+    "讲 2-3 个优点＋1 个待加强点：先讲优点建立信任，缺点讲一个最关键的，最后落到学习建议"
+   ],
+   "correct": 3,
+   "explain": "结构是「2-3 个优点＋1 个待加强点」。先讲优点建立信心，缺点只挑一个最关键的（对应后面观念强化和课程介绍的切入点），最后用学习建议收尾，为推荐级别做铺垫。制造焦虑和回避缺点都不符合话术设计。"
+  },
+  {
+   "id": "ch1_q5",
+   "question": "解读报告时引用的课堂评价与建议级别，信息来源是？",
+   "options": [
+    "直接参考报名系统里的学员基本资料，按年龄段套用通用的评价模板",
+    "体验课老师在课后把课堂评价和建议级别发给 CC，CC 必须在拨打电话前读完并消化",
+    "CC 根据家长在开场时描述的上课情况，自行整理归纳出小朋友的课堂表现",
+    "课后电话一边讲一边问家长「小朋友是不是这样」，根据家长回应现场组织内容"
+   ],
+   "correct": 1,
+   "explain": "demo 老师课后会把课堂评价和建议级别发给对应 CC（通过钉钉/Line 私信）。CC 的动作是：拨打电话前读完、消化，报告解读时用自己的话讲出来。电话前的验收标准是「三份材料齐全，且能说出孩子 2-3 个优点与 1 个待提升点」。"
+  },
+  {
+   "id": "ch1_q6",
+   "question": "开场询问感受时，家长主动抛出一个问题（比如「你们这个课跟校内怎么衔接」），CC 应该？",
+   "options": [
+    "反问家长「您觉得怎么样衔接比较好」，把问题抛回去，根据家长回答再决定讲不讲",
+    "先记下来，告诉妈妈这个问题会在后面的课程介绍环节详细说明，然后继续完成报告解读的流程",
+    "简单回应一句「很好的问题」，然后当家长没问过，继续按自己的节奏往下讲",
+    "立刻停下所有流程，把课程衔接问题展开讲透，直到家长没有疑问再回到报告解读"
+   ],
+   "correct": 1,
+   "explain": "开场先接住家长的情绪，避免一上来就单向输出；家长主动提的问题先记下来，归到对应环节回应（衔接问题正好是课程介绍的素材），不要立刻跑题打断流程，也不能装作没听见。"
+  },
+  {
+   "id": "ch1_q7",
+   "question": "课后电话前准备的三份材料与验收标准，下列说法正确的是？",
+   "options": [
+    "三份材料齐全就行，能不能讲出优缺点不重要，电话里可以边看边讲",
+    "只要拿到老师的课堂评价就够了，精彩瞬间和家长报告可以等电话打完再补看",
+    "授课老师反馈、课堂精彩瞬间、课程评价（家长报告）三样齐备，且能说出 2-3 个优点与 1 个待提升点，才拨打电话",
+    "电话前只需要确认家长的上课时间有没有变化，其他材料等家长问起再查"
+   ],
+   "correct": 2,
+   "explain": "课后准备=「00 课后电话前准备」：授课老师反馈（读完）、精彩瞬间（截取 1 个可复述片段用于报告解读举例）、课程评价（确认家长已收到，作为共同参照）。验收：三份材料齐全＋能说出 2-3 个优点与 1 个待提升点，才拨打电话。"
+  }
+ ],
+ "ch2": [
+  {
+   "id": "ch2_q1",
+   "question": "观念强化的标准话术结构，下列哪一个是正确的？",
+   "options": [
+    "痛点 → 归因和解决方案 → 追问求证 → 紧迫性",
+    "归因分析 → 痛点 → 紧迫性 → 报价方案",
+    "追问求证 → 归因分析 → 痛点确认 → 紧迫性",
+    "痛点 → 课程介绍 → 优惠名额 → 假设成交"
+   ],
+   "correct": 0,
+   "explain": "观念强化按「痛点 → 归因和解决方案 → 追问求证 → 紧迫性」展开：先接住家长的痛点，立刻接归因和解决机制，再用一句提问把话题交回家长求证，最后把「不解决会怎样」说到具体时间点上。"
+  },
+  {
+   "id": "ch2_q2",
+   "question": "观念强化结构中「追问求证」这一段的设计目的，下列理解正确的是？",
+   "options": [
+    "用一句提问把话题交回家长，用求证代替断言，同时确认自己抓的痛点是不是家长的真痛点",
+    "拖延时间等家长自己想通，避免 CC 主动给出解决方案显得推销痕迹太重",
+    "用连续提问给家长施压，让家长在压力下没有时间思考，只能顺着 CC 的节奏走",
+    "测试家长的文化程度和表达能力，据此调整后续产品介绍用词的深浅"
+   ],
+   "correct": 0,
+   "explain": "追问求证是「说完把话题交回家长的一句提问，用求证代替断言」。例如讲完磨蹭的归因后问「您给他计时做过心算吗？他知道 10 道题大概该用多久吗？」——既确认痛点，又让家长自己开口印证，比 CC 单方面断言更有说服力。"
+  },
+  {
+   "id": "ch2_q3",
+   "question": "观念强化的核心纪律，下列哪一条是对的？",
+   "options": [
+    "接住痛点必须立刻接归因和机制，禁止「接住痛点 → 直接报价」",
+    "痛点不重要，报价才是重点，痛点只是报价前的过渡话题",
+    "接住痛点后先直接报价，用价格转移家长注意力，避免在痛点上纠缠太久",
+    "家长提到的痛点要先记下来，等所有流程走完、报价之后再统一回应"
+   ],
+   "correct": 0,
+   "explain": "核心纪律：接住痛点必须立刻接归因和机制，禁止「接住痛点 → 直接报价」。痛点不解决就直接报价，家长感知不到课程价值，只会觉得「贵」。紧迫感只描述课程事实与学习缺口，不承诺提分（合规提醒）。"
+  },
+  {
+   "id": "ch2_q4",
+   "question": "观念强化的紧迫感表达，下列哪一句符合合规要求？",
+   "options": [
+    "「三年级开始题目条件一多，现在不练分步能力，到时候应用问题会一直卡住——这个窗口就在中年级」",
+    "「隔壁班的小朋友都在我们这里学了两年了，您再不报名就真的来不及了」",
+    "「我们全台学员平均提分 30 分，您小朋友上来肯定比这个效果还好」",
+    "「现在报名保证小朋友期末考试至少提高 20 分，不然我们全额退费给您」"
+   ],
+   "correct": 0,
+   "explain": "紧迫感=把「不解决会怎样」说到具体的时间点上，不讲焦虑讲后果；合规红线是只描述课程事实与学习缺口，不承诺提分。A 描述的是学习缺口的自然传导；B/C 承诺提分、D 编造同侪压力，都不合规。"
+  },
+  {
+   "id": "ch2_q5",
+   "question": "家长说小朋友「写功课磨蹭，一写就是两小时」，下列归因哪一个是正确的？",
+   "options": [
+    "磨蹭是低年级孩子的普遍现象，长大自然就好了，不需要特别干预",
+    "磨蹭就是孩子太累了，课业安排太满，应该先减少学习量再谈成绩",
+    "磨蹭往往不是懒，是孩子脑子里没有「时间刻度」，可以用限时心算练出速度感",
+    "磨蹭说明孩子对学习天生没兴趣，这种情况只能靠家长每天在旁边盯着写"
+   ],
+   "correct": 2,
+   "explain": "磨蹭的归因是「孩子脑子里没有『时间刻度』」，解决方案是限时心算练速度感（如一年级要求 5 分钟 20 题）＋把功课拆成小步骤、每步有反馈。这就把一个模糊的抱怨变成了课程能解决的问题——归因错了，后面的方案和紧迫感都立不住。"
+  },
+  {
+   "id": "ch2_q6",
+   "question": "家长说小朋友「会背 1 到 10，但不知道 3 个苹果是几个」，这对应哪个学段痛点？",
+   "options": [
+    "S3 大班｜凑十破十只背口诀——会算但不懂算理，一脱离手指就不会",
+    "S2 中班｜只会做不会说——能算对但讲不出为什么，需要训练表达解题过程",
+    "S1 小班｜假性数数——数和「量」还没对上，需要用实物和游戏把两者连起来",
+    "S4 一年级｜读不懂题——不是不会算，是不知道题目让他干什么"
+   ],
+   "correct": 2,
+   "explain": "「会背数但对不上量」是 S1 假性数数的典型信号——数和『量』还没连起来。S1 用实物、游戏让小朋友把『3』和『3 个苹果』真正连起来，这是后面所有运算的地基。学段痛点速查的价值：一听家长的描述就能对号入座，观念强化直接命中。"
+  },
+  {
+   "id": "ch2_q7",
+   "question": "家长说小朋友五年级了「设个 X 就能解，偏偏要用算术法硬算」，观念强化应该？",
+   "options": [
+    "建议家长先给孩子报个奥数班训练巧算，等算术法练熟了再来学方程式",
+    "承认这是孩子的习惯问题改不了，只能多刷题把速度提上来弥补",
+    "告诉家长算术法更扎实，不用方程式说明孩子基础好，不需要干预",
+    "讲清 S8 的关键期意义：五年级是算术思维转代数思维的关键期，方程式这一步不转过来，上国中后直接跟不上"
+   ],
+   "correct": 3,
+   "explain": "S8 五年级是算术思维转代数思维的关键期，孩子不用方程式是因为「倒推」用惯了。解法是先用天平让他看见方程式就是等量关系（鸡兔同笼设鸡 x 只、兔 (8-x) 只）。紧迫感落在「上国中后一元一次方程式直接跟不上，函数的动态关系更晕」。"
+  },
+  {
+   "id": "ch2_q8",
+   "question": "「产品介绍后—排雷」环节的作用，下列理解正确的是？",
+   "options": [
+    "把刚才讲漏的产品卖点补一遍，确保信息完整无遗漏，方便家长做决定",
+    "直接进入报价环节，用优惠名额逼家长表态，缩短整个销售流程",
+    "让家长复述一遍课程卖点，检验 CC 刚才讲得清不清楚，作为自我评估",
+    "确认家长是否有听进去＋试探家长意向——有意向的家长会在这个环节主动提问"
+   ],
+   "correct": 3,
+   "explain": "排雷是一个「倾听」环节，不是继续推销：一是确认家长有没有听进去，二是试探意向——有意向的家长会在这里主动提问。透过家长的反馈，判断后续需要重点攻坚的方向，而不是把漏讲的内容再背一遍。"
+  }
+ ],
+ "ch3": [
+  {
+   "id": "ch3_q1",
+   "question": "CC 决定采用「反推」方式报价，下列路径正确的是？",
+   "options": [
+    "先报总价 → 拆分单价 → 提升价值 → 关单",
+    "先报单价 → 提升价值 → 再报总价 → 关单",
+    "先讲价值 → 再报单价 → 最后报总价 → 关单",
+    "先提优惠 → 再报总价 → 拆分单价 → 关单"
+   ],
+   "correct": 1,
+   "explain": "反推＝先报单价＋提升价值＋再报总价＋关单；正报＝先报总价＋拆分单价＋提升价值＋关单。总价低的方案可以选正报，课单价低的方案可以选反推，两种路径不要都讲。"
+  },
+  {
+   "id": "ch3_q2",
+   "question": "「正报」和「反推」的选择标准，下列说法正确的是？",
+   "options": [
+    "反推是给犹豫家长的缓兵之计，先把单价说低，等家长交钱后再告知总价",
+    "两种路径都要完整讲一遍，先正报再反推，家长对价格的印象会更深刻",
+    "报价只看家长的经济条件：有钱就正报一次报高价，没钱就反推慢慢加价",
+    "总价低的方案可以选正报（先报总价好接受），课单价低的方案可以选反推（单价听起来划算），两种路径不要都讲"
+   ],
+   "correct": 3,
+   "explain": "选择标准只跟数字形态有关：总价低的方案正报有优势，课单价低的方案反推有优势。核心是两条路径都通过「拆分或提升价值」让价格显得合理，但绝对不要两条都讲，会互相打架、显得刻意。"
+  },
+  {
+   "id": "ch3_q3",
+   "question": "学习规划环节的话术结构，正确的顺序是？",
+   "options": [
+    "开场 → 学习效果 → 达到水平 → 报价铺垫",
+    "开场 → 达到水平 → 画面感学习效果 → 收尾",
+    "收尾 → 达到水平 → 画面感学习效果 → 开场",
+    "开场 → 画面感学习效果 → 收尾 → 达到水平"
+   ],
+   "correct": 1,
+   "explain": "学习规划话术结构＝「开场 → 达到水平 → 画面感学习效果 → 收尾」。开场用通用句（一周两节课、约 96 节课学完一个级别），接着讲该级别的达到水平，再用画面感描述学习效果，收尾发教学大纲（「Sx 级别的教学大纲我发到您微信上了」）。"
+  },
+  {
+   "id": "ch3_q4",
+   "question": "学习规划环节「内容简介和学习效果」的讲法，下列正确的是？",
+   "options": [
+    "从 S1 到 S9 每个级别都讲一遍，让家长完整了解整个课程体系再选",
+    "只讲适合小朋友的那一个级别——级别由前面挖到的需求点和课堂表现决定",
+    "讲相邻的两个级别，让家长自己比较和选择，显得客观不引导",
+    "直接讲最高级别 S9 的效果，拉高家长预期，方便后续报更大的课包"
+   ],
+   "correct": 1,
+   "explain": "关键点：内容简介和学习效果只讲适合的那一个级别——级别由前面挖到的需求点和课堂表现决定。讲多了家长消化不了，讲高级别是画大饼，讲两个级别是让家长做 CC 该做的专业判断。"
+  },
+  {
+   "id": "ch3_q5",
+   "question": "报价环节的金额与优惠口径，下列做法符合要求？",
+   "options": [
+    "名额剩多少看现场气氛灵活说，制造紧迫感是关单技巧的一部分，不算违规",
+    "优惠可以口头承诺，先促成报名，具体折扣等家长付款后再跟系统核对",
+    "价格以当期价目表为准，不编造名额与截止压力，优惠活动如实说明",
+    "价目表上的价格只是参考，如果家长嫌贵可以现场直接承诺一个折扣价"
+   ],
+   "correct": 2,
+   "explain": "合规底线：价格以当期价目表为准，不编造名额与截止压力。编造名额是虚假紧迫，口头承诺折扣是收不了的空头支票——两者都是质检红线，也是纠纷来源。紧迫感要用课程事实与学习缺口来表达（见第二章合规提醒）。"
+  },
+  {
+   "id": "ch3_q6",
+   "question": "报价时塑造「CP 值」的正确方式是？",
+   "options": [
+    "跟家长说「教育不能谈钱，谈钱伤感情」，回避价格讨论直接推进关单",
+    "一次性抛出所有课包的价格表让家长自己比较，体现开放透明",
+    "把总价拆到每节课、每周的维度（如「平均一节 XX 元，一周不到 XX 元」），再用品牌与效果支撑价值感",
+    "反复强调「我们的价格是全台最低的」，用低价直接碾压家长的价格顾虑"
+   ],
+   "correct": 2,
+   "explain": "CP 值塑造的正确姿势是「拆分＋价值支撑」：把总价拆成每节课/每周的成本，再叠加品牌事实（运营 10 年、全台超过五十万付费学员）与学习效果。说「最低价」容易被证伪，回避价格会让家长觉得心虚，甩价格表则是放弃引导。"
+  }
+ ],
+ "ch4": [
+  {
+   "id": "ch4_q1",
+   "question": "家长说：「我再考虑一下。」按照异议处理步骤，第二步「判断」要判断的是什么？",
+   "options": [
+    "判断这是藉口还是真实原因——藉口层出不穷，真实原因藏在细节里",
+    "判断该报 48 堂还是先报试学班，直接替家长做好决定",
+    "判断家长什么时候有空，方便下一次打电话过去跟进",
+    "判断家长是真的要考虑，还是已经决定不报名了"
+   ],
+   "correct": 0,
+   "explain": "异议处理步骤是「倾听 → 判断 → 复述 → 解决」。「我再考虑一下」不是一个结果，而是一个信号——通常意味着顾虑未被完全解决、价值感知不足或缺乏紧迫感。判断的关键是分辨藉口和真实原因：藉口层出不穷；真实原因藏在细节里，找到根源顾虑才能对症解决。"
+  },
+  {
+   "id": "ch4_q2",
+   "question": "「倾听」阶段的做法，下列正确的是？",
+   "options": [
+    "不抵触家长提出的异议，从中找到问题，把顾虑问全——「除了这个顾虑之外，您还有其他担心吗？我记录下来，一并回答您」",
+    "点头附和家长的每个说法，先让家长开心，避免当场出现分歧",
+    "只回应家长提出的第一个顾虑，解决一个算一个，其他的等家长再提再说",
+    "家长刚说完就立刻逐条反驳，用专业知识证明家长的顾虑站不住脚"
+   ],
+   "correct": 0,
+   "explain": "倾听=不抵触＋把顾虑问全。家长提出疑问时不要着急回答，先问「您还有其他担心吗？我记录下来，一并回答您」——把顾虑收集完整再统一解决，避免解决一个又冒一个、始终在被家长牵着走。逐条反驳消磨好感，附和则解决不了任何问题。"
+  },
+  {
+   "id": "ch4_q3",
+   "question": "「复述」阶段使用封闭式问题，主要目的是？",
+   "options": [
+    "收集家长的把柄，后续异议处理时拿出来反驳家长，证明家长考虑多余",
+    "用问题消耗通话时长，等家长说得累了自然就愿意直接报名了",
+    "让家长觉得自己被重视，至于问什么内容其实不重要，态度到位就行",
+    "把模糊的「考虑」具体化为可讨论的议题，并确认真正的决策标准——「您跟爸爸商量，主要是商量要不要学？还是商量在不在我们这里学？」"
+   ],
+   "correct": 3,
+   "explain": "复述用封闭式问题，例如家长说要问爸爸，就问「是不是要问一下爸爸的意见呀？」「那如果爸爸同意，是不是就会继续学习呀？」——把模糊的考虑变成可讨论的具体议题，同时探明决策结构和核心决策标准，为针对性解决铺路。"
+  },
+  {
+   "id": "ch4_q4",
+   "question": "家长说「我要和先生商量一下」，CC 的正确回应思路是？",
+   "options": [
+    "直接说「这种事本来就该妈妈做主」，替家长下结论，省去商量的环节",
+    "同意家长先商量，结束通话等家长主动回复，避免显得太急切",
+    "质疑家长「商量什么呀，孩子学习的事情您自己就能决定吧」，逼家长当场表态",
+    "先表示尊重（理解），再引导决策权归属——提及平常多是妈妈负责孩子功课、爸爸没有陪课不了解情况，最后提出「致电过去当面跟两位完整介绍」"
+   ],
+   "correct": 3,
+   "explain": "决策人类异议的处理要点：先理解尊重（YES），再指出爸爸没陪课、不了解真实情况（BUT），最后给台阶——「您方便说一下爸爸晚上几点回家吗？我致电过去，当面跟你们两位完整介绍，不管最后要不要报名，先完整了解也方便多方比较」。既不越俎代庖，也不被动等待。"
+  },
+  {
+   "id": "ch4_q5",
+   "question": "经判断，家长的异议是藉口（如「我再想想」但没有任何具体顾虑），下一步应该？",
+   "options": [
+    "顺着藉口结束通话，但在群内通报家长意向不佳，让团队降低服务等级",
+    "回到重要性，重新提升观念——用学段痛点和紧迫感让家长重新意识到「为什么要现在学」",
+    "直接挂电话，既然是藉口说明家长没意向，等家长哪天想通了再联系",
+    "立刻抛出更大折扣，用价格击穿家长的犹豫，报价越低越容易成交"
+   ],
+   "correct": 1,
+   "explain": "如果是藉口——回到重要性，重新提升观念；如果是真实原因——按照场景解决。藉口层出不穷，追着藉口逐条回应永远追不完，只有把「为什么要学、为什么是现在」重新立住，藉口自然失去支撑。降价促销不是解法，还会破坏价格体系。"
+  },
+  {
+   "id": "ch4_q6",
+   "question": "YES..BUT 沟通方式的正确用法是？",
+   "options": [
+    "只在家长情绪激动的时候使用，平时直接讲道理效率更高",
+    "一定要先表示理解（我很理解您的想法…可是呢…），不要直接驳斥家长的想法——不同的观点会消磨好感",
+    "先讲「但是」给家长打预防针，再讲理解的部分，这样后面转折不会太突兀",
+    "YES 部分越短越好，快速带过，重点放在 BUT 之后的关键信息上"
+   ],
+   "correct": 1,
+   "explain": "YES..BUT 的核心是「一定要先表示你的理解，不要直接驳斥家长的想法」。常用句式：「我很理解您的想法…可是呢…」「我非常明白您的顾虑…不过呢…」「我特别清楚您的感受…但是呢…」。先共情再引导；顺序不能反——先转折会显得敷衍。"
+  },
+  {
+   "id": "ch4_q7",
+   "question": "家长说「小朋友说上课好无聊，不想学了」，下列哪一步不该做？",
+   "options": [
+    "结合课后报告佐证小朋友的真实表现，再讲游戏化教学与传统填鸭的区别，引导家长帮小朋友做决定",
+    "先用课堂事实反问——「体验课上小朋友整堂课都跟老师互动得不错，专注力也很好，想问一下妈妈为什么觉得他不喜欢呢？」",
+    "听完家长转述后立刻认同「确实我们课程还不够有趣」，并承诺向公司反映改进课程",
+    "表示理解家长尊重小朋友的感受，再说明小朋友年纪还小，长远规划需要家长帮忙把关做决定"
+   ],
+   "correct": 2,
+   "explain": "这类异议要先区分真抗拒还是感受表达：先用课堂事实（报告、老师反馈）反问探明原因，再共情家长（尊重感受）＋引导家长责任（年纪还小需要家长把关），最后用游戏化教学的差异点推动「帮小朋友做决定」。不该做的是 A——没查证就自我否定，既失专业度又强化了「课程无聊」的印象。"
+  }
+ ],
+ "ch5": [
+  {
+   "id": "ch5_q1",
+   "question": "关于关单的时机与节奏，下列哪一项叙述是正确的？",
+   "options": [
+    "前几轮用「软关」试探，多轮之后再「硬关」，时机成熟才正式关单",
+    "关单要等家长主动提出报名，CC 主动开口会让家长觉得压力太大",
+    "黄金关单时间是 24 小时，超过 24 小时就不用再跟进这位家长了",
+    "关单要固定在报价之后的环节进行，顺序不能被打乱，否则流程就乱了"
+   ],
+   "correct": 0,
+   "explain": "关单是在时机成熟的时候，而不是固定在哪个流程中：前几轮「软关」（不逼决策），多轮之后「硬关」（确认成交）。关单应该是随时随地多次的心理暗示传递；黄金关单 48 小时，课前做好挖需，课后顺水推舟。最后的胜利是给坚持的人。"
+  },
+  {
+   "id": "ch5_q2",
+   "question": "「软关」和「硬关」的区别，下列对应正确的是？",
+   "options": [
+    "软关＝第一次报价；硬关＝第二次报价，价格比第一次更低",
+    "软关＝给家长打折优惠；硬关＝不给任何优惠按原价成交",
+    "软关＝不逼决策的试探（「您倾向周中上课还是周末上课呀？」）；硬关＝确认成交（「我现在帮您预留名额，您是用卡支付还是 AFTEE？」）",
+    "软关＝发 Line 文字跟进；硬关＝打电话当面逼家长当场付款"
+   ],
+   "correct": 2,
+   "explain": "软关不逼决策——用选择式提问把家长带入「已经在规划上课」的心理状态（问周中还是周末、下午还是晚上）；硬关是确认成交——帮家长预留名额并直接问支付方式。节奏是「前几轮软关，多轮后硬关」，两者都是心理暗示传递，不是降价工具。"
+  },
+  {
+   "id": "ch5_q3",
+   "question": "「黄金关单 48 小时」的含义是？",
+   "options": [
+    "优惠名额的保留时限是 48 小时，过期自动释放给其他家长",
+    "报名后 48 小时内必须完成首周打卡，否则奖励作废",
+    "家长付款后 48 小时内可以无理由退款，超过时限就不能退了",
+    "体验课后 48 小时内是成交意愿最高的窗口，课前做好挖需，课后顺水推舟尽快促成"
+   ],
+   "correct": 3,
+   "explain": "黄金关单 48 小时=成交窗口期：体验课结束后 48 小时内家长的决策意愿最高，所以「课前做好挖需，课后顺水推舟」。48 小时不是逼单的借口，而是提醒 CC 跟进的节奏——错过窗口，家长热度下降，成交成本翻倍。"
+  },
+  {
+   "id": "ch5_q4",
+   "question": "家长对课程整体满意，但一直不表态、拖时间，最适合优先使用？",
+   "options": [
+    "优惠关单法——立刻宣布名额只剩最后 1 个，再不决定明天就恢复原价",
+    "保障关单法——先承诺随时可退费，等家长放心了再说报名的事",
+    "直接关单法——「看得出来您对课程和老师都很认同，今天就帮小朋友把名额保留下来，我把缴费连结传给您」",
+    "衡量关单法——把小学到国中的升学路径全讲一遍，让家长自己意识到时间紧迫"
+   ],
+   "correct": 2,
+   "explain": "满意但不表态=价值已感知、缺临门一脚，直接关单法最适合（帮客户尽快做决定：肯定认同→保留名额→给连结确认金额）。家长没异议时不必绕保障或优惠；编造「最后1个」违反报价合规；衡量关单法用于算账场景，这里太重。"
+  },
+  {
+   "id": "ch5_q5",
+   "question": "家长说「万一上了没效果怎么办」，最适合使用？",
+   "options": [
+    "保障关单法——「课程有 4 堂无忧试学保障，上完不满意可以全额退」，用保障给家长定心丸",
+    "优惠关单法——「现在报名立减 XXXX，就算没效果您也亏得少一点」",
+    "衡量关单法——详细计算每节课的费用，证明就算没效果损失也不大",
+    "直接关单法——「您放心绝对有效果」，拍胸脯保证打消家长疑虑"
+   ],
+   "correct": 0,
+   "explain": "保障关单法=随时可以退费＋按平均价格扣课时费，给家长吃定心丸（「前 4 堂课不满意全额退」）。注意底线：不到万不得已，不要用退费促单。拍胸脯承诺效果违反合规；「亏得少一点」是负面暗示；算损失更是把家长往不报的方向推。"
+  },
+  {
+   "id": "ch5_q6",
+   "question": "家长说「一次买这么多课有压力，你们有分期吗」，正确的处理是？",
+   "options": [
+    "先确认担心的具体原因（坚持不了/效果存疑/只是不想一次付清），再对症给方案——试学班（学 4 个月先看效果）或 AFTEE 分三期免手续费",
+    "直接推荐金额最小的课包，金额小家长容易点头，先成交再说升舱",
+    "告诉家长分期有手续费不划算，建议找亲戚朋友借钱一次付清",
+    "表示分期名额有限要先交订金占位，制造紧迫感逼家长当天决定"
+   ],
+   "correct": 0,
+   "explain": "先分辨「一次买这么多」背后的真实顾虑：怕坚持不了→聊兴趣与游戏化教学；怕看不到效果→讲覆盖考点与进步案例；单纯不想一次付清→给试学班或 AFTEE 分期免手续费。直接砍课包是逃到小单，编造分期订金是违规。"
+  },
+  {
+   "id": "ch5_q7",
+   "question": "关于关单的心态与原则，下列哪一项是正确的？",
+   "options": [
+    "关单成功靠话术套路，把五种关单法全部背熟，每通电话至少用满三种",
+    "关单时要强势推进，家长不点头就不挂电话，用时长换成交概率",
+    "关单是随时随地多次的心理暗示传递，最后的胜利是给坚持的人，但每次推进都要自然、同频",
+    "家长没有当场报名就等于流失，不必再花时间跟进，把精力放在新名单上"
+   ],
+   "correct": 2,
+   "explain": "关单的要点：时机成熟才关（家长的问题/异议都解决后）；关单是随时随地多次的心理暗示传递；黄金 48 小时；课前做好挖需课后顺水推舟；用和家长同频的方式沟通；最后的胜利是给坚持的人。堆砌话术、死缠烂打都会消耗好感。"
+  }
+ ],
+ "ch6": [
+  {
+   "id": "ch6_q1",
+   "question": "签单后的 24 小时内，下列哪一项不属于「定心丸 5 件事」？",
+   "options": [
+    "引入班导的概念，介绍三位老师分别负责什么",
+    "确认并完善客户资料，在后台写好跟进记录与注意事项",
+    "给予鼓励和信心，肯定家长的选择",
+    "帮小朋友预约下一次的免费升级测评，为升舱做铺垫"
+   ],
+   "correct": 3,
+   "explain": "定心丸 5 件事=①给予鼓励与信心 ②确认并完善客户资料（后台写好跟进记录、注意事项）③引入班导概念、说明三位老师分工 ④介绍转介绍活动（以当期政策为准）⑤发送与所购课包对应版本的入学指南。「签单不是结束，24 小时内的动作决定家长会不会后悔、会不会转介绍」——预约升级测评不在其中，刚报名就谈升舱反而引发「是不是还要再花钱」的疑虑。"
+  },
+  {
+   "id": "ch6_q2",
+   "question": "发送入学指南与课时确认函的要求，下列说法正确的是？",
+   "options": [
+    "入学指南 24 小时内发，课时确认函可以宽限到 72 小时，质检以入学指南为准",
+    "入学指南是通用文件，转发标准版本链接给家长即可，无需核对课包版本",
+    "课时确认函等家长主动索取时再发，避免刚报名就发一堆文件吓到家长",
+    "不同课包版本不同，必须发送与家长所购课包对应的版本，且 24 小时内必须发送，否则触犯质检"
+   ],
+   "correct": 3,
+   "explain": "两条硬性要求：①版本必须与家长所购课包对应，勿发错；②24 小时内必须发送，否则触犯质检。入学指南与课时确认函都适用。发错版本会让家长发现金额或权益对不上，直接引发信任危机。"
+  },
+  {
+   "id": "ch6_q3",
+   "question": "打卡赠课活动的规则，下列描述正确的是？",
+   "options": [
+    "打卡次数不限，家长随时补打卡都算数，攒够 8000 豌豆币就能兑换一节正式课",
+    "每次打卡奖励 8000 豌豆币，连续打卡四周可以直接兑换四节正式课",
+    "保存学员专属海报分享到 FB/IG 等社交平台并停留 24 小时，全屏截图上传家长端；以周为单位每周重新计算，满足要求 2000 豌豆币/周，首次打卡（报名后 48 小时内完成）可得 4000 豌豆币，8000 豌豆币可兑换 1 节正式课",
+    "打卡内容发到个人动态即可，不需要停留时间，截图发给 CC 由 CC 代上传"
+   ],
+   "correct": 2,
+   "explain": "打卡要求：学员专属海报（官方文案或自行编辑），分享到社交平台并停留 24 小时，全屏截图上传；需全员可见，不能分组。周期以周为单位每周一重算；满足要求 2000 豌豆币/周；首次打卡（报名后 48 小时内完成）4000 豌豆币；补卡仅支持补上周截图且需家长上周生成过海报。8000 豌豆币=1 节正式课。"
+  },
+  {
+   "id": "ch6_q4",
+   "question": "家长说「不想打卡，太麻烦了」，参考话术的核心思路是？",
+   "options": [
+    "同意家长放弃打卡，帮家长申请免打卡特权，维护客情关系优先",
+    "让家长直接把海报链接发给亲戚朋友点赞，凑满点赞数就算打卡成功",
+    "告诉家长不打卡就不能享受学员权益，用权益压力促使家长完成打卡",
+    "表示理解＋说明打卡很简单（图片文案一键生成、1 分钟搞定）＋点出分享也是记录小朋友的成长＋承诺后续每周提醒"
+   ],
+   "correct": 3,
+   "explain": "「不想打卡」参考话术：我理解您，打卡真的很简单，图片和文案都是一键生成的，1 分钟就搞定；分享打卡也是记录小朋友的成长；后续我也会每周提醒您。不施压、不拿权益要挟、不随便开特权——把门槛讲低＋服务兜住，打卡率自然上去。"
+  },
+  {
+   "id": "ch6_q5",
+   "question": "成交后跟进记录（Follow 内容）应该包含哪些信息？",
+   "options": [
+    "记录承诺给家长的优惠和赠品，至于发送了什么文件不重要",
+    "课包（以合同为准）、入学指南已发送、思维能力自评已发送、家长端 APP 及打卡长图已发送、其他注意事项",
+    "只需要记录课包金额和付款方式，其他信息财务和教务系统里都有",
+    "记录家长的语气和态度，方便下次电话时判断家长好不好说话"
+   ],
+   "correct": 1,
+   "explain": "Follow 内容标准：课包（以合同为准）；入学指南：已发送；思维能力自评：已发送；家长端 APP 及打卡长图：已发送；其他注意事项。跟进记录是三师服务衔接的基础——班导、授课老师都靠它了解家长状态，缺一项服务就可能断档。"
+  }
+ ]
+};
+
 const LS_PREFIX = 'vipthink_tw_after';
 let currentSection = 0;
 let completedSections = new Set();
-let quiz1Answered = false;
-let quiz1Selected = -1;
+let quizState = {};   // { 'chX_qN': { selected, solved, wrongTries } }
 let reportWritingSubmitted = false;
 let reportWritingScore = 0;
 let reportWritingText = '';
 let reportWritingFeedbackHTML = '';
-let quiz2Answered = false;
-let quiz2Selected = -1;
-let quiz3Answered = false;
-let quiz3Selected = -1;
-let quiz4Answered = false;
-let quiz4Selected = -1;
 let quiz4DialogueAnswered = false;
 let quiz4DialogueScore = 0;
-let quiz5Answered = false;
-let quiz5Selected = -1;
+
+function chapterQuizArr(chIdx) { return chapterQuizzes['ch' + (chIdx + 1)] || []; }
+function chapterSolvedCount(chIdx) { return chapterQuizArr(chIdx).filter(q => quizState[q.id] && quizState[q.id].solved).length; }
+function chapterAllSolved(chIdx) { const arr = chapterQuizArr(chIdx); return arr.length > 0 && chapterSolvedCount(chIdx) === arr.length; }
+function allChaptersSolved() { return courseData.sections.every((_, i) => chapterAllSolved(i)); }
+function findQuizItemById(id) {
+  for (const ch of Object.keys(chapterQuizzes)) {
+    const hit = chapterQuizzes[ch].find(q => q.id === id);
+    if (hit) return hit;
+  }
+  return null;
+}
+function sectionIndexOf(quizId) { return parseInt((quizId.match(/^ch(\d+)/) || [0, 1])[1], 10) - 1; }
+function updateChapterProgressUI(chIdx) {
+  const el = document.getElementById('quizprogress-ch' + (chIdx + 1));
+  if (el) el.textContent = '本章答题 ' + chapterSolvedCount(chIdx) + '/' + chapterQuizArr(chIdx).length;
+}
 let finalTaskSubmitted = false;
 let finalScore = 0;
 
@@ -1367,25 +1752,30 @@ function renderSections() {
   main.innerHTML = courseData.sections.map((s, i) => `
     <div class="section" data-section="${i}">
       ${s.content}
-      ${s.type === 'content_quiz' ? renderQuiz(quizzes[s.quizId], i) : ''}
       ${s.type === 'content_chart_dialogue' ? renderDialogue(quizzes[s.quizId], i) : ''}
+      ${renderChapterQuizBlock(i)}
       <div class="section-nav-buttons">
         <div>${i > 0 ? `<button class="btn btn-outline" onclick="navigateTo(${i-1})">← 上一章</button>` : ''}</div>
         <div>${i < courseData.sections.length - 1 ? `<button class="btn" onclick="markComplete(${i});navigateTo(${i+1})">下一章 →</button>` : `<button class="btn btn-success" id="completeCourseBtn" onclick="tryCompleteCourse(${i})">✓ 完成课程</button>`}</div>
       </div>
     </div>
   `).join('');
+  // s6 等章节：把题块移动到正文内的占位符（终极考核 UI 之前）
+  courseData.sections.forEach((s, i) => {
+    const slot = document.getElementById('quizslot-ch' + (i + 1));
+    const blk = document.getElementById('quizblock-ch' + (i + 1));
+    if (slot && blk) slot.appendChild(blk);
+  });
 }
 
 function canNavigateTo(index) {
-  if (index > 0 && !quiz1Answered) return { ok: false, msg: '请先完成第1章的选择题' };
   if (index > 0 && !reportWritingSubmitted) return { ok: false, msg: '请先完成第1章的报告解读编写练习' };
   if (index > 0 && reportWritingScore < 60) return { ok: false, msg: '第1章报告解读编写练习得分未达60分（当前：' + reportWritingScore + '分），请重新作答' };
-  if (index > 1 && !quiz2Answered) return { ok: false, msg: '请先完成第2章的互动练习' };
-  if (index > 2 && !quiz3Answered) return { ok: false, msg: '请先完成第3章的互动练习' };
-  if (index > 3 && (!quiz4Answered || !quiz4DialogueAnswered)) return { ok: false, msg: '请先完成第4章的选择题和AI模拟对话' };
+  if (index > 3 && !quiz4DialogueAnswered) return { ok: false, msg: '请先完成第4章的AI模拟对话' };
   if (index > 3 && quiz4DialogueScore < 60) return { ok: false, msg: '第4章AI模拟对话得分未达60分，请重新作答' };
-  if (index > 4 && !quiz5Answered) return { ok: false, msg: '请先完成第5章的互动练习' };
+  for (let c = 0; c < index; c++) {
+    if (!chapterAllSolved(c)) return { ok: false, msg: '请先答对第' + (c + 1) + '章全部测验题（当前 ' + chapterSolvedCount(c) + '/' + chapterQuizArr(c).length + '）' };
+  }
   return { ok: true };
 }
 
@@ -1413,6 +1803,10 @@ function navigateTo(index) {
 }
 
 function markComplete(index) {
+  if (chapterQuizArr(index).length && !chapterAllSolved(index)) {
+    showToast('请先答对第' + (index + 1) + '章全部测验题（当前 ' + chapterSolvedCount(index) + '/' + chapterQuizArr(index).length + '）', 'warning');
+    return;
+  }
   completedSections.add(index);
   updateProgress();
   saveProgress();
@@ -1610,15 +2004,8 @@ function normalizeText(text) {
     .replace(/[\s\u00A0\u2000-\u200B\u202F\u205F\u3000\ufeff]/g, '')
     // 去除所有标点符号（中英文）
     .replace(/[，。！？、；：""''【】《》（）\-\—…·～～\/\\\<\>\[\]\{\}\(\)\*\+\=\|\`\~\!\@\#\$\%\^\&\;\:\'\"\,\.\?\/]/g, '')
-    // 英语→普通话统一映射
-    .replace(/的/g, '的')
-    .replace(/了/g, '了')
-    .replace(/不/g, '不')
-    .replace(/是/g, '是')
-    .replace(/𠮶/g, '那')
-    .replace(/的/g, '们')
-    .replace(/什/g, '什')
-    .replace(/些/g, '些');
+    // 方言字→普通话映射
+    .replace(/𠮶/g, '那');
 }
 
 // 语义模糊匹配：综合多种策略判断文本是否语义覆盖了某概念
@@ -1681,7 +2068,7 @@ function scoreNaturalness(text) {
   let score = 0;
   const t = text;
 
-  // 1. 英语口语标记（的/了/不/是/这么/这/𠮶/了/啊/啵/什么/吓）
+  // 1. 口语表达标记（的/了/不/是/这么/这/𠮶/了/啊/啵/什么/吓）
   const cantoneseMarkers = ['的','了','不','是','这么','这','𠮶','了','啊','啵','什么','吓','的','什','些','他'];
   let cantoCount = 0;
   cantoneseMarkers.forEach(m => { if (t.includes(m)) cantoCount++; });
@@ -1833,7 +2220,7 @@ function strictSemanticMatch(text, terms) {
     let detailHtml = '';
     if (d.isNaturalness) {
       const ns = d.natScore || 0;
-      detailHtml = `<div style="font-size:11px;color:#64748b;margin-top:4px;">英语口语标记‧称呼得体‧对话感‧文本长度 → 原始分：${ns}/100</div>`;
+      detailHtml = `<div style="font-size:11px;color:#64748b;margin-top:4px;">口语表达‧称呼得体‧对话感‧文本长度 → 原始分：${ns}/100</div>`;
     }
     dimsHtml += `
       <div class="eval-dim" style="border-color:${borderC}">
@@ -1918,6 +2305,10 @@ function setupReportWritingCounter() {
 }
 
 function tryCompleteCourse(index) {
+  if (chapterQuizArr(index).length && !chapterAllSolved(index)) {
+    showToast('请先答对第' + (index + 1) + '章全部测验题（当前 ' + chapterSolvedCount(index) + '/' + chapterQuizArr(index).length + '）', 'warning');
+    return;
+  }
   if (!finalTaskSubmitted) {
     showToast('请先完成终极考核并提交答案', 'warning');
     return;
@@ -1942,72 +2333,100 @@ function updateProgress() {
   });
 }
 
-function renderQuiz(quiz, sectionIndex) {
-  if (!quiz || quiz.isDialogue) return '';
+function renderChapterQuizBlock(sectionIndex) {
+  const arr = chapterQuizArr(sectionIndex);
+  if (!arr.length) return '';
+  const solved = chapterSolvedCount(sectionIndex);
   return `
-    <div class="quiz-card" id="quiz-${quiz.quizId || sectionIndex}">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-        <span style="font-size:24px;">✍️</span>
-        <h3 style="font-size:16px;font-weight:700;">互动练习：选择题</h3>
+    <div class="chapter-quiz-block" id="quizblock-ch${sectionIndex + 1}">
+      <div class="chapter-quiz-header">
+        <h3>✍️ 章节测验：全部答对才能解锁下一章</h3>
+        <span class="chapter-quiz-progress" id="quizprogress-ch${sectionIndex + 1}">本章答题 ${solved}/${arr.length}</span>
       </div>
-      <div class="quiz-question">${quiz.question}</div>
+      ${arr.map((q, qi) => renderQuizItem(q, sectionIndex, qi)).join('')}
+    </div>
+  `;
+}
+
+function renderQuizItem(q, sectionIndex, qIndex) {
+  const st = quizState[q.id];
+  const prevSolved = qIndex === 0 || !!(quizState[chapterQuizArr(sectionIndex)[qIndex - 1].id] || {}).solved;
+  const disabled = !prevSolved && !(st && st.solved);
+  return `
+    <div class="quiz-card ${disabled ? 'quiz-item-locked' : ''}" id="quiz-${q.id}">
+      <div class="quiz-question"><span style="font-weight:700;color:#4338ca;margin-right:6px;">${qIndex + 1}.</span>${q.question}</div>
       <div class="quiz-options">
-        ${quiz.options.map((opt, oi) => `
-          <div class="quiz-option" data-option="${oi}" onclick="selectQuizOption(this, ${oi}, '${quiz.quizId || sectionIndex}')">
-            <span class="quiz-option-label">${opt.label}</span>
-            <span>${opt.text}</span>
+        ${q.options.map((text, oi) => `
+          <div class="quiz-option" data-option="${oi}" onclick="selectQuizOption(this, ${oi}, '${q.id}')">
+            <span class="quiz-option-label">${'ABCD'[oi]}</span>
+            <span>${text}</span>
           </div>
         `).join('')}
       </div>
-      <div class="quiz-feedback" id="feedback-${quiz.quizId || sectionIndex}"></div>
+      <div class="quiz-feedback" id="feedback-${q.id}"></div>
     </div>
   `;
 }
 
 function selectQuizOption(el, optionIndex, quizId) {
-  const quiz = quizzes[quizId];
-  if (!quiz) return;
-  
-  // Check if already answered
-  if (quizId === 'quiz1' && quiz1Answered) return;
-  if (quizId === 'quiz2' && quiz2Answered) return;
-  if (quizId === 'quiz3' && quiz3Answered) return;
-  if (quizId === 'quiz4' && quiz4Answered) return;
-  if (quizId === 'quiz5' && quiz5Answered) return;
-  
-  const isCorrect = optionIndex === quiz.correct;
+  const q = findQuizItemById(quizId);
+  if (!q) return;
+  const st = quizState[quizId] || (quizState[quizId] = { selected: -1, solved: false, wrongTries: 0 });
+  if (st.solved) return;   // 已答对的题锁定
+
+  const isCorrect = optionIndex === q.correct;
   const feedbackEl = document.getElementById('feedback-' + quizId);
   const quizCard = document.getElementById('quiz-' + quizId);
-  
-  // Mark options
   const options = el.parentNode.querySelectorAll('.quiz-option');
-  options.forEach((opt, i) => {
-    opt.classList.remove('selected');
-    if (i === quiz.correct) opt.classList.add('correct');
-    if (i === optionIndex && !isCorrect) opt.classList.add('wrong');
-    opt.style.pointerEvents = 'none';
-  });
-  
-  // Show feedback
+  st.selected = optionIndex;
+
   if (isCorrect) {
-    feedbackEl.innerHTML = quiz.feedback_correct;
-    feedbackEl.className = 'quiz-feedback correct show';
+    options.forEach((opt, i) => {
+      opt.classList.remove('selected');
+      opt.style.pointerEvents = 'none';
+      if (i === q.correct) opt.classList.add('correct');
+    });
+    st.solved = true;
+    if (feedbackEl) {
+      feedbackEl.innerHTML = buildExplainHTML(q, true);
+      feedbackEl.className = 'quiz-feedback correct show';
+    }
+    quizCard.classList.remove('answered-wrong');
     quizCard.classList.add('answered-correct');
+
+    const chIdx = sectionIndexOf(quizId);
+    updateChapterProgressUI(chIdx);
+    const arr = chapterQuizArr(chIdx);
+    const qIdx = arr.findIndex(x => x.id === quizId);
+    const nextQ = arr[qIdx + 1];
+    if (nextQ) {
+      const nextCard = document.getElementById('quiz-' + nextQ.id);
+      if (nextCard) nextCard.classList.remove('quiz-item-locked');
+    }
   } else {
-    feedbackEl.innerHTML = quiz.feedback_wrong;
-    feedbackEl.className = 'quiz-feedback wrong show';
+    // 答错：仅错项标红禁点，不暴露正确项，其余选项可继续尝试
+    el.classList.remove('selected');
+    el.classList.add('wrong');
+    el.style.pointerEvents = 'none';
+    st.wrongTries++;
+    let hint = buildExplainHTML(q, false);
+    if (st.wrongTries >= 2) hint += '<div style="margin-top:8px;font-size:13px;color:#92400e;">💡 建议回看本章内容后再作答。</div>';
+    if (feedbackEl) {
+      feedbackEl.innerHTML = hint;
+      feedbackEl.className = 'quiz-feedback wrong show';
+    }
     quizCard.classList.add('answered-wrong');
   }
-  
-  // Update state
-  if (quizId === 'quiz1') { quiz1Answered = true; quiz1Selected = optionIndex; }
-  if (quizId === 'quiz2') { quiz2Answered = true; quiz2Selected = optionIndex; }
-  if (quizId === 'quiz3') { quiz3Answered = true; quiz3Selected = optionIndex; }
-  if (quizId === 'quiz4') { quiz4Answered = true; quiz4Selected = optionIndex; }
-  if (quizId === 'quiz5') { quiz5Answered = true; quiz5Selected = optionIndex; }
-  
+
   saveProgress();
   updateSidebarLocks();
+}
+
+function buildExplainHTML(q, isCorrect) {
+  const head = isCorrect
+    ? '✅ <strong>答对了！</strong>'
+    : '❌ <strong>还不对，请阅读解析后再试一次：</strong>';
+  return head + '<div class="explain-body">' + q.explain + '</div>';
 }
 
 function renderDialogue(quiz, sectionIndex) {
@@ -2091,7 +2510,7 @@ function selectScenario(scenarioId) {
 
   // Highlight selected card
   document.querySelectorAll('.scenario-card').forEach(card => {
-    card.style.borderColor = card.dataset.scenario === scenarioId ? '#4338bc' : '#e2e8f0';
+    card.style.borderColor = card.dataset.scenario === scenarioId ? '#4338ca' : '#e2e8f0';
     card.style.background = card.dataset.scenario === scenarioId ? '#eef2ff' : '#fff';
   });
 
@@ -2326,8 +2745,8 @@ function showFinalSummary(scenario) {
       <div style="font-size:13px;line-height:1.7;color:#374151;">
         <div style="margin:6px 0;padding:8px 12px;background:#fef3c7;border-radius:8px;"><strong style="color:#92400e;">👨‍👩‍👧 家长：</strong>${rd.parentMsg}</div>
         <div style="margin:6px 0;padding:8px 12px;background:#dcfce7;border-radius:8px;"><strong style="color:#166534;">💼 CC（参考）：</strong>${rd.reference}</div>
-        ${rd.isFinal ? '' : `<div style="margin:6px 0;padding:8px 12px;background:#f3f4f6;border-radius:8px;font-size:12px;color:#6b7280;"><em>→ （若CC回应得好）家长继续：${rd.nextParentOnGood}</div>
-        <div style="margin:6px 0;padding:8px 12px;background:#f3f4f6;border-radius:8px;font-size:12px;color:#6b7280;"><em>→ （若CC回应一般）家长继续：${rd.nextParentOnWeak}</div>`}
+        ${rd.isFinal ? '' : `<div style="margin:6px 0;padding:8px 12px;background:#f3f4f6;border-radius:8px;font-size:12px;color:#6b7280;"><em>→ （若CC回应得好）家长继续：${rd.nextParentOnGood}</em></div>
+        <div style="margin:6px 0;padding:8px 12px;background:#f3f4f6;border-radius:8px;font-size:12px;color:#6b7280;"><em>→ （若CC回应一般）家长继续：${rd.nextParentOnWeak}</em></div>`}
       </div>
     </div>`;
   });
@@ -2543,7 +2962,7 @@ function inferFinalTopic(userText) {
     },
     {
         "idx": 2,
-        "keys": [
+        "keys": [ "归因", "追问求证", "紧迫性", "紧迫",
             "黄金期",
             "黄金",
             "关键期",
@@ -2877,12 +3296,8 @@ async function evaluateFinalWithAI() {
     result = JSON.parse(jsonMatch ? jsonMatch[0] : rawText);
   } catch (e) {
     console.warn('AI 评分 JSON 解析失败，原始返回:', rawText);
-    result = {
-      score: 65, process: 20, accuracy: 20, rapport: 18, coverage: 7,
-      feedback: 'AI 评分解析出现问题，已给予基础分数。建议重做以获得准确评分。',
-      strengths: ['完成了对话'],
-      improvements: ['可再详细一些']
-    };
+    // 解析失败不计成绩，由调用方恢复界面并允许重新提交评分
+    throw new Error('评分服务返回了无法解析的结果，请重新提交评分');
   }
 
   finalScore = Math.min(Math.max(parseInt(result.score) || 0, 0), 100);
@@ -2985,40 +3400,38 @@ function restoreAllUIState() {
 }
 
 function restoreQuizUI() {
-  const quizIds = ['quiz1', 'quiz2', 'quiz3', 'quiz4', 'quiz5'];
-  const answeredMap = { quiz1: quiz1Answered, quiz2: quiz2Answered, quiz3: quiz3Answered, quiz4: quiz4Answered, quiz5: quiz5Answered };
-  const selectedMap = { quiz1: quiz1Selected, quiz2: quiz2Selected, quiz3: quiz3Selected, quiz4: quiz4Selected, quiz5: quiz5Selected };
+  courseData.sections.forEach((_, chIdx) => {
+    chapterQuizArr(chIdx).forEach((q) => {
+      const st = quizState[q.id];
+      const quizCard = document.getElementById('quiz-' + q.id);
+      if (!quizCard) return;
+      const options = quizCard.querySelectorAll('.quiz-option');
+      const feedbackEl = document.getElementById('feedback-' + q.id);
 
-  quizIds.forEach(quizId => {
-    if (!answeredMap[quizId]) return;
-    const quiz = quizzes[quizId];
-    if (!quiz) return;
-
-    const quizCard = document.getElementById('quiz-' + quizId);
-    if (!quizCard) return;
-
-    const options = quizCard.querySelectorAll('.quiz-option');
-    const feedbackEl = document.getElementById('feedback-' + quizId);
-    const selectedIdx = selectedMap[quizId];
-    const isCorrect = selectedIdx === quiz.correct;
-
-    options.forEach((opt, i) => {
-      if (i === quiz.correct) opt.classList.add('correct');
-      if (i === selectedIdx && !isCorrect) opt.classList.add('wrong');
-      opt.style.pointerEvents = 'none';
-    });
-
-    if (feedbackEl) {
-      if (isCorrect) {
-        feedbackEl.innerHTML = quiz.feedback_correct;
-        feedbackEl.className = 'quiz-feedback correct show';
+      if (st && st.solved) {
+        options.forEach((opt, i) => {
+          opt.style.pointerEvents = 'none';
+          if (i === q.correct) opt.classList.add('correct');
+        });
+        if (feedbackEl) {
+          feedbackEl.innerHTML = buildExplainHTML(q, true);
+          feedbackEl.className = 'quiz-feedback correct show';
+        }
         quizCard.classList.add('answered-correct');
-      } else {
-        feedbackEl.innerHTML = quiz.feedback_wrong;
-        feedbackEl.className = 'quiz-feedback wrong show';
+      } else if (st && st.selected >= 0) {
+        // 答错过但未答对：恢复红项，其余选项可继续重试
+        if (st.selected !== q.correct && options[st.selected]) {
+          options[st.selected].classList.add('wrong');
+          options[st.selected].style.pointerEvents = 'none';
+        }
         quizCard.classList.add('answered-wrong');
+        if (feedbackEl) {
+          feedbackEl.innerHTML = buildExplainHTML(q, false);
+          feedbackEl.className = 'quiz-feedback wrong show';
+        }
       }
-    }
+    });
+    updateChapterProgressUI(chIdx);
   });
 }
 
@@ -3068,8 +3481,6 @@ function setupQuizListeners() {
     if (e.ctrlKey && e.key === 'Enter') {
       const dialogueInput = document.getElementById('dialogueInput');
       if (dialogueInput && document.activeElement === dialogueInput) submitDialogueRound();
-      const finalInput = document.getElementById('finalDialogueInput');
-      if (finalInput && document.activeElement === finalInput) submitFinalRound();
     }
   });
 }
@@ -3120,9 +3531,10 @@ function saveProgress() {
   const state = {
     currentSection,
     completedSections: [...completedSections],
-    quiz1Answered, quiz1Selected, reportWritingSubmitted, reportWritingScore, reportWritingText, reportWritingFeedbackHTML, quiz2Answered, quiz2Selected, quiz3Answered, quiz3Selected, quiz4Answered, quiz4Selected, quiz4DialogueAnswered, quiz4DialogueScore, quiz5Answered, quiz5Selected,
+    quizState,
+    reportWritingSubmitted, reportWritingScore, reportWritingText, reportWritingFeedbackHTML,
+    quiz4DialogueAnswered, quiz4DialogueScore,
     finalTaskSubmitted, finalScore,
-    // Multi-turn dialogue state
     activeScenarioId, currentRoundIdx, roundScores
   };
   localStorage.setItem(LS_PREFIX + '_progress', JSON.stringify(state));
@@ -3132,42 +3544,66 @@ function loadProgress() {
     const saved = JSON.parse(localStorage.getItem(LS_PREFIX + '_progress'));
     if (saved) {
       completedSections = new Set(saved.completedSections || []);
-      quiz1Answered = saved.quiz1Answered || false;
-      quiz1Selected = saved.quiz1Selected !== undefined ? saved.quiz1Selected : -1;
+      if (saved.quizState && typeof saved.quizState === 'object') {
+        quizState = sanitizeQuizState(saved.quizState);
+      } else {
+        quizState = migrateLegacyProgress(saved);
+      }
       reportWritingSubmitted = saved.reportWritingSubmitted || false;
       reportWritingScore = saved.reportWritingScore || 0;
       reportWritingText = saved.reportWritingText || '';
       reportWritingFeedbackHTML = saved.reportWritingFeedbackHTML || '';
-      quiz2Answered = saved.quiz2Answered || false;
-      quiz2Selected = saved.quiz2Selected !== undefined ? saved.quiz2Selected : -1;
-      quiz3Answered = saved.quiz3Answered || false;
-      quiz3Selected = saved.quiz3Selected !== undefined ? saved.quiz3Selected : -1;
-      quiz4Answered = saved.quiz4Answered || false;
-      quiz4Selected = saved.quiz4Selected !== undefined ? saved.quiz4Selected : -1;
       quiz4DialogueAnswered = saved.quiz4DialogueAnswered || false;
       quiz4DialogueScore = saved.quiz4DialogueScore || 0;
-      // Restore multi-turn dialogue state
       if (saved.activeScenarioId) activeScenarioId = saved.activeScenarioId;
       if (saved.currentRoundIdx) currentRoundIdx = saved.currentRoundIdx;
       if (saved.roundScores && saved.roundScores.length > 0) roundScores = saved.roundScores;
-      quiz5Answered = saved.quiz5Answered || false;
-      quiz5Selected = saved.quiz5Selected !== undefined ? saved.quiz5Selected : -1;
       finalTaskSubmitted = saved.finalTaskSubmitted || false;
       finalScore = saved.finalScore || 0;
-      updateProgress();
-      updateSidebarLocks();
-      // Restore current section position
       if (saved.currentSection !== undefined && saved.currentSection !== null) {
         currentSection = saved.currentSection;
       }
+      updateProgress();
+      updateSidebarLocks();
     }
   } catch (e) {}
+}
+function migrateLegacyProgress(saved) {
+  // 旧结构（quiz1-5 各1题）→ 新结构：旧答对迁为每章第1题 solved；答错不迁（新机制可重试）
+  const state = {};
+  for (let ch = 1; ch <= 5; ch++) {
+    if (!saved['quiz' + ch + 'Answered']) continue;
+    const sel = saved['quiz' + ch + 'Selected'];
+    const q = (chapterQuizzes['ch' + ch] || [])[0];
+    if (!q) continue;
+    if (sel === q.correct) state[q.id] = { selected: sel, solved: true, wrongTries: 0 };
+  }
+  return state;
+}
+function sanitizeQuizState(raw) {
+  const state = {};
+  Object.keys(raw || {}).forEach(id => {
+    const q = findQuizItemById(id);
+    if (!q) return;
+    const st = raw[id] || {};
+    const sel = parseInt(st.selected, 10);
+    const fixed = {
+      selected: (sel >= 0 && sel < q.options.length) ? sel : -1,
+      solved: !!st.solved,
+      wrongTries: parseInt(st.wrongTries, 10) || 0
+    };
+    if (fixed.solved) fixed.selected = q.correct;
+    state[id] = fixed;
+  });
+  return state;
 }
 
 function checkCertificate() {
   const allDone = completedSections.size >= courseData.sections.length
-    && quiz1Answered && reportWritingSubmitted && quiz2Answered && quiz3Answered && quiz4Answered && quiz4DialogueAnswered 
-    && quiz5Answered && finalTaskSubmitted && finalScore >= 60;
+    && allChaptersSolved()
+    && reportWritingSubmitted && reportWritingScore >= 60
+    && quiz4DialogueAnswered && quiz4DialogueScore >= 60
+    && finalTaskSubmitted && finalScore >= 60;
   if (allDone) {
     setTimeout(() => {
       showToast('🏆 恭喜完成全部课程！点击领取结业证书', 'success');
@@ -3178,6 +3614,7 @@ function checkCertificate() {
     }, 1000);
   }
 }
+
 function closeCertificate() {
   document.getElementById('certOverlay').classList.remove('show');
 }
